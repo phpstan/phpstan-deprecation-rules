@@ -51,30 +51,6 @@ class ImplementationOfDeprecatedInterfaceRuleTest extends \PHPStan\Testing\RuleT
 					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable2.',
 					13,
 				],
-				[
-					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable.',
-					26,
-				],
-				[
-					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable.',
-					30,
-				],
-				[
-					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable2.',
-					30,
-				],
-				[
-					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable.',
-					47,
-				],
-				[
-					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable.',
-					51,
-				],
-				[
-					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable2.',
-					51,
-				],
 			]
 		);
 	}
