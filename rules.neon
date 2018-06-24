@@ -1,1 +1,12 @@
-rules: []
+rules:
+	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
+	- PHPStan\Rules\Deprecations\AccessDeprecatedStaticPropertyRule
+	- PHPStan\Rules\Deprecations\CallToDeprecatedFunctionRule
+	- PHPStan\Rules\Deprecations\CallToDeprecatedMethodRule
+	- PHPStan\Rules\Deprecations\CallToDeprecatedStaticMethodRule
+	- PHPStan\Rules\Deprecations\FetchingClassConstOfDeprecatedClassRule
+	- PHPStan\Rules\Deprecations\ImplementationOfDeprecatedInterfaceRule
+	- PHPStan\Rules\Deprecations\InheritanceOfDeprecatedClassRule
+	- PHPStan\Rules\Deprecations\InheritanceOfDeprecatedInterfaceRule
+	- PHPStan\Rules\Deprecations\InstantiationOfDeprecatedClassRule
+	- PHPStan\Rules\Deprecations\UsageOfDeprecatedTraitRule

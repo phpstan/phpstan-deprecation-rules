@@ -1,2 +1,6 @@
 includes:
 	- rules.neon
+
+parameters:
+	excludes_analyse:
+		- */tests/*/data/*

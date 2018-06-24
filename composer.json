@@ -27,5 +27,8 @@
 		"psr-4": {
 			"PHPStan\\": "src/"
 		}
+	},
+	"autoload-dev": {
+		"classmap": ["tests/"]
 	}
 }
