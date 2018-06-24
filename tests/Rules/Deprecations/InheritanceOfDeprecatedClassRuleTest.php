@@ -27,8 +27,6 @@ class InheritanceOfDeprecatedClassRuleTest extends \PHPStan\Testing\RuleTestCase
 
 	public function testInheritanceOfDeprecatedClassInAnonymousClasses(): void
 	{
-		static::markTestSkipped('The `isAnonymous` method in the ReflectionClass doesn\'t work for some reason.');
-
 		require_once __DIR__ . '/data/inheritance-of-deprecated-class-definition.php';
 		$this->analyse(
 			[__DIR__ . '/data/inheritance-of-deprecated-class-in-anonymous-classes.php'],

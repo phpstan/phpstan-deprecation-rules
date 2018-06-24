@@ -53,7 +53,7 @@ class ImplementationOfDeprecatedInterfaceRule implements \PHPStan\Rules\Rule
 				$interface = $this->broker->getClass($interfaceName);
 
 				if ($interface->isDeprecated()) {
-					if (!$class->getNativeReflection()->isAnonymous()) {
+					if (!$class->isAnonymous()) {
 						$errors[] = sprintf(
 							'Class %s implements deprecated interface %s.',
 							$className,

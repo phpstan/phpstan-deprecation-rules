@@ -35,8 +35,6 @@ class ImplementationOfDeprecatedInterfaceRuleTest extends \PHPStan\Testing\RuleT
 
 	public function testImplementationOfDeprecatedInterfacesInAnonymousClasses(): void
 	{
-		static::markTestSkipped('The `isAnonymous` method in the ReflectionClass doesn\'t work for some reason.');
-
 		require_once __DIR__ . '/data/implementation-of-deprecated-interface-definition.php';
 		$this->analyse(
 			[__DIR__ . '/data/implementation-of-deprecated-interface-in-anonymous-classes.php'],
@@ -52,6 +50,30 @@ class ImplementationOfDeprecatedInterfaceRuleTest extends \PHPStan\Testing\RuleT
 				[
 					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable2.',
 					13,
+				],
+				[
+					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable.',
+					26,
+				],
+				[
+					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable.',
+					30,
+				],
+				[
+					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable2.',
+					30,
+				],
+				[
+					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable.',
+					47,
+				],
+				[
+					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable.',
+					51,
+				],
+				[
+					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable2.',
+					51,
 				],
 			]
 		);
