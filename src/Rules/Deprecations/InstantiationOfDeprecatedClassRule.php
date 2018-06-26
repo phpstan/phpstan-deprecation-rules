@@ -47,6 +47,10 @@ class InstantiationOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 		if ($node->class instanceof Name) {
 			$referencedClasses[] = $scope->resolveName($node->class);
 		} elseif ($node->class instanceof Class_) {
+			if ($node->class->isAnonymous()) {
+				return [];
+			}
+
 			$referencedClasses[] = $scope->resolveName($node->class->namespacedName);
 		} else {
 			$classTypeResult = $this->ruleLevelHelper->findTypeToCheck(
