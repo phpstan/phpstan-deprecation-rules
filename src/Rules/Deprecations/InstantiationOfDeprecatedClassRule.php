@@ -57,7 +57,7 @@ class InstantiationOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 				$scope,
 				$node->class,
 				'', // We don't care about the error message
-				function () {
+				function (): bool {
 					return true;
 				}
 			);

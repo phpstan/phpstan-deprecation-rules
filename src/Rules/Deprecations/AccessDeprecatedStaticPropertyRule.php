@@ -58,7 +58,7 @@ class AccessDeprecatedStaticPropertyRule implements \PHPStan\Rules\Rule
 				$scope,
 				$node->class,
 				'', // We don't care about the error message
-				function (Type $type) use ($propertyName) {
+				function (Type $type) use ($propertyName): bool {
 					return $type->canAccessProperties()->yes() && $type->hasProperty($propertyName);
 				}
 			);
