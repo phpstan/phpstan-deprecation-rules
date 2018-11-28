@@ -59,7 +59,7 @@ class FetchingClassConstOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 				$node->class,
 				'', // We don't care about the error message
 				function (Type $type) use ($constantName): bool {
-					return $type->canAccessConstants()->yes() && $type->hasConstant($constantName);
+					return $type->canAccessConstants()->yes() && $type->hasConstant($constantName)->yes();
 				}
 			);
 

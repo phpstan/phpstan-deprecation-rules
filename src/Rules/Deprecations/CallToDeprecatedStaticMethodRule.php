@@ -59,7 +59,7 @@ class CallToDeprecatedStaticMethodRule implements \PHPStan\Rules\Rule
 				$node->class,
 				'', // We don't care about the error message
 				function (Type $type) use ($methodName): bool {
-					return $type->canCallMethods()->yes() && $type->hasMethod($methodName);
+					return $type->canCallMethods()->yes() && $type->hasMethod($methodName)->yes();
 				}
 			);
 
