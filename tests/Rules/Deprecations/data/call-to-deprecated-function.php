@@ -7,6 +7,7 @@ foo();
 
 deprecated_foo();
 \CheckDeprecatedFunctionCall\deprecated_foo();
+deprecated_with_description();
 
 /**
  * @deprecated

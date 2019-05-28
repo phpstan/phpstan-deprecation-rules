@@ -83,22 +83,50 @@ class CallToDeprecatedStaticMethodRule implements \PHPStan\Rules\Rule
 			}
 
 			if ($class->isDeprecated()) {
-				$errors[] = sprintf(
-					'Call to method %s() of deprecated class %s.',
-					$methodReflection->getName(),
-					$methodReflection->getDeclaringClass()->getName()
-				);
+				$classDescription = null;
+				if (method_exists($class, 'getDeprecatedDescription')) {
+					$classDescription = $class->getDeprecatedDescription();
+				}
+
+				if ($classDescription === null) {
+					$errors[] = sprintf(
+						'Call to method %s() of deprecated class %s.',
+						$methodReflection->getName(),
+						$methodReflection->getDeclaringClass()->getName()
+					);
+				} else {
+					$errors[] = sprintf(
+						"Call to method %s() of deprecated class %s:\n%s",
+						$methodReflection->getName(),
+						$methodReflection->getDeclaringClass()->getName(),
+						$classDescription
+					);
+				}
 			}
 
 			if (!$methodReflection instanceof DeprecatableReflection || !$methodReflection->isDeprecated()) {
 				continue;
 			}
 
-			$errors[] = sprintf(
-				'Call to deprecated method %s() of class %s.',
-				$methodReflection->getName(),
-				$methodReflection->getDeclaringClass()->getName()
-			);
+			$description = null;
+			if (method_exists($methodReflection, 'getDeprecatedDescription')) {
+				$description = $methodReflection->getDeprecatedDescription();
+			}
+
+			if ($description === null) {
+				$errors[] = sprintf(
+					'Call to deprecated method %s() of class %s.',
+					$methodReflection->getName(),
+					$methodReflection->getDeclaringClass()->getName()
+				);
+			} else {
+				$errors[] = sprintf(
+					"Call to deprecated method %s() of class %s:\n%s",
+					$methodReflection->getName(),
+					$methodReflection->getDeclaringClass()->getName(),
+					$description
+				);
+			}
 		}
 
 		return $errors;

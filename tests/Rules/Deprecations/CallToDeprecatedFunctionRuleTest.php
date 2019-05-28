@@ -25,6 +25,10 @@ class CallToDeprecatedFunctionRuleTest extends \PHPStan\Testing\RuleTestCase
 					'Call to deprecated function CheckDeprecatedFunctionCall\deprecated_foo().',
 					9,
 				],
+				[
+					"Call to deprecated function CheckDeprecatedFunctionCall\\deprecated_with_description():\nGlobal function? Seriously?",
+					10,
+				],
 			]
 		);
 	}

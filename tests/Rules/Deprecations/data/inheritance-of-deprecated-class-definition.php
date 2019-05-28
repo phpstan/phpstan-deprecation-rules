@@ -14,3 +14,11 @@ class DeprecatedFoo
 {
 
 }
+
+/**
+ * @deprecated Inheritance is deprecated.
+ */
+class DeprecatedWithDescription
+{
+
+}

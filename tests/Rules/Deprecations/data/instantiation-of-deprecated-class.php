@@ -4,6 +4,7 @@ namespace InstantiationOfDeprecatedClass;
 
 $foo = new Foo();
 $deprecatedFoo = new DeprecatedFoo();
+$deprecated2 = new DeprecatedWithDescription();
 
 /**
  * @deprecated

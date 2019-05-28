@@ -46,6 +46,14 @@ class Foo
 
 	}
 
+	/**
+	 * @deprecated Call a different method instead.
+	 */
+	public function deprecatedWithDescription()
+	{
+
+	}
+
 }
 
 class Bar extends Foo

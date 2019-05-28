@@ -54,13 +54,29 @@ class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
 					continue;
 				}
 
-				if ($methodReflection->isDeprecated()) {
+				if (!$methodReflection->isDeprecated()) {
+					continue;
+				}
+
+				$description = null;
+				if (method_exists($methodReflection, 'getDeprecatedDescription')) {
+					$description = $methodReflection->getDeprecatedDescription();
+				}
+
+				if ($description === null) {
 					return [sprintf(
 						'Call to deprecated method %s() of class %s.',
 						$methodReflection->getName(),
 						$methodReflection->getDeclaringClass()->getName()
 					)];
 				}
+
+				return [sprintf(
+					"Call to deprecated method %s() of class %s:\n%s",
+					$methodReflection->getName(),
+					$methodReflection->getDeclaringClass()->getName(),
+					$description
+				)];
 			} catch (\PHPStan\Broker\ClassNotFoundException $e) {
 				// Other rules will notify if the class is not found
 			} catch (\PHPStan\Reflection\MissingMethodFromReflectionException $e) {

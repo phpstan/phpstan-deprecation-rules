@@ -25,6 +25,10 @@ class InstantiationOfDeprecatedClassRuleTest extends \PHPStan\Testing\RuleTestCa
 					'Instantiation of deprecated class InstantiationOfDeprecatedClass\DeprecatedFoo.',
 					6,
 				],
+				[
+					"Instantiation of deprecated class InstantiationOfDeprecatedClass\DeprecatedWithDescription:\nDo not instantiate.",
+					7,
+				],
 			]
 		);
 	}

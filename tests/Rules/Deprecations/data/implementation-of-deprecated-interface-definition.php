@@ -22,3 +22,11 @@ interface DeprecatedFooable2
 {
 
 }
+
+/**
+ * @deprecated Better interface imminent?
+ */
+interface DeprecatedWithDescription
+{
+
+}

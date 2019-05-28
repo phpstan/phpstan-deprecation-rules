@@ -30,6 +30,8 @@ $foo::$fooFromTrait;
 $foo::$deprecatedFooFromTrait = 'foo';
 $foo::$deprecatedFooFromTrait;
 
+Foo::$deprecatedWithDescription;
+
 /**
  * @deprecated
  */

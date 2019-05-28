@@ -47,12 +47,27 @@ class UsageOfDeprecatedTraitRule implements \PHPStan\Rules\Rule
 
 			try {
 				$trait = $this->broker->getClass($traitName);
+				if (!$trait->isDeprecated()) {
+					continue;
+				}
 
-				if ($trait->isDeprecated()) {
+				$description = null;
+				if (method_exists($trait, 'getDeprecatedDescription')) {
+					$description = $trait->getDeprecatedDescription();
+				}
+
+				if ($description === null) {
 					$errors[] = sprintf(
 						'Usage of deprecated trait %s in class %s.',
 						$traitName,
 						$className
+					);
+				} else {
+					$errors[] = sprintf(
+						"Usage of deprecated trait %s in class %s:\n%s",
+						$traitName,
+						$className,
+						$description
 					);
 				}
 			} catch (\PHPStan\Broker\ClassNotFoundException $e) {

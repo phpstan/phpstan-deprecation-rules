@@ -10,6 +10,10 @@ $deprecatedFoo = new class extends DeprecatedFoo {
 
 };
 
+$deprecatedBar = new class extends DeprecatedWithDescription {
+
+};
+
 /**
  * @deprecated
  */

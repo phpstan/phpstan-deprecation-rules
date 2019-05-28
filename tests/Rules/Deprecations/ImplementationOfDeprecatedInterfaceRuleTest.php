@@ -29,6 +29,10 @@ class ImplementationOfDeprecatedInterfaceRuleTest extends \PHPStan\Testing\RuleT
 					'Class ImplementationOfDeprecatedInterface\Foo3 implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable2.',
 					15,
 				],
+				[
+					"Class ImplementationOfDeprecatedInterface\Foo4 implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedWithDescription:\nBetter interface imminent?",
+					20,
+				],
 			]
 		);
 	}
@@ -50,6 +54,10 @@ class ImplementationOfDeprecatedInterfaceRuleTest extends \PHPStan\Testing\RuleT
 				[
 					'Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedFooable2.',
 					13,
+				],
+				[
+					"Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedWithDescription:\nBetter interface imminent?",
+					17,
 				],
 			]
 		);

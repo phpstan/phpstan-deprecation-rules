@@ -17,6 +17,11 @@ interface Foo3 extends Fooable, DeprecatedFooable, DeprecatedFooable2
 
 }
 
+interface Foo4 extends DeprecatedWithDescription
+{
+
+}
+
 /**
  * @deprecated
  */

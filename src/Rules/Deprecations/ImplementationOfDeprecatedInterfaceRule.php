@@ -57,17 +57,38 @@ class ImplementationOfDeprecatedInterfaceRule implements \PHPStan\Rules\Rule
 				$interface = $this->broker->getClass($interfaceName);
 
 				if ($interface->isDeprecated()) {
+					$description = null;
+					if (method_exists($interface, 'getDeprecatedDescription')) {
+						$description = $interface->getDeprecatedDescription();
+					}
 					if (!$class->isAnonymous()) {
-						$errors[] = sprintf(
-							'Class %s implements deprecated interface %s.',
-							$className,
-							$interfaceName
-						);
+						if ($description === null) {
+							$errors[] = sprintf(
+								'Class %s implements deprecated interface %s.',
+								$className,
+								$interfaceName
+							);
+						} else {
+							$errors[] = sprintf(
+								"Class %s implements deprecated interface %s:\n%s",
+								$className,
+								$interfaceName,
+								$description
+							);
+						}
 					} else {
-						$errors[] = sprintf(
-							'Anonymous class implements deprecated interface %s.',
-							$interfaceName
-						);
+						if ($description === null) {
+							$errors[] = sprintf(
+								'Anonymous class implements deprecated interface %s.',
+								$interfaceName
+							);
+						} else {
+							$errors[] = sprintf(
+								"Anonymous class implements deprecated interface %s:\n%s",
+								$interfaceName,
+								$description
+							);
+						}
 					}
 				}
 			} catch (\PHPStan\Broker\ClassNotFoundException $e) {

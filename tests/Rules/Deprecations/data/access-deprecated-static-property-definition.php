@@ -24,4 +24,9 @@ class Foo {
 	 */
 	public static $deprecatedFoo;
 
+	/**
+	 * @deprecated This is probably a singleton.
+	 */
+	public static $deprecatedWithDescription;
+
 }

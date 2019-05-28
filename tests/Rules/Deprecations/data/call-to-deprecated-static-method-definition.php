@@ -26,6 +26,14 @@ class Foo
 
 	}
 
+	/**
+	 * @deprecated This is probably a singleton.
+	 */
+	public static function deprecatedWithDescription()
+	{
+
+	}
+
 }
 
 class Bar extends Foo
@@ -42,6 +50,14 @@ class Bar extends Foo
  * @deprecated
  */
 class DeprecatedBar extends Foo
+{
+
+}
+
+/**
+ * @deprecated Do not touch this at all.
+ */
+class DeprecatedBaz extends Foo
 {
 
 }

@@ -16,6 +16,8 @@ $foo->fooFromTrait;
 $foo->deprecatedFooFromTrait = 'deprecatedFooFromTrait';
 $foo->deprecatedFooFromTrait;
 
+$foo->deprecatedWithDescription;
+
 /**
  * @deprecated
  */

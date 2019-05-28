@@ -80,11 +80,25 @@ class FetchingClassConstOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 			}
 
 			if ($class->isDeprecated()) {
-				$errors[] = sprintf(
-					'Fetching class constant %s of deprecated class %s.',
-					$constantName,
-					$referencedClass
-				);
+				$classDescription = null;
+				if (method_exists($class, 'getDeprecatedDescription')) {
+					$classDescription = $class->getDeprecatedDescription();
+				}
+
+				if ($classDescription === null) {
+					$errors[] = sprintf(
+						'Fetching class constant %s of deprecated class %s.',
+						$constantName,
+						$referencedClass
+					);
+				} else {
+					$errors[] = sprintf(
+						"Fetching class constant %s of deprecated class %s:\n%s",
+						$constantName,
+						$referencedClass,
+						$classDescription
+					);
+				}
 			}
 
 			if (!$class->hasConstant($constantName)) {
@@ -97,11 +111,25 @@ class FetchingClassConstOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 				continue;
 			}
 
-			$errors[] = sprintf(
-				'Fetching deprecated class constant %s of class %s.',
-				$constantName,
-				$referencedClass
-			);
+			$description = null;
+			if (method_exists($constantReflection, 'getDeprecatedDescription')) {
+				$description = $constantReflection->getDeprecatedDescription();
+			}
+
+			if ($description === null) {
+				$errors[] = sprintf(
+					'Fetching deprecated class constant %s of class %s.',
+					$constantName,
+					$referencedClass
+				);
+			} else {
+				$errors[] = sprintf(
+					"Fetching deprecated class constant %s of class %s:\n%s",
+					$constantName,
+					$referencedClass,
+					$description
+				);
+			}
 		}
 
 		return $errors;

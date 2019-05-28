@@ -11,3 +11,8 @@ class Bar2 extends DeprecatedFoo
 {
 
 }
+
+class Bar3 extends DeprecatedWithDescription
+{
+
+}

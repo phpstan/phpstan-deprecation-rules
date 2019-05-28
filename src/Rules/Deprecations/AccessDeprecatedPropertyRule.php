@@ -55,10 +55,24 @@ class AccessDeprecatedPropertyRule implements \PHPStan\Rules\Rule
 				}
 
 				if ($propertyReflection->isDeprecated()) {
+					$description = null;
+					if (method_exists($propertyReflection, 'getDeprecatedDescription')) {
+						$description = $propertyReflection->getDeprecatedDescription();
+					}
+
+					if ($description === null) {
+						return [sprintf(
+							'Access to deprecated property $%s of class %s.',
+							$propertyName,
+							$propertyReflection->getDeclaringClass()->getName()
+						)];
+					}
+
 					return [sprintf(
-						'Access to deprecated property $%s of class %s.',
+						"Access to deprecated property $%s of class %s:\n%s",
 						$propertyName,
-						$propertyReflection->getDeclaringClass()->getName()
+						$propertyReflection->getDeclaringClass()->getName(),
+						$description
 					)];
 				}
 			} catch (\PHPStan\Broker\ClassNotFoundException $e) {

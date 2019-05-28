@@ -21,6 +21,10 @@ class InheritanceOfDeprecatedClassRuleTest extends \PHPStan\Testing\RuleTestCase
 					'Class InheritanceOfDeprecatedClass\Bar2 extends deprecated class InheritanceOfDeprecatedClass\DeprecatedFoo.',
 					10,
 				],
+				[
+					"Class InheritanceOfDeprecatedClass\Bar3 extends deprecated class InheritanceOfDeprecatedClass\DeprecatedWithDescription:\nInheritance is deprecated.",
+					15,
+				],
 			]
 		);
 	}
@@ -34,6 +38,10 @@ class InheritanceOfDeprecatedClassRuleTest extends \PHPStan\Testing\RuleTestCase
 				[
 					'Anonymous class extends deprecated class InheritanceOfDeprecatedClass\DeprecatedFoo.',
 					9,
+				],
+				[
+					"Anonymous class extends deprecated class InheritanceOfDeprecatedClass\DeprecatedWithDescription:\nInheritance is deprecated.",
+					13,
 				],
 			]
 		);

@@ -14,3 +14,11 @@ trait DeprecatedFooTrait
 {
 
 }
+
+/**
+ * @deprecated Do not use traits.
+ */
+trait DeprecatedTraitWithDescription
+{
+
+}

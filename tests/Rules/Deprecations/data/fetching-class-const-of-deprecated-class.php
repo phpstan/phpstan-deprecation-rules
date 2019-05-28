@@ -10,6 +10,8 @@ Foo::DEPRECATED_FOO;
 
 DeprecatedFoo::class;
 DeprecatedFoo::class;
+Foo::DEPRECATED_WITH_DESCRIPTION;
+DeprecatedBar::FOO;
 
 /**
  * @deprecated

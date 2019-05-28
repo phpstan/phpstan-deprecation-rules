@@ -54,19 +54,40 @@ class InheritanceOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 
 		try {
 			$parentClass = $this->broker->getClass($parentClassName);
+			$description = null;
+			if (method_exists($parentClass, 'getDeprecatedDescription')) {
+				$description = $parentClass->getDeprecatedDescription();
+			}
 
 			if ($parentClass->isDeprecated()) {
 				if (!$class->isAnonymous()) {
-					$errors[] = sprintf(
-						'Class %s extends deprecated class %s.',
-						$className,
-						$parentClassName
-					);
+					if ($description === null) {
+						$errors[] = sprintf(
+							'Class %s extends deprecated class %s.',
+							$className,
+							$parentClassName
+						);
+					} else {
+						$errors[] = sprintf(
+							"Class %s extends deprecated class %s:\n%s",
+							$className,
+							$parentClassName,
+							$description
+						);
+					}
 				} else {
-					$errors[] = sprintf(
-						'Anonymous class extends deprecated class %s.',
-						$parentClassName
-					);
+					if ($description === null) {
+						$errors[] = sprintf(
+							'Anonymous class extends deprecated class %s.',
+							$parentClassName
+						);
+					} else {
+						$errors[] = sprintf(
+							"Anonymous class extends deprecated class %s:\n%s",
+							$parentClassName,
+							$description
+						);
+					}
 				}
 			}
 		} catch (\PHPStan\Broker\ClassNotFoundException $e) {

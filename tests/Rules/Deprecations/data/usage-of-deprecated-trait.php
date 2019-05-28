@@ -18,6 +18,13 @@ class Foo2
 
 }
 
+class Foo3
+{
+
+	use DeprecatedTraitWithDescription;
+
+}
+
 /**
  * @deprecated
  */

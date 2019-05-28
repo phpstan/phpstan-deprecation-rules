@@ -12,6 +12,7 @@ $bar->deprecatedFoo2();
 
 $foo->fooFromTrait();
 $foo->deprecatedFooFromTrait();
+$foo->deprecatedWithDescription();
 
 /**
  * @deprecated

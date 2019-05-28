@@ -25,4 +25,9 @@ class Foo {
 	 */
 	public $deprecatedFoo;
 
+	/**
+	 * @deprecated Use something else instead.
+	 */
+	public $deprecatedWithDescription;
+
 }

@@ -12,6 +12,11 @@ class Foo
 	 */
 	public const DEPRECATED_FOO = 'FOO';
 
+	/**
+	 * @deprecated Use different constant.
+	 */
+	public const DEPRECATED_WITH_DESCRIPTION = 'BAR';
+
 }
 
 /**
@@ -26,5 +31,15 @@ class DeprecatedFoo
 	 * @deprecated
 	 */
 	public const DEPRECATED_FOO = 'FOO';
+
+}
+
+/**
+ * @deprecated Deprecated for some reason.
+ */
+class DeprecatedBar
+{
+
+	public const FOO = 'FOO';
 
 }

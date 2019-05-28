@@ -12,6 +12,9 @@ DeprecatedBar::foo();
 DeprecatedBar::deprecatedFoo();
 DeprecatedBar::deprecatedFoo2();
 
+DeprecatedBaz::foo();
+Foo::deprecatedWithDescription();
+
 class Bar2 extends Foo
 {
 

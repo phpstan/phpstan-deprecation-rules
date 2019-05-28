@@ -17,6 +17,11 @@ class Foo3 implements Fooable, DeprecatedFooable, DeprecatedFooable2
 
 }
 
+class Foo4 implements DeprecatedWithDescription
+{
+
+}
+
 /**
  * @deprecated
  */

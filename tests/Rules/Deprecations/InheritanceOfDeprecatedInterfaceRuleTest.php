@@ -29,6 +29,10 @@ class InheritanceOfDeprecatedInterfaceRuleTest extends \PHPStan\Testing\RuleTest
 					'Interface InheritanceOfDeprecatedInterface\Foo3 extends deprecated interface InheritanceOfDeprecatedInterface\DeprecatedFooable2.',
 					15,
 				],
+				[
+					"Interface InheritanceOfDeprecatedInterface\Foo4 extends deprecated interface InheritanceOfDeprecatedInterface\DeprecatedWithDescription:\nImplement something else.",
+					20,
+				],
 			]
 		);
 	}

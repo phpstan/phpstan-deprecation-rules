@@ -14,3 +14,11 @@ class DeprecatedFoo
 {
 
 }
+
+/**
+ * @deprecated Do not instantiate.
+ */
+class DeprecatedWithDescription
+{
+
+}

@@ -56,11 +56,27 @@ class InheritanceOfDeprecatedInterfaceRule implements \PHPStan\Rules\Rule
 			try {
 				$parentInterface = $this->broker->getClass($parentInterfaceName);
 
-				if ($parentInterface->isDeprecated()) {
+				if (!$parentInterface->isDeprecated()) {
+					continue;
+				}
+
+				$description = null;
+				if (method_exists($parentInterface, 'getDeprecatedDescription')) {
+					$description = $parentInterface->getDeprecatedDescription();
+				}
+
+				if ($description === null) {
 					$errors[] = sprintf(
 						'Interface %s extends deprecated interface %s.',
 						$interfaceName,
 						$parentInterfaceName
+					);
+				} else {
+					$errors[] = sprintf(
+						"Interface %s extends deprecated interface %s:\n%s",
+						$interfaceName,
+						$parentInterfaceName,
+						$description
 					);
 				}
 			} catch (\PHPStan\Broker\ClassNotFoundException $e) {

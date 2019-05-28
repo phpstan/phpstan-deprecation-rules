@@ -14,6 +14,10 @@ $fooable3 = new class implements Fooable, DeprecatedFooable, DeprecatedFooable2 
 
 };
 
+$fooable4 = new class implements DeprecatedWithDescription {
+
+};
+
 /**
  * @deprecated
  */

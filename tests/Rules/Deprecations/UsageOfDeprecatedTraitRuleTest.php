@@ -25,6 +25,10 @@ class UsageOfDeprecatedTraitRuleTest extends \PHPStan\Testing\RuleTestCase
 					'Usage of deprecated trait UsageOfDeprecatedTrait\DeprecatedFooTrait in class UsageOfDeprecatedTrait\Foo2.',
 					16,
 				],
+				[
+					"Usage of deprecated trait UsageOfDeprecatedTrait\DeprecatedTraitWithDescription in class UsageOfDeprecatedTrait\Foo3:\nDo not use traits.",
+					24,
+				],
 			]
 		);
 	}
