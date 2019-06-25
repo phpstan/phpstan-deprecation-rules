@@ -34,6 +34,10 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rul
 	 */
 	public function processNode(Node $node, Scope $scope): array
 	{
+		if (DeprecatedScopeHelper::isScopeDeprecated($scope)) {
+			return [];
+		}
+
 		/** @var MethodReflection $method */
 		$method = $scope->getFunction();
 		if (!$method instanceof MethodReflection) {

@@ -23,6 +23,7 @@ class TypeHintDeprecatedInClassMethodSignatureRuleTest extends \PHPStan\Testing\
 				["Parameter \$property4 of method TypeHintDeprecatedInFunctionSignature\Foo::setProperties() has typehint with deprecated class TypeHintDeprecatedInFunctionSignature\VerboseDeprecatedProperty:\nI'll be back", 13],
 				['Parameter $property6 of method TypeHintDeprecatedInFunctionSignature\Foo::setProperties() has typehint with deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty.', 13],
 				['Return type of method TypeHintDeprecatedInFunctionSignature\Foo::setProperties() has typehint with deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty.', 13],
+				['Parameter $property of method TypeHintDeprecatedInFunctionSignature\FooImplNoOverride::oops() has typehint with deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty.', 50],
 			]
 		);
 	}
