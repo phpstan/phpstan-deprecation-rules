@@ -12,9 +12,9 @@ class Foo
      */
     public function setProperties(
         DeprecatedProperty $property,
-        ?DeprecatedProperty $property2,
+        ?DeprecatedInterface $property2,
         $property3,
-        Property $property4,
+        VerboseDeprecatedProperty $property4,
         string $property5,
         $property6
     ): DeprecatedProperty {

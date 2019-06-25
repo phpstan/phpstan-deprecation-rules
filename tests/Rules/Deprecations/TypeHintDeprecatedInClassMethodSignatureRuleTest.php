@@ -18,10 +18,11 @@ class TypeHintDeprecatedInClassMethodSignatureRuleTest extends \PHPStan\Testing\
 		$this->analyse(
 			[__DIR__ . '/data/typehint-deprecated-class.php'],
 			[
-				['Usage of deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty in argument #0.', 13],
-				['Usage of deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty in argument #1.', 13],
-				['Usage of deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty in argument #5.', 13],
-				['Usage of deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty in return type.', 13],
+				['Parameter $property of method TypeHintDeprecatedInFunctionSignature\Foo::setProperties() has typehint with deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty.', 13],
+				['Parameter $property2 of method TypeHintDeprecatedInFunctionSignature\Foo::setProperties() has typehint with deprecated interface TypeHintDeprecatedInFunctionSignature\DeprecatedInterface.', 13],
+				["Parameter \$property4 of method TypeHintDeprecatedInFunctionSignature\Foo::setProperties() has typehint with deprecated class TypeHintDeprecatedInFunctionSignature\VerboseDeprecatedProperty:\nI'll be back", 13],
+				['Parameter $property6 of method TypeHintDeprecatedInFunctionSignature\Foo::setProperties() has typehint with deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty.', 13],
+				['Return type of method TypeHintDeprecatedInFunctionSignature\Foo::setProperties() has typehint with deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty.', 13],
 			]
 		);
 	}

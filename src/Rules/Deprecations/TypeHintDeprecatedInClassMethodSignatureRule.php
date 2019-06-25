@@ -6,6 +6,7 @@ use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
 use PHPStan\Node\InClassMethodNode;
+use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\ParameterReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
@@ -40,31 +41,68 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rul
 		}
 		$methodSignature = ParametersAcceptorSelector::selectSingle($method->getVariants());
 
-		$errorLists = [];
+		$errors = [];
 		foreach ($methodSignature->getParameters() as $i => $parameter) {
 			/** @var ParameterReflection $parameter */
-			$errorLists[] = $this->checkClasses(
-				$parameter->getType()->getReferencedClasses(),
-				'argument #' . $i
+			$deprecatedClasses = $this->filterDeprecatedClasses($parameter->getType()->getReferencedClasses());
+			foreach ($deprecatedClasses as $deprecatedClass) {
+				$errors[] = sprintf(
+					'Parameter $%s of method %s::%s() has typehint with deprecated %s %s%s',
+					$parameter->getName(),
+					$method->getDeclaringClass()->getName(),
+					$method->getName(),
+					$this->getClassType($deprecatedClass),
+					$deprecatedClass->getName(),
+					$this->getClassDeprecationDescription($deprecatedClass)
+				);
+			}
+		}
+
+		$deprecatedClasses = $this->filterDeprecatedClasses($methodSignature->getReturnType()->getReferencedClasses());
+		foreach ($deprecatedClasses as $deprecatedClass) {
+			$errors[] = sprintf(
+				'Return type of method %s::%s() has typehint with deprecated %s %s%s',
+				$method->getDeclaringClass()->getName(),
+				$method->getName(),
+				$this->getClassType($deprecatedClass),
+				$deprecatedClass->getName(),
+				$this->getClassDeprecationDescription($deprecatedClass)
 			);
 		}
 
-		$errorLists[] = $this->checkClasses(
-			$methodSignature->getReturnType()->getReferencedClasses(),
-			'return type'
-		);
+		return $errors;
+	}
 
-		return array_merge(...$errorLists);
+	private function getClassType(ClassReflection $class): string
+	{
+		if ($class->isInterface()) {
+			return 'interface';
+		}
+
+		return 'class';
+	}
+
+	private function getClassDeprecationDescription(ClassReflection $class): string
+	{
+		$description = null;
+		if (method_exists($class, 'getDeprecatedDescription')) {
+			$description = $class->getDeprecatedDescription();
+		}
+
+		if ($description === null) {
+			return '.';
+		}
+
+		return sprintf(":\n%s", $description);
 	}
 
 	/**
 	 * @param string[] $referencedClasses
-	 * @param string $where
-	 * @return string[]
+	 * @return ClassReflection[]
 	 */
-	private function checkClasses(array $referencedClasses, string $where): array
+	private function filterDeprecatedClasses(array $referencedClasses): array
 	{
-		$errors = [];
+		$deprecatedClasses = [];
 		foreach ($referencedClasses as $referencedClass) {
 			try {
 				$class = $this->broker->getClass($referencedClass);
@@ -76,28 +114,10 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rul
 				continue;
 			}
 
-			$classDescription = null;
-			if (method_exists($class, 'getDeprecatedDescription')) {
-				$classDescription = $class->getDeprecatedDescription();
-			}
-
-			if ($classDescription === null) {
-				$errors[] = sprintf(
-					'Usage of deprecated class %s in %s.',
-					$referencedClass,
-					$where
-				);
-			} else {
-				$errors[] = sprintf(
-					"Usage of deprecated class %s in %s:\n%s",
-					$referencedClass,
-					$where,
-					$classDescription
-				);
-			}
+			$deprecatedClasses[] = $class;
 		}
 
-		return $errors;
+		return $deprecatedClasses;
 	}
 
 }
