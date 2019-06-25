@@ -31,3 +31,15 @@ class Foo
     }
 
 }
+
+class FooImplNoOverride implements IThinkYourStucked
+{
+
+    /**
+     * @param Property $property
+     */
+    public function oops($property): void
+    {
+    }
+
+}

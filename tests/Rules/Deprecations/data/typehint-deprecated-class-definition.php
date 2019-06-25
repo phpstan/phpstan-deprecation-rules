@@ -30,3 +30,11 @@ class Property
 {
 
 }
+
+interface IThinkYourStucked
+{
+    /**
+     * @param Property|DeprecatedProperty $property
+     */
+    public function oops($property): void;
+}
