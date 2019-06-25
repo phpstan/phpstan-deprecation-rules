@@ -32,13 +32,34 @@ class Foo
 
 }
 
-class FooImplNoOverride implements IThinkYourStucked
+class FooImplOverride implements IThinkYourStucked
 {
 
     /**
      * @param Property $property
      */
     public function oops($property): void
+    {
+    }
+
+}
+
+class FooImplNoOverride implements IThinkYourStucked
+{
+
+    public function oops($property): void
+    {
+    }
+
+}
+
+/**
+ * @deprecated
+ */
+class DeprecatedClass
+{
+
+    public function bar(DeprecatedProperty $property)
     {
     }
 
