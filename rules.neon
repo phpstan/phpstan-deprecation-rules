@@ -9,5 +9,5 @@ rules:
 	- PHPStan\Rules\Deprecations\InheritanceOfDeprecatedClassRule
 	- PHPStan\Rules\Deprecations\InheritanceOfDeprecatedInterfaceRule
 	- PHPStan\Rules\Deprecations\InstantiationOfDeprecatedClassRule
-	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInFunctionSignatureRule
+	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInClassMethodSignatureRule
 	- PHPStan\Rules\Deprecations\UsageOfDeprecatedTraitRule
