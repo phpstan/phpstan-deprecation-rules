@@ -83,11 +83,7 @@ class CallToDeprecatedStaticMethodRule implements \PHPStan\Rules\Rule
 			}
 
 			if ($class->isDeprecated()) {
-				$classDescription = null;
-				if (method_exists($class, 'getDeprecatedDescription')) {
-					$classDescription = $class->getDeprecatedDescription();
-				}
-
+				$classDescription = $class->getDeprecatedDescription();
 				if ($classDescription === null) {
 					$errors[] = sprintf(
 						'Call to method %s() of deprecated class %s.',
@@ -108,11 +104,7 @@ class CallToDeprecatedStaticMethodRule implements \PHPStan\Rules\Rule
 				continue;
 			}
 
-			$description = null;
-			if (method_exists($methodReflection, 'getDeprecatedDescription')) {
-				$description = $methodReflection->getDeprecatedDescription();
-			}
-
+			$description = $methodReflection->getDeprecatedDescription();
 			if ($description === null) {
 				$errors[] = sprintf(
 					'Call to deprecated method %s() of class %s.',

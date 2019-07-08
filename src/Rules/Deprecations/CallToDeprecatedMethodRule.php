@@ -58,11 +58,7 @@ class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
 					continue;
 				}
 
-				$description = null;
-				if (method_exists($methodReflection, 'getDeprecatedDescription')) {
-					$description = $methodReflection->getDeprecatedDescription();
-				}
-
+				$description = $methodReflection->getDeprecatedDescription();
 				if ($description === null) {
 					return [sprintf(
 						'Call to deprecated method %s() of class %s.',

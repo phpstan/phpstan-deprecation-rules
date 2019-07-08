@@ -60,11 +60,7 @@ class InheritanceOfDeprecatedInterfaceRule implements \PHPStan\Rules\Rule
 					continue;
 				}
 
-				$description = null;
-				if (method_exists($parentInterface, 'getDeprecatedDescription')) {
-					$description = $parentInterface->getDeprecatedDescription();
-				}
-
+				$description = $parentInterface->getDeprecatedDescription();
 				if ($description === null) {
 					$errors[] = sprintf(
 						'Interface %s extends deprecated interface %s.',

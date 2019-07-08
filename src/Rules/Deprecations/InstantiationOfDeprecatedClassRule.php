@@ -82,11 +82,7 @@ class InstantiationOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 				continue;
 			}
 
-			$description = null;
-			if (method_exists($class, 'getDeprecatedDescription')) {
-				$description = $class->getDeprecatedDescription();
-			}
-
+			$description = $class->getDeprecatedDescription();
 			if ($description === null) {
 				$errors[] = sprintf(
 					'Instantiation of deprecated class %s.',

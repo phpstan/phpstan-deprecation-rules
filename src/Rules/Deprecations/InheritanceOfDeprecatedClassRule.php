@@ -54,11 +54,7 @@ class InheritanceOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 
 		try {
 			$parentClass = $this->broker->getClass($parentClassName);
-			$description = null;
-			if (method_exists($parentClass, 'getDeprecatedDescription')) {
-				$description = $parentClass->getDeprecatedDescription();
-			}
-
+			$description = $parentClass->getDeprecatedDescription();
 			if ($parentClass->isDeprecated()) {
 				if (!$class->isAnonymous()) {
 					if ($description === null) {

@@ -57,10 +57,7 @@ class ImplementationOfDeprecatedInterfaceRule implements \PHPStan\Rules\Rule
 				$interface = $this->broker->getClass($interfaceName);
 
 				if ($interface->isDeprecated()) {
-					$description = null;
-					if (method_exists($interface, 'getDeprecatedDescription')) {
-						$description = $interface->getDeprecatedDescription();
-					}
+					$description = $interface->getDeprecatedDescription();
 					if (!$class->isAnonymous()) {
 						if ($description === null) {
 							$errors[] = sprintf(

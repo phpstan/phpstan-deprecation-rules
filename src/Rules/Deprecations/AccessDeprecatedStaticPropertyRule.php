@@ -81,11 +81,7 @@ class AccessDeprecatedStaticPropertyRule implements \PHPStan\Rules\Rule
 			}
 
 			if ($property instanceof DeprecatableReflection && $property->isDeprecated()) {
-				$description = null;
-				if (method_exists($property, 'getDeprecatedDescription')) {
-					$description = $property->getDeprecatedDescription();
-				}
-
+				$description = $property->getDeprecatedDescription();
 				if ($description === null) {
 					return [sprintf(
 						'Access to deprecated static property $%s of class %s.',

@@ -88,11 +88,7 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rul
 
 	private function getClassDeprecationDescription(ClassReflection $class): string
 	{
-		$description = null;
-		if (method_exists($class, 'getDeprecatedDescription')) {
-			$description = $class->getDeprecatedDescription();
-		}
-
+		$description = $class->getDeprecatedDescription();
 		if ($description === null) {
 			return '.';
 		}

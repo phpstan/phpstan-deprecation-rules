@@ -51,11 +51,7 @@ class UsageOfDeprecatedTraitRule implements \PHPStan\Rules\Rule
 					continue;
 				}
 
-				$description = null;
-				if (method_exists($trait, 'getDeprecatedDescription')) {
-					$description = $trait->getDeprecatedDescription();
-				}
-
+				$description = $trait->getDeprecatedDescription();
 				if ($description === null) {
 					$errors[] = sprintf(
 						'Usage of deprecated trait %s in class %s.',
