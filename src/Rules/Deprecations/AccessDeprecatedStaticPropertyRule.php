@@ -8,7 +8,6 @@ use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
-use PHPStan\Reflection\DeprecatableReflection;
 use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
@@ -80,7 +79,7 @@ class AccessDeprecatedStaticPropertyRule implements \PHPStan\Rules\Rule
 				continue;
 			}
 
-			if ($property instanceof DeprecatableReflection && $property->isDeprecated()) {
+			if ($property->isDeprecated()->yes()) {
 				$description = $property->getDeprecatedDescription();
 				if ($description === null) {
 					return [sprintf(

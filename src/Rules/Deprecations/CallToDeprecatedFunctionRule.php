@@ -45,7 +45,7 @@ class CallToDeprecatedFunctionRule implements \PHPStan\Rules\Rule
 			return [];
 		}
 
-		if ($function->isDeprecated()) {
+		if ($function->isDeprecated()->yes()) {
 			$description = $function->getDeprecatedDescription();
 			if ($description === null) {
 				return [sprintf(

@@ -7,7 +7,6 @@ use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
-use PHPStan\Reflection\DeprecatableReflection;
 use PHPStan\Type\TypeUtils;
 
 class AccessDeprecatedPropertyRule implements \PHPStan\Rules\Rule
@@ -50,11 +49,7 @@ class AccessDeprecatedPropertyRule implements \PHPStan\Rules\Rule
 				$classReflection = $this->broker->getClass($referencedClass);
 				$propertyReflection = $classReflection->getProperty($propertyName, $scope);
 
-				if (!$propertyReflection instanceof DeprecatableReflection) {
-					continue;
-				}
-
-				if ($propertyReflection->isDeprecated()) {
+				if ($propertyReflection->isDeprecated()->yes()) {
 					$description = $propertyReflection->getDeprecatedDescription();
 					if ($description === null) {
 						return [sprintf(

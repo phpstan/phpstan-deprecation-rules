@@ -3,7 +3,6 @@
 namespace PHPStan\Rules\Deprecations;
 
 use PHPStan\Analyser\Scope;
-use PHPStan\Reflection\DeprecatableReflection;
 
 class DeprecatedScopeHelper
 {
@@ -21,7 +20,7 @@ class DeprecatedScopeHelper
 		}
 
 		$function = $scope->getFunction();
-		if ($function instanceof DeprecatableReflection && $function->isDeprecated()) {
+		if ($function !== null && $function->isDeprecated()->yes()) {
 			return true;
 		}
 

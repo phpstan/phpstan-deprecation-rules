@@ -8,7 +8,6 @@ use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
-use PHPStan\Reflection\DeprecatableReflection;
 use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
@@ -100,7 +99,7 @@ class CallToDeprecatedStaticMethodRule implements \PHPStan\Rules\Rule
 				}
 			}
 
-			if (!$methodReflection instanceof DeprecatableReflection || !$methodReflection->isDeprecated()) {
+			if (!$methodReflection->isDeprecated()->yes()) {
 				continue;
 			}
 

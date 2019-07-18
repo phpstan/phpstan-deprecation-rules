@@ -7,7 +7,6 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
-use PHPStan\Reflection\DeprecatableReflection;
 use PHPStan\Type\TypeUtils;
 
 class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
@@ -50,11 +49,7 @@ class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
 				$classReflection = $this->broker->getClass($referencedClass);
 				$methodReflection = $classReflection->getMethod($methodName, $scope);
 
-				if (!$methodReflection instanceof DeprecatableReflection) {
-					continue;
-				}
-
-				if (!$methodReflection->isDeprecated()) {
+				if (!$methodReflection->isDeprecated()->yes()) {
 					continue;
 				}
 

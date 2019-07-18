@@ -8,7 +8,6 @@ use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
-use PHPStan\Reflection\DeprecatableReflection;
 use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
@@ -103,7 +102,7 @@ class FetchingClassConstOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 
 			$constantReflection = $class->getConstant($constantName);
 
-			if (!$constantReflection instanceof DeprecatableReflection || !$constantReflection->isDeprecated()) {
+			if (!$constantReflection->isDeprecated()->yes()) {
 				continue;
 			}
 
