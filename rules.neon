@@ -1,3 +1,7 @@
+services:
+    -
+        class: PHPStan\Rules\Deprecations\DeprecatedClassHelper
+
 rules:
 	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
 	- PHPStan\Rules\Deprecations\AccessDeprecatedStaticPropertyRule

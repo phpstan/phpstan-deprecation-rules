@@ -9,7 +9,7 @@ class TypeHintDeprecatedInClassMethodSignatureRuleTest extends \PHPStan\Testing\
 	{
 		$broker = $this->createBroker();
 
-		return new TypeHintDeprecatedInClassMethodSignatureRule($broker);
+		return new TypeHintDeprecatedInClassMethodSignatureRule(new DeprecatedClassHelper($broker));
 	}
 
 	public function test(): void
