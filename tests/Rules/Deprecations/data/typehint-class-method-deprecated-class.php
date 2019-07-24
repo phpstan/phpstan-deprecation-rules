@@ -1,6 +1,6 @@
 <?php
 
-namespace TypeHintDeprecatedInFunctionSignature;
+namespace TypeHintDeprecatedInClassMethodSignature;
 
 class Foo
 {
@@ -64,3 +64,17 @@ class DeprecatedClass
     }
 
 }
+
+new class {
+    private $property;
+
+    public function __construct(DeprecatedProperty $property = null)
+    {
+        $this->property = $property;
+    }
+
+    public function getProperty(): ?DeprecatedProperty
+    {
+        return $this->property;
+    }
+};

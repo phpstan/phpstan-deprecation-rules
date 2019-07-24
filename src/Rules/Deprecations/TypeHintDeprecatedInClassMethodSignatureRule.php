@@ -50,9 +50,42 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rul
 			/** @var ParameterReflection $parameter */
 			$deprecatedClasses = $this->filterDeprecatedClasses($parameter->getType()->getReferencedClasses());
 			foreach ($deprecatedClasses as $deprecatedClass) {
+				if ($method->getDeclaringClass()->isAnonymous()) {
+					$errors[] = sprintf(
+						'Parameter $%s of method %s() in anonymous class has typehint with deprecated %s %s%s',
+						$parameter->getName(),
+						$method->getName(),
+						$this->getClassType($deprecatedClass),
+						$deprecatedClass->getName(),
+						$this->getClassDeprecationDescription($deprecatedClass)
+					);
+				} else {
+					$errors[] = sprintf(
+						'Parameter $%s of method %s::%s() has typehint with deprecated %s %s%s',
+						$parameter->getName(),
+						$method->getDeclaringClass()->getName(),
+						$method->getName(),
+						$this->getClassType($deprecatedClass),
+						$deprecatedClass->getName(),
+						$this->getClassDeprecationDescription($deprecatedClass)
+					);
+				}
+			}
+		}
+
+		$deprecatedClasses = $this->filterDeprecatedClasses($methodSignature->getReturnType()->getReferencedClasses());
+		foreach ($deprecatedClasses as $deprecatedClass) {
+			if ($method->getDeclaringClass()->isAnonymous()) {
 				$errors[] = sprintf(
-					'Parameter $%s of method %s::%s() has typehint with deprecated %s %s%s',
-					$parameter->getName(),
+					'Return type of method %s() in anonymous class has typehint with deprecated %s %s%s',
+					$method->getName(),
+					$this->getClassType($deprecatedClass),
+					$deprecatedClass->getName(),
+					$this->getClassDeprecationDescription($deprecatedClass)
+				);
+			} else {
+				$errors[] = sprintf(
+					'Return type of method %s::%s() has typehint with deprecated %s %s%s',
 					$method->getDeclaringClass()->getName(),
 					$method->getName(),
 					$this->getClassType($deprecatedClass),
@@ -60,18 +93,6 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rul
 					$this->getClassDeprecationDescription($deprecatedClass)
 				);
 			}
-		}
-
-		$deprecatedClasses = $this->filterDeprecatedClasses($methodSignature->getReturnType()->getReferencedClasses());
-		foreach ($deprecatedClasses as $deprecatedClass) {
-			$errors[] = sprintf(
-				'Return type of method %s::%s() has typehint with deprecated %s %s%s',
-				$method->getDeclaringClass()->getName(),
-				$method->getName(),
-				$this->getClassType($deprecatedClass),
-				$deprecatedClass->getName(),
-				$this->getClassDeprecationDescription($deprecatedClass)
-			);
 		}
 
 		return $errors;

@@ -1,6 +1,6 @@
 <?php
 
-namespace TypeHintDeprecatedInFunctionSignature;
+namespace TypeHintDeprecatedInClassMethodSignature;
 
 /**
  * @deprecated
