@@ -14,4 +14,5 @@ rules:
 	- PHPStan\Rules\Deprecations\InheritanceOfDeprecatedInterfaceRule
 	- PHPStan\Rules\Deprecations\InstantiationOfDeprecatedClassRule
 	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInClassMethodSignatureRule
+	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInClosureSignatureRule
 	- PHPStan\Rules\Deprecations\UsageOfDeprecatedTraitRule
