@@ -4,22 +4,19 @@ namespace PHPStan\Rules\Deprecations;
 
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
-use PHPStan\Broker\Broker;
 use PHPStan\Node\InClassMethodNode;
-use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\MethodReflection;
-use PHPStan\Reflection\ParameterReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 
 class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rule
 {
 
-	/** @var Broker */
-	private $broker;
+	/** @var DeprecatedClassHelper */
+	private $deprecatedClassHelper;
 
-	public function __construct(Broker $broker)
+	public function __construct(DeprecatedClassHelper $deprecatedClassHelper)
 	{
-		$this->broker = $broker;
+		$this->deprecatedClassHelper = $deprecatedClassHelper;
 	}
 
 	public function getNodeType(): string
@@ -47,17 +44,16 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rul
 
 		$errors = [];
 		foreach ($methodSignature->getParameters() as $i => $parameter) {
-			/** @var ParameterReflection $parameter */
-			$deprecatedClasses = $this->filterDeprecatedClasses($parameter->getType()->getReferencedClasses());
+			$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($parameter->getType()->getReferencedClasses());
 			foreach ($deprecatedClasses as $deprecatedClass) {
 				if ($method->getDeclaringClass()->isAnonymous()) {
 					$errors[] = sprintf(
 						'Parameter $%s of method %s() in anonymous class has typehint with deprecated %s %s%s',
 						$parameter->getName(),
 						$method->getName(),
-						$this->getClassType($deprecatedClass),
+						$this->deprecatedClassHelper->getClassType($deprecatedClass),
 						$deprecatedClass->getName(),
-						$this->getClassDeprecationDescription($deprecatedClass)
+						$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass)
 					);
 				} else {
 					$errors[] = sprintf(
@@ -65,80 +61,37 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rul
 						$parameter->getName(),
 						$method->getDeclaringClass()->getName(),
 						$method->getName(),
-						$this->getClassType($deprecatedClass),
+						$this->deprecatedClassHelper->getClassType($deprecatedClass),
 						$deprecatedClass->getName(),
-						$this->getClassDeprecationDescription($deprecatedClass)
+						$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass)
 					);
 				}
 			}
 		}
 
-		$deprecatedClasses = $this->filterDeprecatedClasses($methodSignature->getReturnType()->getReferencedClasses());
+		$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($methodSignature->getReturnType()->getReferencedClasses());
 		foreach ($deprecatedClasses as $deprecatedClass) {
 			if ($method->getDeclaringClass()->isAnonymous()) {
 				$errors[] = sprintf(
 					'Return type of method %s() in anonymous class has typehint with deprecated %s %s%s',
 					$method->getName(),
-					$this->getClassType($deprecatedClass),
+					$this->deprecatedClassHelper->getClassType($deprecatedClass),
 					$deprecatedClass->getName(),
-					$this->getClassDeprecationDescription($deprecatedClass)
+					$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass)
 				);
 			} else {
 				$errors[] = sprintf(
 					'Return type of method %s::%s() has typehint with deprecated %s %s%s',
 					$method->getDeclaringClass()->getName(),
 					$method->getName(),
-					$this->getClassType($deprecatedClass),
+					$this->deprecatedClassHelper->getClassType($deprecatedClass),
 					$deprecatedClass->getName(),
-					$this->getClassDeprecationDescription($deprecatedClass)
+					$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass)
 				);
 			}
 		}
 
 		return $errors;
-	}
-
-	private function getClassType(ClassReflection $class): string
-	{
-		if ($class->isInterface()) {
-			return 'interface';
-		}
-
-		return 'class';
-	}
-
-	private function getClassDeprecationDescription(ClassReflection $class): string
-	{
-		$description = $class->getDeprecatedDescription();
-		if ($description === null) {
-			return '.';
-		}
-
-		return sprintf(":\n%s", $description);
-	}
-
-	/**
-	 * @param string[] $referencedClasses
-	 * @return ClassReflection[]
-	 */
-	private function filterDeprecatedClasses(array $referencedClasses): array
-	{
-		$deprecatedClasses = [];
-		foreach ($referencedClasses as $referencedClass) {
-			try {
-				$class = $this->broker->getClass($referencedClass);
-			} catch (\PHPStan\Broker\ClassNotFoundException $e) {
-				continue;
-			}
-
-			if (!$class->isDeprecated()) {
-				continue;
-			}
-
-			$deprecatedClasses[] = $class;
-		}
-
-		return $deprecatedClasses;
 	}
 
 }
