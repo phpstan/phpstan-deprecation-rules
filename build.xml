@@ -2,14 +2,28 @@
 <project name="PHPStan deprecation rules" default="check">
 
 	<target name="check" depends="
-		composer,
+		composer-validate,
+		composer-install,
 		lint,
 		cs,
+		composer-normalize-check,
 		tests,
 		phpstan
 	"/>
 
-	<target name="composer">
+	<target name="composer-validate">
+		<exec
+				executable="composer"
+				logoutput="true"
+				passthru="true"
+				checkreturn="true"
+		>
+			<arg value="validate"/>
+			<arg value="--ansi"/>
+		</exec>
+	</target>
+
+	<target name="composer-install">
 		<exec
 				executable="composer"
 				logoutput="true"
@@ -17,6 +31,31 @@
 				checkreturn="true"
 		>
 			<arg value="install"/>
+		</exec>
+	</target>
+
+	<target name="composer-normalize-check">
+		<exec
+				executable="composer"
+				logoutput="true"
+				passthru="true"
+				checkreturn="true"
+		>
+			<arg value="normalize"/>
+			<arg value="--ansi"/>
+			<arg value="--dry-run"/>
+		</exec>
+	</target>
+
+	<target name="composer-normalize-fix">
+		<exec
+				executable="composer"
+				logoutput="true"
+				passthru="true"
+				checkreturn="true"
+		>
+			<arg value="normalize"/>
+			<arg value="--ansi"/>
 		</exec>
 	</target>
 
