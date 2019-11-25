@@ -9,6 +9,9 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
 use PHPStan\Type\TypeUtils;
 
+/**
+ * @implements \PHPStan\Rules\Rule<MethodCall>
+ */
 class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
 {
 
@@ -25,11 +28,6 @@ class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
 		return MethodCall::class;
 	}
 
-	/**
-	 * @param MethodCall $node
-	 * @param \PHPStan\Analyser\Scope $scope
-	 * @return string[] errors
-	 */
 	public function processNode(Node $node, Scope $scope): array
 	{
 		if (DeprecatedScopeHelper::isScopeDeprecated($scope)) {

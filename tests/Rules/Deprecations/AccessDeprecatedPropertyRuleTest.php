@@ -2,6 +2,9 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+/**
+ * @extends \PHPStan\Testing\RuleTestCase<AccessDeprecatedPropertyRule>
+ */
 class AccessDeprecatedPropertyRuleTest extends \PHPStan\Testing\RuleTestCase
 {
 

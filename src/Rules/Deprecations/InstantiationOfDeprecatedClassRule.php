@@ -11,6 +11,9 @@ use PHPStan\Broker\Broker;
 use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\ErrorType;
 
+/**
+ * @implements \PHPStan\Rules\Rule<New_>
+ */
 class InstantiationOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 {
 
@@ -31,11 +34,6 @@ class InstantiationOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 		return New_::class;
 	}
 
-	/**
-	 * @param New_ $node
-	 * @param \PHPStan\Analyser\Scope $scope
-	 * @return string[] errors
-	 */
 	public function processNode(Node $node, Scope $scope): array
 	{
 		if (DeprecatedScopeHelper::isScopeDeprecated($scope)) {

@@ -2,6 +2,9 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+/**
+ * @extends \PHPStan\Testing\RuleTestCase<InheritanceOfDeprecatedClassRule>
+ */
 class InheritanceOfDeprecatedClassRuleTest extends \PHPStan\Testing\RuleTestCase
 {
 

@@ -8,6 +8,9 @@ use PHPStan\Node\InClassMethodNode;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 
+/**
+ * @implements \PHPStan\Rules\Rule<InClassMethodNode>
+ */
 class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rule
 {
 
@@ -24,11 +27,6 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rul
 		return InClassMethodNode::class;
 	}
 
-	/**
-	 * @param InClassMethodNode $node
-	 * @param \PHPStan\Analyser\Scope $scope
-	 * @return string[] errors
-	 */
 	public function processNode(Node $node, Scope $scope): array
 	{
 		if (DeprecatedScopeHelper::isScopeDeprecated($scope)) {

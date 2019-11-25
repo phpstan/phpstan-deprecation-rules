@@ -5,9 +5,11 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClosureNode;
-use PHPStan\Node\InFunctionNode;
 use PHPStan\Reflection\ParametersAcceptor;
 
+/**
+ * @implements \PHPStan\Rules\Rule<InClosureNode>
+ */
 class TypeHintDeprecatedInClosureSignatureRule implements \PHPStan\Rules\Rule
 {
 
@@ -24,11 +26,6 @@ class TypeHintDeprecatedInClosureSignatureRule implements \PHPStan\Rules\Rule
 		return InClosureNode::class;
 	}
 
-	/**
-	 * @param InFunctionNode $node
-	 * @param \PHPStan\Analyser\Scope $scope
-	 * @return string[] errors
-	 */
 	public function processNode(Node $node, Scope $scope): array
 	{
 		if (DeprecatedScopeHelper::isScopeDeprecated($scope)) {

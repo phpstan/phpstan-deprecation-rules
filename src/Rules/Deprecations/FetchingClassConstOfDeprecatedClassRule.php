@@ -12,6 +12,9 @@ use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
 
+/**
+ * @implements \PHPStan\Rules\Rule<ClassConstFetch>
+ */
 class FetchingClassConstOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 {
 
@@ -32,11 +35,6 @@ class FetchingClassConstOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 		return ClassConstFetch::class;
 	}
 
-	/**
-	 * @param ClassConstFetch $node
-	 * @param \PHPStan\Analyser\Scope $scope
-	 * @return string[] errors
-	 */
 	public function processNode(Node $node, Scope $scope): array
 	{
 		if (DeprecatedScopeHelper::isScopeDeprecated($scope)) {

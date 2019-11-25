@@ -4,6 +4,9 @@ namespace PHPStan\Rules\Deprecations;
 
 use PHPStan\Rules\RuleLevelHelper;
 
+/**
+ * @extends \PHPStan\Testing\RuleTestCase<FetchingClassConstOfDeprecatedClassRule>
+ */
 class FetchingClassConstOfDeprecatedClassRuleTest extends \PHPStan\Testing\RuleTestCase
 {
 

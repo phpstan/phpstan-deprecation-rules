@@ -12,6 +12,9 @@ use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
 
+/**
+ * @implements \PHPStan\Rules\Rule<StaticPropertyFetch>
+ */
 class AccessDeprecatedStaticPropertyRule implements \PHPStan\Rules\Rule
 {
 
@@ -32,11 +35,6 @@ class AccessDeprecatedStaticPropertyRule implements \PHPStan\Rules\Rule
 		return StaticPropertyFetch::class;
 	}
 
-	/**
-	 * @param StaticPropertyFetch $node
-	 * @param \PHPStan\Analyser\Scope $scope
-	 * @return string[] errors
-	 */
 	public function processNode(Node $node, Scope $scope): array
 	{
 		if (DeprecatedScopeHelper::isScopeDeprecated($scope)) {

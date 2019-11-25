@@ -7,6 +7,9 @@ use PhpParser\Node\Stmt\TraitUse;
 use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
 
+/**
+ * @implements \PHPStan\Rules\Rule<TraitUse>
+ */
 class UsageOfDeprecatedTraitRule implements \PHPStan\Rules\Rule
 {
 
@@ -23,11 +26,6 @@ class UsageOfDeprecatedTraitRule implements \PHPStan\Rules\Rule
 		return TraitUse::class;
 	}
 
-	/**
-	 * @param TraitUse $node
-	 * @param \PHPStan\Analyser\Scope $scope
-	 * @return string[] errors
-	 */
 	public function processNode(Node $node, Scope $scope): array
 	{
 		if (DeprecatedScopeHelper::isScopeDeprecated($scope)) {

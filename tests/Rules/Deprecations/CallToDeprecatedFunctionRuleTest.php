@@ -2,6 +2,9 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+/**
+ * @extends \PHPStan\Testing\RuleTestCase<CallToDeprecatedFunctionRule>
+ */
 class CallToDeprecatedFunctionRuleTest extends \PHPStan\Testing\RuleTestCase
 {
 

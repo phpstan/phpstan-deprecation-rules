@@ -2,6 +2,9 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+/**
+ * @extends \PHPStan\Testing\RuleTestCase<TypeHintDeprecatedInFunctionSignatureRule>
+ */
 class TypeHintDeprecatedInFunctionSignatureRuleTest extends \PHPStan\Testing\RuleTestCase
 {
 
