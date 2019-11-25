@@ -4,4 +4,4 @@ includes:
 
 parameters:
 	excludes_analyse:
-		- */tests/*/data/*
+		- tests/*/data/*
