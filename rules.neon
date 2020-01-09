@@ -9,6 +9,7 @@ rules:
 	- PHPStan\Rules\Deprecations\CallToDeprecatedMethodRule
 	- PHPStan\Rules\Deprecations\CallToDeprecatedStaticMethodRule
 	- PHPStan\Rules\Deprecations\FetchingClassConstOfDeprecatedClassRule
+	- PHPStan\Rules\Deprecations\FetchingDeprecatedConstRule
 	- PHPStan\Rules\Deprecations\ImplementationOfDeprecatedInterfaceRule
 	- PHPStan\Rules\Deprecations\InheritanceOfDeprecatedClassRule
 	- PHPStan\Rules\Deprecations\InheritanceOfDeprecatedInterfaceRule
