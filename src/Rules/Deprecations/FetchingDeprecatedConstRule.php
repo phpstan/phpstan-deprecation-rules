@@ -5,7 +5,6 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PhpParser\Node\Expr\ConstFetch;
 use PHPStan\Analyser\Scope;
-use PHPStan\Reflection\GlobalConstantReflection;
 use PHPStan\Reflection\ReflectionProvider;
 
 /**
@@ -44,21 +43,23 @@ class FetchingDeprecatedConstRule implements \PHPStan\Rules\Rule
 		}
 
 		$constantReflection = $this->reflectionProvider->getConstant($node->name, $scope);
+		$defaultMessage = 'Use of constant %s is deprecated.';
 
-		if ($this->isDeprecated($constantReflection)) {
+		if ($constantReflection->isDeprecated()->yes()) {
 			return [sprintf(
-				$this->deprecatedConstants[$constantReflection->getName()] ?? 'Use of constant %s is deprecated.',
+				$constantReflection->getDeprecatedDescription() ?? $defaultMessage,
+				$constantReflection->getName()
+			)];
+		}
+
+		if (isset($this->deprecatedConstants[$constantReflection->getName()])) {
+			return [sprintf(
+				$this->deprecatedConstants[$constantReflection->getName()] ?? $defaultMessage,
 				$constantReflection->getName()
 			)];
 		}
 
 		return [];
-	}
-
-	private function isDeprecated(GlobalConstantReflection $constantReflection): bool
-	{
-		return $constantReflection->isDeprecated()->yes()
-			|| isset($this->deprecatedConstants[$constantReflection->getName()]);
 	}
 
 }
