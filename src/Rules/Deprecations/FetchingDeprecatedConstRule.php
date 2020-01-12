@@ -17,14 +17,17 @@ class FetchingDeprecatedConstRule implements \PHPStan\Rules\Rule
 	private $reflectionProvider;
 
 	/** @var array<string,string> */
-	private $deprecatedConstants = [
-		'FILTER_FLAG_SCHEME_REQUIRED' => 'Use of constant %s is deprecated since PHP 7.3.',
-		'FILTER_FLAG_HOST_REQUIRED' => 'Use of constant %s is deprecated since PHP 7.3.',
-	];
+	private $deprecatedConstants = [];
 
 	public function __construct(ReflectionProvider $reflectionProvider)
 	{
 		$this->reflectionProvider = $reflectionProvider;
+
+		// phpcs:ignore SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
+		if (PHP_VERSION_ID >= 70300) {
+			$this->deprecatedConstants['FILTER_FLAG_SCHEME_REQUIRED'] = 'Use of constant %s is deprecated since PHP 7.3.';
+			$this->deprecatedConstants['FILTER_FLAG_HOST_REQUIRED'] = 'Use of constant %s is deprecated since PHP 7.3.';
+		}
 	}
 
 	public function getNodeType(): string
