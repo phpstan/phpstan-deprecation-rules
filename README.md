@@ -1,6 +1,6 @@
 # Rules for detecting usage of deprecated classes, methods, properties, constants and traits.
 
-[![Build Status](https://travis-ci.org/phpstan/phpstan-deprecation-rules.svg)](https://travis-ci.org/phpstan/phpstan-deprecation-rules)
+[![Build Status](https://travis-ci.com/phpstan/phpstan-deprecation-rules.svg?branch=master)](https://travis-ci.com/phpstan/phpstan-deprecation-rules)
 [![Latest Stable Version](https://poser.pugx.org/phpstan/phpstan-deprecation-rules/v/stable)](https://packagist.org/packages/phpstan/phpstan-deprecation-rules)
 [![License](https://poser.pugx.org/phpstan/phpstan-deprecation-rules/license)](https://packagist.org/packages/phpstan/phpstan-deprecation-rules)
 
