@@ -94,6 +94,10 @@ class FetchingClassConstOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 				}
 			}
 
+			if (strtolower($constantName) === 'class') {
+				continue;
+			}
+
 			if (!$class->hasConstant($constantName)) {
 				continue;
 			}
