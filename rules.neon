@@ -17,4 +17,5 @@ rules:
 	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInClassMethodSignatureRule
 	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInClosureSignatureRule
 	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInFunctionSignatureRule
+	- PHPStan\Rules\Deprecations\UsageOfDeprecatedCastRule
 	- PHPStan\Rules\Deprecations\UsageOfDeprecatedTraitRule
