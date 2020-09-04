@@ -6,15 +6,6 @@
 
 * [PHPStan](https://phpstan.org/)
 
-This extension emits deprecation warnings on code, which uses properties/functions/methods/classes which are annotated as `@deprecated`.
-
-In case you don't own the code which you want to be considered deprecated, use [PHPStan Stub Files](https://phpstan.org/user-guide/stub-files) to declare deprecations for vendor files like
-```
-/** @deprecated */
-class ThirdPartyClass {}
-```
-
-
 ## Installation
 
 To use this extension, require it in [Composer](https://getcomposer.org/):
@@ -35,3 +26,13 @@ includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
 ```
 </details>
+
+## Deprecating code you don't own
+
+This extension emits deprecation warnings on code, which uses properties/functions/methods/classes which are annotated as `@deprecated`.
+
+In case you don't own the code which you want to be considered deprecated, use [PHPStan Stub Files](https://phpstan.org/user-guide/stub-files) to declare deprecations for vendor files like:
+```
+/** @deprecated */
+class ThirdPartyClass {}
+```
