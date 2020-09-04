@@ -27,7 +27,7 @@ includes:
 ```
 </details>
 
-## Deprecating code you don't own
+## Deprecating code you don't own
 
 This extension emits deprecation warnings on code, which uses properties/functions/methods/classes which are annotated as `@deprecated`.
 
