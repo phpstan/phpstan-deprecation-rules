@@ -13,6 +13,9 @@ DeprecatedFoo::class;
 Foo::DEPRECATED_WITH_DESCRIPTION;
 DeprecatedBar::FOO;
 
+SubFoo::DEPRECATED_FOO;
+SubFoo::DEPRECATED_WITH_DESCRIPTION;
+
 /**
  * @deprecated
  */
@@ -33,5 +36,10 @@ class DeprecatedScope
 		Foo::class;
 		DeprecatedFoo::class;
 	}
+
+}
+
+class SubFoo extends Foo
+{
 
 }

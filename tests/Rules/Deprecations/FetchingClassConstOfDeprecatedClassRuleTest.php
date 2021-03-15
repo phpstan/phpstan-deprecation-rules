@@ -48,6 +48,14 @@ class FetchingClassConstOfDeprecatedClassRuleTest extends \PHPStan\Testing\RuleT
 					"Fetching class constant FOO of deprecated class FetchingClassConstOfDeprecatedClass\DeprecatedBar:\nDeprecated for some reason.",
 					14,
 				],
+				[
+					"Fetching deprecated class constant DEPRECATED_FOO of class FetchingClassConstOfDeprecatedClass\SubFoo.",
+					16,
+				],
+				[
+					"Fetching deprecated class constant DEPRECATED_WITH_DESCRIPTION of class FetchingClassConstOfDeprecatedClass\SubFoo:\nUse different constant.",
+					17,
+				],
 			]
 		);
 	}
