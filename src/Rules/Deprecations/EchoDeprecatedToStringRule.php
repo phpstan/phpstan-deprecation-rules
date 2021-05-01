@@ -45,10 +45,8 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 
 	/**
 	 * @param string[] $messages
-	 *
-	 * @return void
 	 */
-	private function deepCheckExpr(Node\Expr $expr, Scope $scope, array &$messages)
+	private function deepCheckExpr(Node\Expr $expr, Scope $scope, array &$messages): void
 	{
 		if ($expr instanceof Node\Expr\BinaryOp\Concat) {
 			$this->deepCheckExpr($expr->left, $scope, $messages);
@@ -60,8 +58,6 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 				$messages[] = $message;
 			}
 		} else {
-
-
 
 		}
 	}
