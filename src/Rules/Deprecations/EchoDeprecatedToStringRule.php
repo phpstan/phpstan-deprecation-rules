@@ -50,7 +50,7 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 	 */
 	private function deepCheckExpr(Node\Expr $expr, Scope $scope, array &$messages): void
 	{
-		if ($expr instanceof Node\Expr\BinaryOp\Concat) {
+		if ($expr instanceof Node\Expr\BinaryOp) {
 			$this->deepCheckExpr($expr->left, $scope, $messages);
 			$this->deepCheckExpr($expr->right, $scope, $messages);
 		} elseif ($expr instanceof Node\Expr\Cast\String_ || $expr instanceof Node\Expr\Assign || $expr instanceof Node\Expr\AssignOp) {
