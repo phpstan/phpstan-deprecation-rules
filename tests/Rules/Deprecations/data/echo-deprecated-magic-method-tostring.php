@@ -7,14 +7,22 @@ function ()
 	$bar = new MagicBar();
 	echo $bar;
 	echo $bar . "hallo";
+	echo "la". ($bar."3") . "lu";
 
 	$barDesc = new MagicBarWithDesc();
 	echo $barDesc;
 	echo $barDesc . "hallo";
+	echo "la". ($barDesc."3") . "lu";
 
 	$noDeps = new NoDeprecation();
 	echo $noDeps;
 	echo $noDeps . "hallo";
+	echo "la". ($noDeps."3") . "lu";
+
+	echo "la". "le" . "lu";
+	echo "la". 5 . "lu";
+	echo "la". (5+3) . "lu";
+	echo "la". (5*3) . "lu";
 };
 
 class MagicBar
