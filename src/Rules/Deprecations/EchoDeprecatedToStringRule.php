@@ -44,6 +44,8 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 	}
 
 	/**
+	 * @param Node\Expr $expr
+	 * @param Scope $scope
 	 * @param string[] $messages
 	 */
 	private function deepCheckExpr(Node\Expr $expr, Scope $scope, array &$messages): void
@@ -57,8 +59,6 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 			if ($message) {
 				$messages[] = $message;
 			}
-		} else {
-
 		}
 	}
 
