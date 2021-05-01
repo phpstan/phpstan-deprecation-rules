@@ -56,7 +56,7 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 		} elseif ($expr instanceof Node\Expr\Cast\String_ || $expr instanceof Node\Expr\Assign || $expr instanceof Node\Expr\AssignOp) {
 			$this->deepCheckExpr($expr->expr, $scope, $messages);
 		} elseif ($expr instanceof Node\Scalar\Encapsed) {
-			foreach($expr->parts as $part) {
+			foreach ($expr->parts as $part) {
 				$this->deepCheckExpr($part, $scope, $messages);
 			}
 		} else {
