@@ -25,7 +25,7 @@ class EchoDeprecatedToStringRuleTest extends \PHPStan\Testing\RuleTestCase
 			[
 				[
 					'Call to deprecated method __toString() of class CheckDeprecatedStaticMethodCall\MagicBar.',
-					6,
+					8,
 				]
 			]
 		);
