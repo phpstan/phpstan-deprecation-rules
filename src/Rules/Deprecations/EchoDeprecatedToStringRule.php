@@ -3,12 +3,12 @@
 namespace PHPStan\Rules\Deprecations;
 
 use PhpParser\Node;
+use PhpParser\Node\Stmt\Echo_;
 use PHPStan\Analyser\Scope;
-use PHPStan\Type\ObjectType;
 use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\ErrorType;
+use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
-use PhpParser\Node\Stmt\Echo_;
 
 /**
  * @implements \PHPStan\Rules\Rule<Echo_>
@@ -16,9 +16,7 @@ use PhpParser\Node\Stmt\Echo_;
 class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 {
 
-	/**
-	 * @var RuleLevelHelper
-	 */
+	/** @var RuleLevelHelper */
 	private $ruleLevelHelper;
 
 	public function __construct(RuleLevelHelper $ruleLevelHelper)
@@ -59,7 +57,7 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 
 			$classReflection = $type->getClassReflection();
 
-			if (null === $classReflection) {
+			if ($classReflection === null) {
 				continue;
 			}
 
