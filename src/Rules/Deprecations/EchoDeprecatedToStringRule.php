@@ -60,7 +60,7 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 		return $messages;
 	}
 
-	private function checkExpr(Node $expr, Scope $scope): ?string
+	private function checkExpr(Node\Expr $expr, Scope $scope): ?string
 	{
 		$type = $this->ruleLevelHelper->findTypeToCheck(
 			$scope,
