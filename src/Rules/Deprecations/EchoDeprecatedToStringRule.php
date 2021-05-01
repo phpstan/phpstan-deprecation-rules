@@ -63,7 +63,7 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 				continue;
 			}
 
-			$methodReflection = $classReflection->getNativeMethod('__toString', $scope);
+			$methodReflection = $classReflection->getNativeMethod('__toString');
 
 			if (!$methodReflection->isDeprecated()->yes()) {
 				continue;
