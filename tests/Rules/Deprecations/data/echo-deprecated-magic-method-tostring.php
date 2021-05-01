@@ -2,8 +2,11 @@
 
 namespace CheckDeprecatedStaticMethodCall;
 
-$bar = new MagicBar();
-echo $bar;
+function ()
+{
+	$bar = new MagicBar();
+	echo $bar;
+};
 
 class MagicBar
 {
