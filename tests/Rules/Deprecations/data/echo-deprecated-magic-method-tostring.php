@@ -13,6 +13,7 @@ function ()
 	echo "la". ($x=$bar) . "lu";
 	echo "la". ($x.=$bar) . "lu";
 	echo "" ?: $bar;
+	echo $_GET['doesNotExist'] ?? $bar;
 	echo "" == $bar;
 	echo "" != $bar;
 	echo "" === $bar;
@@ -28,6 +29,7 @@ function ()
 	echo "la". ($x=$barDesc) . "lu";
 	echo "la". ($x.=$barDesc) . "lu";
 	echo "" ?: $barDesc;
+	echo $_GET['doesNotExist'] ?? $barDesc;
 	echo "" == $barDesc;
 	echo "" != $barDesc;
 	echo "" === $barDesc;
@@ -43,6 +45,7 @@ function ()
 	echo "la". ($x=$noDeps) . "lu";
 	echo "la". ($x.=$noDeps) . "lu";
 	echo "" ?: $noDeps;
+	echo $_GET['doesNotExist'] ?? $noDeps;
 	echo "" == $noDeps;
 	echo "" != $noDeps;
 	echo "" === $noDeps;
