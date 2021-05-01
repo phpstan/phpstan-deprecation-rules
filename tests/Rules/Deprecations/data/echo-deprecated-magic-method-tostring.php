@@ -10,6 +10,7 @@ function ()
 	echo "la". ($bar."3") . "lu";
 	echo "la". (string)($bar) . "lu";
 	echo "la". ($x=$bar) . "lu";
+	echo "la". ($x.=$bar) . "lu";
 
 	$barDesc = new MagicBarWithDesc();
 	echo $barDesc;
@@ -17,6 +18,7 @@ function ()
 	echo "la". ($barDesc."3") . "lu";
 	echo "la". (string)($barDesc) . "lu";
 	echo "la". ($x=$barDesc) . "lu";
+	echo "la". ($x.=$barDesc) . "lu";
 
 	$noDeps = new NoDeprecation();
 	echo $noDeps;
@@ -24,6 +26,7 @@ function ()
 	echo "la". ($noDeps."3") . "lu";
 	echo "la". (string)($noDeps) . "lu";
 	echo "la". ($x=$noDeps) . "lu";
+	echo "la". ($x.=$noDeps) . "lu";
 
 	echo "la". "le" . "lu";
 	echo "la". 5 . "lu";
