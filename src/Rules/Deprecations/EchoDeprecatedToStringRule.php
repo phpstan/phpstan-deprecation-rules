@@ -36,28 +36,34 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 		}
 
 		$messages = [];
-
 		foreach ($node->exprs as $key => $expr) {
-			if ($expr instanceof Node\Expr\Variable) {
-				$message = $this->checkExpr($expr, $scope);
-
-				if ($message) {
-					$messages[] = $message;
-				}
-			} elseif ($expr instanceof Node\Expr\BinaryOp\Concat) {
-				$message = $this->checkExpr($expr->left, $scope);
-				if ($message) {
-					$messages[] = $message;
-				}
-
-				$message = $this->checkExpr($expr->right, $scope);
-				if ($message) {
-					$messages[] = $message;
-				}
-			}
+			$this->deepCheckExpr($expr, $scope, $messages);
 		}
 
 		return $messages;
+	}
+
+	/**
+	 * @param string[] $messages
+	 *
+	 * @return void
+	 */
+	private function deepCheckExpr(Node\Expr $expr, Scope $scope, array &$messages)
+	{
+		if ($expr instanceof Node\Expr\BinaryOp\Concat) {
+			$this->deepCheckExpr($expr->left, $scope, $messages);
+			$this->deepCheckExpr($expr->right, $scope, $messages);
+		} elseif ($expr instanceof Node\Expr) {
+			$message = $this->checkExpr($expr, $scope);
+
+			if ($message) {
+				$messages[] = $message;
+			}
+		} else {
+
+
+
+		}
 	}
 
 	private function checkExpr(Node\Expr $expr, Scope $scope): ?string
