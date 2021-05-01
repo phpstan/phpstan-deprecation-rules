@@ -3,19 +3,12 @@
 namespace PHPStan\Rules\Deprecations;
 
 use PhpParser\Node;
-use PhpParser\Node\Expr\PropertyFetch;
-use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
-use PHPStan\Analyser\VariableTypeHolder;
-use PHPStan\Broker\Broker;
 use PHPStan\Type\ObjectType;
-use PHPStan\Type\TypeUtils;
-use PHPStan\Rules\Rule;
-use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
-use PHPStan\Type\VerbosityLevel;
+use PhpParser\Node\Stmt\Echo_;
 
 /**
  * @implements \PHPStan\Rules\Rule<Echo_>
@@ -35,7 +28,7 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 
 	public function getNodeType(): string
 	{
-		return Node\Stmt\Echo_::class;
+		return Echo_::class;
 	}
 
 	public function processNode(Node $node, Scope $scope): array
