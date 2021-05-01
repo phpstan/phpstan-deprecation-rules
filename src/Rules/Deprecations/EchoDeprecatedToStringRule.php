@@ -38,53 +38,70 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 		$messages = [];
 
 		foreach ($node->exprs as $key => $expr) {
-			if (!$expr instanceof Node\Expr\Variable) {
-				continue;
-			}
+			if ($expr instanceof Node\Expr\Variable) {
+				$message = $this->checkExpr($expr, $scope);
 
-			$type = $this->ruleLevelHelper->findTypeToCheck(
-				$scope,
-				$expr,
-				'',
-				static function (Type $type): bool {
-					return !$type->toString() instanceof ErrorType;
+				if ($message) {
+					$messages[] = $message;
 				}
-			)->getType();
+			} elseif ($expr instanceof Node\Expr\BinaryOp\Concat) {
+				$message = $this->checkExpr($expr->left, $scope);
+				if ($message) {
+					$messages[] = $message;
+				}
 
-			if (!$type instanceof ObjectType) {
-				continue;
-			}
-
-			$classReflection = $type->getClassReflection();
-
-			if ($classReflection === null) {
-				continue;
-			}
-
-			$methodReflection = $classReflection->getNativeMethod('__toString');
-
-			if (!$methodReflection->isDeprecated()->yes()) {
-				continue;
-			}
-
-			$description = $methodReflection->getDeprecatedDescription();
-			if ($description === null) {
-				$messages[] = sprintf(
-					'Call to deprecated method %s() of class %s.',
-					$methodReflection->getName(),
-					$methodReflection->getDeclaringClass()->getName()
-				);
-			} else {
-				$messages[] = sprintf(
-					"Call to deprecated method %s() of class %s:\n%s",
-					$methodReflection->getName(),
-					$methodReflection->getDeclaringClass()->getName(),
-					$description
-				);
+				$message = $this->checkExpr($expr->right, $scope);
+				if ($message) {
+					$messages[] = $message;
+				}
 			}
 		}
 
 		return $messages;
+	}
+
+	private function checkExpr(Node $expr, Scope $scope): ?string
+	{
+		$type = $this->ruleLevelHelper->findTypeToCheck(
+			$scope,
+			$expr,
+			'',
+			static function (Type $type): bool {
+				return !$type->toString() instanceof ErrorType;
+			}
+		)->getType();
+
+		if (!$type instanceof ObjectType) {
+			return null;
+		}
+
+		$classReflection = $type->getClassReflection();
+
+		if ($classReflection === null) {
+			return null;
+		}
+
+		$methodReflection = $classReflection->getNativeMethod('__toString');
+
+		if (!$methodReflection->isDeprecated()->yes()) {
+			return null;
+		}
+
+		$description = $methodReflection->getDeprecatedDescription();
+		if ($description === null) {
+			return sprintf(
+				'Call to deprecated method %s() of class %s.',
+				$methodReflection->getName(),
+				$methodReflection->getDeclaringClass()->getName()
+			);
+		}
+
+		return sprintf(
+			"Call to deprecated method %s() of class %s:\n%s",
+			$methodReflection->getName(),
+			$methodReflection->getDeclaringClass()->getName(),
+			$description
+		);
 	}
 
 }

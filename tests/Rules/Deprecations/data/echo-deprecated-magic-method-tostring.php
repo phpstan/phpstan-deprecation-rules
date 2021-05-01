@@ -6,6 +6,7 @@ function ()
 {
 	$bar = new MagicBar();
 	echo $bar;
+	echo $bar . "hallo";
 };
 
 class MagicBar
