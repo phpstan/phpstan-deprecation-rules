@@ -53,6 +53,8 @@ class EchoDeprecatedToStringRule implements \PHPStan\Rules\Rule
 		if ($expr instanceof Node\Expr\BinaryOp\Concat) {
 			$this->deepCheckExpr($expr->left, $scope, $messages);
 			$this->deepCheckExpr($expr->right, $scope, $messages);
+		} elseif ($expr instanceof Node\Expr\Cast\String_) {
+			$this->deepCheckExpr($expr->expr, $scope, $messages);
 		} elseif ($expr instanceof Node\Expr) {
 			$message = $this->checkExpr($expr, $scope);
 
