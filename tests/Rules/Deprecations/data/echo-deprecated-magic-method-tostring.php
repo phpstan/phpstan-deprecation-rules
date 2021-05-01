@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckDeprecatedStaticMethodCall;
+namespace EchoDeprecatedToStringRule;
 
 function ()
 {
