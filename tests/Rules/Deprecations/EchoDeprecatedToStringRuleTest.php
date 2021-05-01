@@ -24,11 +24,11 @@ class EchoDeprecatedToStringRuleTest extends \PHPStan\Testing\RuleTestCase
 			[__DIR__ . '/data/echo-deprecated-magic-method-tostring.php'],
 			[
 				[
-					'Call to deprecated method __toString() of class CheckDeprecatedStaticMethodCall\MagicBar.',
+					'Call to deprecated method __toString() of class EchoDeprecatedToStringRule\MagicBar.',
 					8,
 				],
 				[
-					'Call to deprecated method __toString() of class CheckDeprecatedStaticMethodCall\MagicBar.',
+					'Call to deprecated method __toString() of class EchoDeprecatedToStringRule\MagicBar.',
 					9,
 				],
 			]
