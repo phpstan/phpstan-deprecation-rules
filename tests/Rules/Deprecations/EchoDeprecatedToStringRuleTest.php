@@ -68,8 +68,8 @@ class EchoDeprecatedToStringRuleTest extends \PHPStan\Testing\RuleTestCase
 					18,
 				],
 				[
-					"Call to deprecated method __toString() of class EchoDeprecatedToStringRule\MagicBarWithDesc:\nuse XY instead.",
-					21,
+					'Call to deprecated method __toString() of class EchoDeprecatedToStringRule\MagicBar.',
+					19,
 				],
 				[
 					"Call to deprecated method __toString() of class EchoDeprecatedToStringRule\MagicBarWithDesc:\nuse XY instead.",
@@ -110,6 +110,14 @@ class EchoDeprecatedToStringRuleTest extends \PHPStan\Testing\RuleTestCase
 				[
 					"Call to deprecated method __toString() of class EchoDeprecatedToStringRule\MagicBarWithDesc:\nuse XY instead.",
 					31,
+				],
+				[
+					"Call to deprecated method __toString() of class EchoDeprecatedToStringRule\MagicBarWithDesc:\nuse XY instead.",
+					32,
+				],
+				[
+					"Call to deprecated method __toString() of class EchoDeprecatedToStringRule\MagicBarWithDesc:\nuse XY instead.",
+					33,
 				],
 			]
 		);
