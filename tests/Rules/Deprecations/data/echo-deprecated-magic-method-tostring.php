@@ -13,6 +13,7 @@ function ()
 	echo "la". ($x.=$bar) . "lu";
 	echo "" ?: $bar;
 	echo "" == $bar;
+	echo "" === $bar;
 
 	$barDesc = new MagicBarWithDesc();
 	echo $barDesc;
@@ -23,6 +24,7 @@ function ()
 	echo "la". ($x.=$barDesc) . "lu";
 	echo "" ?: $barDesc;
 	echo "" == $barDesc;
+	echo "" === $barDesc;
 
 	$noDeps = new NoDeprecation();
 	echo $noDeps;
@@ -33,6 +35,7 @@ function ()
 	echo "la". ($x.=$noDeps) . "lu";
 	echo "" ?: $noDeps;
 	echo "" == $noDeps;
+	echo "" === $noDeps;
 
 	echo "la". "le" . "lu";
 	echo "la". 5 . "lu";
