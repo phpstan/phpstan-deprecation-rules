@@ -13,6 +13,7 @@ use PHPStan\Type\TypeUtils;
  */
 class EchoDeprecatedBinaryOpToStringRule implements \PHPStan\Rules\Rule
 {
+
 	/** @var Broker */
 	private $broker;
 
@@ -87,4 +88,5 @@ class EchoDeprecatedBinaryOpToStringRule implements \PHPStan\Rules\Rule
 
 		return null;
 	}
+
 }
