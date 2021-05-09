@@ -3,9 +3,9 @@
 namespace PHPStan\Rules\Deprecations;
 
 use PhpParser\Node;
+use PhpParser\Node\Expr\BinaryOp;
 use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
-use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\TypeUtils;
 
 /**
@@ -24,7 +24,7 @@ class EchoDeprecatedBinaryOpToStringRule implements \PHPStan\Rules\Rule
 
 	public function getNodeType(): string
 	{
-		return Node\Expr\BinaryOp::class;
+		return BinaryOp::class;
 	}
 
 	public function processNode(Node $node, Scope $scope): array
