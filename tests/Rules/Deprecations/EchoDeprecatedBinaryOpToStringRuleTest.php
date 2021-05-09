@@ -5,7 +5,7 @@ namespace PHPStan\Rules\Deprecations;
 use PHPStan\Rules\RuleLevelHelper;
 
 /**
- * @extends \PHPStan\Testing\RuleTestCase<EchoDeprecatedToStringRule>
+ * @extends \PHPStan\Testing\RuleTestCase<EchoDeprecatedBinaryOpToStringRule>
  */
 class EchoDeprecatedBinaryOpToStringRuleTest extends \PHPStan\Testing\RuleTestCase
 {
