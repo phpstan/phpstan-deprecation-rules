@@ -3,25 +3,25 @@
 namespace PHPStan\Rules\Deprecations;
 
 use PhpParser\Node;
-use PhpParser\Node\Stmt\Echo_;
 use PHPStan\Analyser\Scope;
+use PHPStan\Broker\Broker;
 use PHPStan\Rules\RuleLevelHelper;
-use PHPStan\Type\ErrorType;
-use PHPStan\Type\ObjectType;
-use PHPStan\Type\Type;
-use function PHPStan\dumpType;
+use PHPStan\Type\TypeUtils;
 
 /**
  * @implements \PHPStan\Rules\Rule<Echo_>
  */
 class EchoDeprecatedBinaryOpToStringRule implements \PHPStan\Rules\Rule
 {
+	/** @var Broker */
+	private $broker;
 
 	/** @var RuleLevelHelper */
 	private $ruleLevelHelper;
 
-	public function __construct(RuleLevelHelper $ruleLevelHelper)
+	public function __construct(Broker $broker, RuleLevelHelper $ruleLevelHelper)
 	{
+		$this->broker = $broker;
 		$this->ruleLevelHelper = $ruleLevelHelper;
 	}
 
@@ -49,48 +49,42 @@ class EchoDeprecatedBinaryOpToStringRule implements \PHPStan\Rules\Rule
 		return $messages;
 	}
 
-	private function checkExpr(Node\Expr $expr, Scope $scope): ?string
+	private function checkExpr(Node\Expr $node, Scope $scope): ?string
 	{
-		$type = $this->ruleLevelHelper->findTypeToCheck(
-			$scope,
-			$expr,
-			'',
-			static function (Type $type): bool {
-				return !$type->toString() instanceof ErrorType;
+		$methodCalledOnType = $scope->getType($node);
+		$referencedClasses = TypeUtils::getDirectClassNames($methodCalledOnType);
+
+		foreach ($referencedClasses as $referencedClass) {
+			try {
+				$classReflection = $this->broker->getClass($referencedClass);
+				$methodReflection = $classReflection->getNativeMethod('__toString');
+
+				if (!$methodReflection->isDeprecated()->yes()) {
+					return null;
+				}
+
+				$description = $methodReflection->getDeprecatedDescription();
+				if ($description === null) {
+					return sprintf(
+						'Call to deprecated method %s() of class %s.',
+						$methodReflection->getName(),
+						$methodReflection->getDeclaringClass()->getName()
+					);
+				}
+
+				return sprintf(
+					"Call to deprecated method %s() of class %s:\n%s",
+					$methodReflection->getName(),
+					$methodReflection->getDeclaringClass()->getName(),
+					$description
+				);
+			} catch (\PHPStan\Broker\ClassNotFoundException $e) {
+				// Other rules will notify if the class is not found
+			} catch (\PHPStan\Reflection\MissingMethodFromReflectionException $e) {
+				// Other rules will notify if the the method is not found
 			}
-		)->getType();
-
-		if (!$type instanceof ObjectType) {
-			return null;
 		}
 
-		$classReflection = $type->getClassReflection();
-
-		if ($classReflection === null) {
-			return null;
-		}
-
-		$methodReflection = $classReflection->getNativeMethod('__toString');
-
-		if (!$methodReflection->isDeprecated()->yes()) {
-			return null;
-		}
-
-		$description = $methodReflection->getDeprecatedDescription();
-		if ($description === null) {
-			return sprintf(
-				'Call to deprecated method %s() of class %s.',
-				$methodReflection->getName(),
-				$methodReflection->getDeclaringClass()->getName()
-			);
-		}
-
-		return sprintf(
-			"Call to deprecated method %s() of class %s:\n%s",
-			$methodReflection->getName(),
-			$methodReflection->getDeclaringClass()->getName(),
-			$description
-		);
+		return null;
 	}
-
 }
