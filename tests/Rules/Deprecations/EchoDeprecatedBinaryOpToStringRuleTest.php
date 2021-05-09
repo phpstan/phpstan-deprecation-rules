@@ -14,7 +14,7 @@ class EchoDeprecatedBinaryOpToStringRuleTest extends \PHPStan\Testing\RuleTestCa
 	{
 		$ruleLevelHelper = new RuleLevelHelper($this->createBroker(), true, false, true);
 
-		return new EchoDeprecatedBinaryOpToStringRule($ruleLevelHelper);
+		return new EchoDeprecatedBinaryOpToStringRule($this->createBroker(), $ruleLevelHelper);
 	}
 
 	public function testDeprecatedMagicMethodToStringCall(): void
