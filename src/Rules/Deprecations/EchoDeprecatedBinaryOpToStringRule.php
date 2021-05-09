@@ -9,7 +9,7 @@ use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\TypeUtils;
 
 /**
- * @implements \PHPStan\Rules\Rule<Echo_>
+ * @implements \PHPStan\Rules\Rule<BinaryOp>
  */
 class EchoDeprecatedBinaryOpToStringRule implements \PHPStan\Rules\Rule
 {
@@ -17,13 +17,9 @@ class EchoDeprecatedBinaryOpToStringRule implements \PHPStan\Rules\Rule
 	/** @var Broker */
 	private $broker;
 
-	/** @var RuleLevelHelper */
-	private $ruleLevelHelper;
-
-	public function __construct(Broker $broker, RuleLevelHelper $ruleLevelHelper)
+	public function __construct(Broker $broker)
 	{
 		$this->broker = $broker;
-		$this->ruleLevelHelper = $ruleLevelHelper;
 	}
 
 	public function getNodeType(): string
