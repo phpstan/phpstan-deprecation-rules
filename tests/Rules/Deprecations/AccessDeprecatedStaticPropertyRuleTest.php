@@ -13,9 +13,8 @@ class AccessDeprecatedStaticPropertyRuleTest extends \PHPStan\Testing\RuleTestCa
 	protected function getRule(): \PHPStan\Rules\Rule
 	{
 		$broker = $this->createBroker();
-		$ruleLevelHelper = new RuleLevelHelper($this->createBroker(), true, false, true);
 
-		return new AccessDeprecatedStaticPropertyRule($broker, $ruleLevelHelper);
+		return new AccessDeprecatedStaticPropertyRule($broker, self::getContainer()->getByType(RuleLevelHelper::class));
 	}
 
 	public function testAccessDeprecatedStaticProperty(): void

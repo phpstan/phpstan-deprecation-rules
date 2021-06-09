@@ -13,9 +13,8 @@ class InstantiationOfDeprecatedClassRuleTest extends \PHPStan\Testing\RuleTestCa
 	protected function getRule(): \PHPStan\Rules\Rule
 	{
 		$broker = $this->createBroker();
-		$ruleLevelHelper = new RuleLevelHelper($this->createBroker(), true, false, true);
 
-		return new InstantiationOfDeprecatedClassRule($broker, $ruleLevelHelper);
+		return new InstantiationOfDeprecatedClassRule($broker, self::getContainer()->getByType(RuleLevelHelper::class));
 	}
 
 	public function testInstantiationOfDeprecatedClass(): void
