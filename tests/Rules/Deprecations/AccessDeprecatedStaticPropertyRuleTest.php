@@ -40,11 +40,11 @@ class AccessDeprecatedStaticPropertyRuleTest extends \PHPStan\Testing\RuleTestCa
 					17,
 				],
 				[
-					'Access to deprecated static property $deprecatedFooFromTrait of class AccessDeprecatedStaticProperty\FooTrait.',
+					'Access to deprecated static property $deprecatedFooFromTrait of class AccessDeprecatedStaticProperty\Foo.',
 					22,
 				],
 				[
-					'Access to deprecated static property $deprecatedFooFromTrait of class AccessDeprecatedStaticProperty\FooTrait.',
+					'Access to deprecated static property $deprecatedFooFromTrait of class AccessDeprecatedStaticProperty\Foo.',
 					23,
 				],
 				[

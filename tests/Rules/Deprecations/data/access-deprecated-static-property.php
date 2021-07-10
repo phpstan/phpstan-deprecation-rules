@@ -16,11 +16,11 @@ $foo::$foo;
 $foo::$deprecatedFoo = 'foo';
 $foo::$deprecatedFoo;
 
-FooTrait::$fooFromTrait = 'foo';
-FooTrait::$fooFromTrait;
+Foo::$fooFromTrait = 'foo';
+Foo::$fooFromTrait;
 
-FooTrait::$deprecatedFooFromTrait = 'foo';
-FooTrait::$deprecatedFooFromTrait;
+Foo::$deprecatedFooFromTrait = 'foo';
+Foo::$deprecatedFooFromTrait;
 
 $foo = new Foo();
 
