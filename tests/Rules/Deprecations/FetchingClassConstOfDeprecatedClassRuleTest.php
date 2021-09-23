@@ -12,9 +12,7 @@ class FetchingClassConstOfDeprecatedClassRuleTest extends \PHPStan\Testing\RuleT
 
 	protected function getRule(): \PHPStan\Rules\Rule
 	{
-		$broker = $this->createBroker();
-
-		return new FetchingClassConstOfDeprecatedClassRule($broker, self::getContainer()->getByType(RuleLevelHelper::class));
+		return new FetchingClassConstOfDeprecatedClassRule($this->createReflectionProvider(), self::getContainer()->getByType(RuleLevelHelper::class));
 	}
 
 	public function testFetchingClassConstOfDeprecatedClass(): void

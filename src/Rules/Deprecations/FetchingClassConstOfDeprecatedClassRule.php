@@ -7,7 +7,7 @@ use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
-use PHPStan\Broker\Broker;
+use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
@@ -18,15 +18,15 @@ use PHPStan\Type\Type;
 class FetchingClassConstOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 {
 
-	/** @var Broker */
-	private $broker;
+	/** @var ReflectionProvider */
+	private $reflectionProvider;
 
 	/** @var RuleLevelHelper */
 	private $ruleLevelHelper;
 
-	public function __construct(Broker $broker, RuleLevelHelper $ruleLevelHelper)
+	public function __construct(ReflectionProvider $reflectionProvider, RuleLevelHelper $ruleLevelHelper)
 	{
-		$this->broker = $broker;
+		$this->reflectionProvider = $reflectionProvider;
 		$this->ruleLevelHelper = $ruleLevelHelper;
 	}
 
@@ -71,7 +71,7 @@ class FetchingClassConstOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 
 		foreach ($referencedClasses as $referencedClass) {
 			try {
-				$class = $this->broker->getClass($referencedClass);
+				$class = $this->reflectionProvider->getClass($referencedClass);
 			} catch (\PHPStan\Broker\ClassNotFoundException $e) {
 				continue;
 			}

@@ -10,8 +10,7 @@ class ImplementationOfDeprecatedInterfaceRuleTest extends \PHPStan\Testing\RuleT
 
 	protected function getRule(): \PHPStan\Rules\Rule
 	{
-		$broker = $this->createBroker();
-		return new ImplementationOfDeprecatedInterfaceRule($broker);
+		return new ImplementationOfDeprecatedInterfaceRule($this->createReflectionProvider());
 	}
 
 	public function testImplementationOfDeprecatedInterfacesInClasses(): void

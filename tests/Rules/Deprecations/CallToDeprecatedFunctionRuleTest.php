@@ -10,8 +10,7 @@ class CallToDeprecatedFunctionRuleTest extends \PHPStan\Testing\RuleTestCase
 
 	protected function getRule(): \PHPStan\Rules\Rule
 	{
-		$broker = $this->createBroker();
-		return new CallToDeprecatedFunctionRule($broker);
+		return new CallToDeprecatedFunctionRule($this->createReflectionProvider());
 	}
 
 	public function testDeprecatedFunctionCall(): void

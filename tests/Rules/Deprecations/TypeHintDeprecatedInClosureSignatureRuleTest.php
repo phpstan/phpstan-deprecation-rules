@@ -10,9 +10,7 @@ class TypeHintDeprecatedInClosureSignatureRuleTest extends \PHPStan\Testing\Rule
 
 	protected function getRule(): \PHPStan\Rules\Rule
 	{
-		$broker = $this->createBroker();
-
-		return new TypeHintDeprecatedInClosureSignatureRule(new DeprecatedClassHelper($broker));
+		return new TypeHintDeprecatedInClosureSignatureRule(new DeprecatedClassHelper($this->createReflectionProvider()));
 	}
 
 	public function test(): void

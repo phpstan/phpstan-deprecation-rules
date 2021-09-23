@@ -10,8 +10,7 @@ class InheritanceOfDeprecatedClassRuleTest extends \PHPStan\Testing\RuleTestCase
 
 	protected function getRule(): \PHPStan\Rules\Rule
 	{
-		$broker = $this->createBroker();
-		return new InheritanceOfDeprecatedClassRule($broker);
+		return new InheritanceOfDeprecatedClassRule($this->createReflectionProvider());
 	}
 
 	public function testInheritanceOfDeprecatedClassInClasses(): void

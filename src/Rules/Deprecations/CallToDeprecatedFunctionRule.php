@@ -5,7 +5,7 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
 use PHPStan\Analyser\Scope;
-use PHPStan\Broker\Broker;
+use PHPStan\Reflection\ReflectionProvider;
 
 /**
  * @implements \PHPStan\Rules\Rule<FuncCall>
@@ -13,12 +13,12 @@ use PHPStan\Broker\Broker;
 class CallToDeprecatedFunctionRule implements \PHPStan\Rules\Rule
 {
 
-	/** @var Broker */
-	private $broker;
+	/** @var ReflectionProvider */
+	private $reflectionProvider;
 
-	public function __construct(Broker $broker)
+	public function __construct(ReflectionProvider $reflectionProvider)
 	{
-		$this->broker = $broker;
+		$this->reflectionProvider = $reflectionProvider;
 	}
 
 	public function getNodeType(): string
@@ -37,7 +37,7 @@ class CallToDeprecatedFunctionRule implements \PHPStan\Rules\Rule
 		}
 
 		try {
-			$function = $this->broker->getFunction($node->name, $scope);
+			$function = $this->reflectionProvider->getFunction($node->name, $scope);
 		} catch (\PHPStan\Broker\FunctionNotFoundException $e) {
 			// Other rules will notify if the function is not found
 			return [];

@@ -10,8 +10,7 @@ class AccessDeprecatedPropertyRuleTest extends \PHPStan\Testing\RuleTestCase
 
 	protected function getRule(): \PHPStan\Rules\Rule
 	{
-		$broker = $this->createBroker();
-		return new AccessDeprecatedPropertyRule($broker);
+		return new AccessDeprecatedPropertyRule($this->createReflectionProvider());
 	}
 
 	public function testAccessDeprecatedProperty(): void

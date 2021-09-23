@@ -6,7 +6,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
-use PHPStan\Broker\Broker;
+use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\TypeUtils;
 
 /**
@@ -15,12 +15,12 @@ use PHPStan\Type\TypeUtils;
 class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
 {
 
-	/** @var Broker */
-	private $broker;
+	/** @var ReflectionProvider */
+	private $reflectionProvider;
 
-	public function __construct(Broker $broker)
+	public function __construct(ReflectionProvider $reflectionProvider)
 	{
-		$this->broker = $broker;
+		$this->reflectionProvider = $reflectionProvider;
 	}
 
 	public function getNodeType(): string
@@ -44,7 +44,7 @@ class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
 
 		foreach ($referencedClasses as $referencedClass) {
 			try {
-				$classReflection = $this->broker->getClass($referencedClass);
+				$classReflection = $this->reflectionProvider->getClass($referencedClass);
 				$methodReflection = $classReflection->getMethod($methodName, $scope);
 
 				if (!$methodReflection->isDeprecated()->yes()) {

@@ -10,8 +10,7 @@ class UsageOfDeprecatedTraitRuleTest extends \PHPStan\Testing\RuleTestCase
 
 	protected function getRule(): \PHPStan\Rules\Rule
 	{
-		$broker = $this->createBroker();
-		return new UsageOfDeprecatedTraitRule($broker);
+		return new UsageOfDeprecatedTraitRule($this->createReflectionProvider());
 	}
 
 	public function testUsageOfDeprecatedTrait(): void
