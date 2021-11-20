@@ -6,6 +6,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
+use PHPStan\Reflection\MissingMethodFromReflectionException;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\TypeUtils;
 
@@ -47,7 +48,23 @@ class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
 				$classReflection = $this->reflectionProvider->getClass($referencedClass);
 				$methodReflection = $classReflection->getMethod($methodName, $scope);
 
-				if (!$methodReflection->isDeprecated()->yes()) {
+				$interfaces = $classReflection->getInterfaces();
+
+				$interfaceIsDeprecated = false;
+
+				foreach ($interfaces as $interface) {
+					try {
+						$interfaceMethodReflection = $interface->getMethod($methodName, $scope);
+						if ($interfaceMethodReflection->isDeprecated()->yes()) {
+							$interfaceIsDeprecated = true;
+							break;
+						}
+					} catch (MissingMethodFromReflectionException $e) {
+						// The method did not exist on the interface, which is totally fine.
+					}
+				}
+
+				if (!$methodReflection->isDeprecated()->yes() && !$interfaceIsDeprecated) {
 					continue;
 				}
 
