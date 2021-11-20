@@ -51,12 +51,14 @@ class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
 				$interfaces = $classReflection->getInterfaces();
 
 				$interfaceIsDeprecated = false;
+				$deprecatedInterface = null;
 
 				foreach ($interfaces as $interface) {
 					try {
 						$interfaceMethodReflection = $interface->getMethod($methodName, $scope);
 						if ($interfaceMethodReflection->isDeprecated()->yes()) {
 							$interfaceIsDeprecated = true;
+							$deprecatedInterface = $interfaceMethodReflection;
 							break;
 						}
 					} catch (MissingMethodFromReflectionException $e) {
@@ -69,6 +71,10 @@ class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
 				}
 
 				$description = $methodReflection->getDeprecatedDescription();
+				if ($description === null && $deprecatedInterface) {
+					// See if the deprecated interface has the description instead.
+					$description = $deprecatedInterface->getDeprecatedDescription();
+				}
 				if ($description === null) {
 					return [sprintf(
 						'Call to deprecated method %s() of class %s.',
