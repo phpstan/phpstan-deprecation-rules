@@ -14,6 +14,9 @@ $foo->fooFromTrait();
 $foo->deprecatedFooFromTrait();
 $foo->deprecatedWithDescription();
 
+$fooFromInterface = new FooClassFromInterface();
+$fooFromInterface->superDeprecated();
+
 /**
  * @deprecated
  */

@@ -35,6 +35,10 @@ class CallToDeprecatedMethodRuleTest extends \PHPStan\Testing\RuleTestCase
 					"Call to deprecated method deprecatedWithDescription() of class CheckDeprecatedMethodCall\\Foo:\nCall a different method instead.",
 					15,
 				],
+				[
+					"Call to deprecated method superDeprecated() of class CheckDeprecatedMethodCall\\FooClassFromInterface:\nThis is totally deprecated.",
+					18,
+				],
 			]
 		);
 	}

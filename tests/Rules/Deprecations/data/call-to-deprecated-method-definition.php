@@ -65,3 +65,25 @@ class Bar extends Foo
 	}
 
 }
+
+interface FooInterface
+{
+
+	/**
+	 * @deprecated This is totally deprecated.
+	 */
+	public function superDeprecated();
+}
+
+
+class FooClassFromInterface implements FooInterface
+{
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function superDeprecated()
+	{
+
+	}
+}
