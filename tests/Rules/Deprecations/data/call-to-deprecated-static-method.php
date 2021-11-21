@@ -26,6 +26,14 @@ class Bar2 extends Foo
 
 }
 
+class Bar3 extends Foo
+{
+	public static function callOtherDeprecatedMethod()
+	{
+		parent::deprecatedFoo();
+	}
+}
+
 /**
  * @deprecated
  */
