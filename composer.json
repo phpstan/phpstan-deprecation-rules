@@ -10,6 +10,7 @@
 		"phpstan/phpstan": "^1.3"
 	},
 	"require-dev": {
+		"nikic/php-parser": "dev-master as 4.13.2",
 		"php-parallel-lint/php-parallel-lint": "^1.2",
 		"phpstan/phpstan-phpunit": "^1.0",
 		"phpunit/phpunit": "^9.5"
