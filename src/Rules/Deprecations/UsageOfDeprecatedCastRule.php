@@ -5,12 +5,13 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Cast;
 use PHPStan\Analyser\Scope;
+use PHPStan\Rules\Rule;
 use function sprintf;
 
 /**
- * @implements \PHPStan\Rules\Rule<Cast>
+ * @implements Rule<Cast>
  */
-class UsageOfDeprecatedCastRule implements \PHPStan\Rules\Rule
+class UsageOfDeprecatedCastRule implements Rule
 {
 
 	public function getNodeType(): string

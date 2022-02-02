@@ -2,15 +2,17 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleLevelHelper;
+use PHPStan\Testing\RuleTestCase;
 
 /**
- * @extends \PHPStan\Testing\RuleTestCase<AccessDeprecatedStaticPropertyRule>
+ * @extends RuleTestCase<AccessDeprecatedStaticPropertyRule>
  */
-class AccessDeprecatedStaticPropertyRuleTest extends \PHPStan\Testing\RuleTestCase
+class AccessDeprecatedStaticPropertyRuleTest extends RuleTestCase
 {
 
-	protected function getRule(): \PHPStan\Rules\Rule
+	protected function getRule(): Rule
 	{
 		return new AccessDeprecatedStaticPropertyRule($this->createReflectionProvider(), self::getContainer()->getByType(RuleLevelHelper::class));
 	}

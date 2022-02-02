@@ -7,11 +7,14 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassMethodNode;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
+use PHPStan\Rules\Rule;
+use PHPStan\ShouldNotHappenException;
+use function sprintf;
 
 /**
- * @implements \PHPStan\Rules\Rule<InClassMethodNode>
+ * @implements Rule<InClassMethodNode>
  */
-class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rule
+class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 {
 
 	/** @var DeprecatedClassHelper */
@@ -36,12 +39,12 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements \PHPStan\Rules\Rul
 		/** @var MethodReflection $method */
 		$method = $scope->getFunction();
 		if (!$method instanceof MethodReflection) {
-			throw new \PHPStan\ShouldNotHappenException();
+			throw new ShouldNotHappenException();
 		}
 		$methodSignature = ParametersAcceptorSelector::selectSingle($method->getVariants());
 
 		$errors = [];
-		foreach ($methodSignature->getParameters() as $i => $parameter) {
+		foreach ($methodSignature->getParameters() as $parameter) {
 			$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($parameter->getType()->getReferencedClasses());
 			foreach ($deprecatedClasses as $deprecatedClass) {
 				if ($method->getDeclaringClass()->isAnonymous()) {

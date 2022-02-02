@@ -2,13 +2,16 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Rules\Rule;
+use PHPStan\Testing\RuleTestCase;
+
 /**
- * @extends \PHPStan\Testing\RuleTestCase<CallToDeprecatedMethodRule>
+ * @extends RuleTestCase<CallToDeprecatedMethodRule>
  */
-class CallToDeprecatedMethodRuleTest extends \PHPStan\Testing\RuleTestCase
+class CallToDeprecatedMethodRuleTest extends RuleTestCase
 {
 
-	protected function getRule(): \PHPStan\Rules\Rule
+	protected function getRule(): Rule
 	{
 		return new CallToDeprecatedMethodRule($this->createReflectionProvider());
 	}

@@ -2,15 +2,17 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleLevelHelper;
+use PHPStan\Testing\RuleTestCase;
 
 /**
- * @extends \PHPStan\Testing\RuleTestCase<InstantiationOfDeprecatedClassRule>
+ * @extends RuleTestCase<InstantiationOfDeprecatedClassRule>
  */
-class InstantiationOfDeprecatedClassRuleTest extends \PHPStan\Testing\RuleTestCase
+class InstantiationOfDeprecatedClassRuleTest extends RuleTestCase
 {
 
-	protected function getRule(): \PHPStan\Rules\Rule
+	protected function getRule(): Rule
 	{
 		return new InstantiationOfDeprecatedClassRule($this->createReflectionProvider(), self::getContainer()->getByType(RuleLevelHelper::class));
 	}
