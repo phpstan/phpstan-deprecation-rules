@@ -7,11 +7,14 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Node\InFunctionNode;
 use PHPStan\Reflection\FunctionReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
+use PHPStan\Rules\Rule;
+use PHPStan\ShouldNotHappenException;
+use function sprintf;
 
 /**
- * @implements \PHPStan\Rules\Rule<InFunctionNode>
+ * @implements Rule<InFunctionNode>
  */
-class TypeHintDeprecatedInFunctionSignatureRule implements \PHPStan\Rules\Rule
+class TypeHintDeprecatedInFunctionSignatureRule implements Rule
 {
 
 	/** @var DeprecatedClassHelper */
@@ -35,12 +38,12 @@ class TypeHintDeprecatedInFunctionSignatureRule implements \PHPStan\Rules\Rule
 
 		$function = $scope->getFunction();
 		if (!$function instanceof FunctionReflection) {
-			throw new \PHPStan\ShouldNotHappenException();
+			throw new ShouldNotHappenException();
 		}
 		$functionSignature = ParametersAcceptorSelector::selectSingle($function->getVariants());
 
 		$errors = [];
-		foreach ($functionSignature->getParameters() as $i => $parameter) {
+		foreach ($functionSignature->getParameters() as $parameter) {
 			$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($parameter->getType()->getReferencedClasses());
 			foreach ($deprecatedClasses as $deprecatedClass) {
 				$errors[] = sprintf(

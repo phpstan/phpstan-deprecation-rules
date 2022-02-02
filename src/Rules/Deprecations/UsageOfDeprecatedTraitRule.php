@@ -5,12 +5,16 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\TraitUse;
 use PHPStan\Analyser\Scope;
+use PHPStan\Broker\ClassNotFoundException;
 use PHPStan\Reflection\ReflectionProvider;
+use PHPStan\Rules\Rule;
+use PHPStan\ShouldNotHappenException;
+use function sprintf;
 
 /**
- * @implements \PHPStan\Rules\Rule<TraitUse>
+ * @implements Rule<TraitUse>
  */
-class UsageOfDeprecatedTraitRule implements \PHPStan\Rules\Rule
+class UsageOfDeprecatedTraitRule implements Rule
 {
 
 	/** @var ReflectionProvider */
@@ -34,7 +38,7 @@ class UsageOfDeprecatedTraitRule implements \PHPStan\Rules\Rule
 
 		$classReflection = $scope->getClassReflection();
 		if ($classReflection === null) {
-			throw new \PHPStan\ShouldNotHappenException();
+			throw new ShouldNotHappenException();
 		}
 
 		$errors = [];
@@ -64,7 +68,7 @@ class UsageOfDeprecatedTraitRule implements \PHPStan\Rules\Rule
 						$description
 					);
 				}
-			} catch (\PHPStan\Broker\ClassNotFoundException $e) {
+			} catch (ClassNotFoundException $e) {
 				continue;
 			}
 		}

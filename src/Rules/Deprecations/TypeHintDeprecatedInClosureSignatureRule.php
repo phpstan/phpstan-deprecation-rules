@@ -6,11 +6,14 @@ use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClosureNode;
 use PHPStan\Reflection\ParametersAcceptor;
+use PHPStan\Rules\Rule;
+use PHPStan\ShouldNotHappenException;
+use function sprintf;
 
 /**
- * @implements \PHPStan\Rules\Rule<InClosureNode>
+ * @implements Rule<InClosureNode>
  */
-class TypeHintDeprecatedInClosureSignatureRule implements \PHPStan\Rules\Rule
+class TypeHintDeprecatedInClosureSignatureRule implements Rule
 {
 
 	/** @var DeprecatedClassHelper */
@@ -34,11 +37,11 @@ class TypeHintDeprecatedInClosureSignatureRule implements \PHPStan\Rules\Rule
 
 		$functionSignature = $scope->getAnonymousFunctionReflection();
 		if (!$functionSignature instanceof ParametersAcceptor) {
-			throw new \PHPStan\ShouldNotHappenException();
+			throw new ShouldNotHappenException();
 		}
 
 		$errors = [];
-		foreach ($functionSignature->getParameters() as $i => $parameter) {
+		foreach ($functionSignature->getParameters() as $parameter) {
 			$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($parameter->getType()->getReferencedClasses());
 			foreach ($deprecatedClasses as $deprecatedClass) {
 				$errors[] = sprintf(

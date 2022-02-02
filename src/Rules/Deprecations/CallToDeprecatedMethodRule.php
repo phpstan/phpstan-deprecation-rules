@@ -6,13 +6,17 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
+use PHPStan\Broker\ClassNotFoundException;
+use PHPStan\Reflection\MissingMethodFromReflectionException;
 use PHPStan\Reflection\ReflectionProvider;
+use PHPStan\Rules\Rule;
 use PHPStan\Type\TypeUtils;
+use function sprintf;
 
 /**
- * @implements \PHPStan\Rules\Rule<MethodCall>
+ * @implements Rule<MethodCall>
  */
-class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
+class CallToDeprecatedMethodRule implements Rule
 {
 
 	/** @var ReflectionProvider */
@@ -66,9 +70,9 @@ class CallToDeprecatedMethodRule implements \PHPStan\Rules\Rule
 					$methodReflection->getDeclaringClass()->getName(),
 					$description
 				)];
-			} catch (\PHPStan\Broker\ClassNotFoundException $e) {
+			} catch (ClassNotFoundException $e) {
 				// Other rules will notify if the class is not found
-			} catch (\PHPStan\Reflection\MissingMethodFromReflectionException $e) {
+			} catch (MissingMethodFromReflectionException $e) {
 				// Other rules will notify if the the method is not found
 			}
 		}

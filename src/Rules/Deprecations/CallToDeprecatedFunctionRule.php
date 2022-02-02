@@ -4,13 +4,17 @@ namespace PHPStan\Rules\Deprecations;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
+use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
+use PHPStan\Broker\FunctionNotFoundException;
 use PHPStan\Reflection\ReflectionProvider;
+use PHPStan\Rules\Rule;
+use function sprintf;
 
 /**
- * @implements \PHPStan\Rules\Rule<FuncCall>
+ * @implements Rule<FuncCall>
  */
-class CallToDeprecatedFunctionRule implements \PHPStan\Rules\Rule
+class CallToDeprecatedFunctionRule implements Rule
 {
 
 	/** @var ReflectionProvider */
@@ -32,13 +36,13 @@ class CallToDeprecatedFunctionRule implements \PHPStan\Rules\Rule
 			return [];
 		}
 
-		if (!($node->name instanceof \PhpParser\Node\Name)) {
+		if (!($node->name instanceof Name)) {
 			return [];
 		}
 
 		try {
 			$function = $this->reflectionProvider->getFunction($node->name, $scope);
-		} catch (\PHPStan\Broker\FunctionNotFoundException $e) {
+		} catch (FunctionNotFoundException $e) {
 			// Other rules will notify if the function is not found
 			return [];
 		}

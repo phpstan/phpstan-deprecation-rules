@@ -6,11 +6,14 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\ConstFetch;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ReflectionProvider;
+use PHPStan\Rules\Rule;
+use function sprintf;
+use const PHP_VERSION_ID;
 
 /**
- * @implements \PHPStan\Rules\Rule<ConstFetch>
+ * @implements Rule<ConstFetch>
  */
-class FetchingDeprecatedConstRule implements \PHPStan\Rules\Rule
+class FetchingDeprecatedConstRule implements Rule
 {
 
 	/** @var ReflectionProvider */

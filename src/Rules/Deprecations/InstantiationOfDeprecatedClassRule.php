@@ -7,14 +7,17 @@ use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\Scope;
+use PHPStan\Broker\ClassNotFoundException;
 use PHPStan\Reflection\ReflectionProvider;
+use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Type\ErrorType;
+use function sprintf;
 
 /**
- * @implements \PHPStan\Rules\Rule<New_>
+ * @implements Rule<New_>
  */
-class InstantiationOfDeprecatedClassRule implements \PHPStan\Rules\Rule
+class InstantiationOfDeprecatedClassRule implements Rule
 {
 
 	/** @var ReflectionProvider */
@@ -55,7 +58,7 @@ class InstantiationOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 				$scope,
 				$node->class,
 				'', // We don't care about the error message
-				function (): bool {
+				static function (): bool {
 					return true;
 				}
 			);
@@ -72,7 +75,7 @@ class InstantiationOfDeprecatedClassRule implements \PHPStan\Rules\Rule
 		foreach ($referencedClasses as $referencedClass) {
 			try {
 				$class = $this->reflectionProvider->getClass($referencedClass);
-			} catch (\PHPStan\Broker\ClassNotFoundException $e) {
+			} catch (ClassNotFoundException $e) {
 				continue;
 			}
 

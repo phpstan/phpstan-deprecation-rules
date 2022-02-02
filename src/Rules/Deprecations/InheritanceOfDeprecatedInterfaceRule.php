@@ -5,12 +5,15 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Interface_;
 use PHPStan\Analyser\Scope;
+use PHPStan\Broker\ClassNotFoundException;
 use PHPStan\Reflection\ReflectionProvider;
+use PHPStan\Rules\Rule;
+use function sprintf;
 
 /**
- * @implements \PHPStan\Rules\Rule<Interface_>
+ * @implements Rule<Interface_>
  */
-class InheritanceOfDeprecatedInterfaceRule implements \PHPStan\Rules\Rule
+class InheritanceOfDeprecatedInterfaceRule implements Rule
 {
 
 	/** @var ReflectionProvider */
@@ -38,7 +41,7 @@ class InheritanceOfDeprecatedInterfaceRule implements \PHPStan\Rules\Rule
 
 		try {
 			$interface = $this->reflectionProvider->getClass($interfaceName);
-		} catch (\PHPStan\Broker\ClassNotFoundException $e) {
+		} catch (ClassNotFoundException $e) {
 			return [];
 		}
 
@@ -73,7 +76,7 @@ class InheritanceOfDeprecatedInterfaceRule implements \PHPStan\Rules\Rule
 						$description
 					);
 				}
-			} catch (\PHPStan\Broker\ClassNotFoundException $e) {
+			} catch (ClassNotFoundException $e) {
 				// Other rules will notify if the interface is not found
 			}
 		}

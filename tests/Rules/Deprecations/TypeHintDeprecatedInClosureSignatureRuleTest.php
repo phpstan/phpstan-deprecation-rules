@@ -2,13 +2,16 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Rules\Rule;
+use PHPStan\Testing\RuleTestCase;
+
 /**
- * @extends \PHPStan\Testing\RuleTestCase<TypeHintDeprecatedInClosureSignatureRule>
+ * @extends RuleTestCase<TypeHintDeprecatedInClosureSignatureRule>
  */
-class TypeHintDeprecatedInClosureSignatureRuleTest extends \PHPStan\Testing\RuleTestCase
+class TypeHintDeprecatedInClosureSignatureRuleTest extends RuleTestCase
 {
 
-	protected function getRule(): \PHPStan\Rules\Rule
+	protected function getRule(): Rule
 	{
 		return new TypeHintDeprecatedInClosureSignatureRule(new DeprecatedClassHelper($this->createReflectionProvider()));
 	}
