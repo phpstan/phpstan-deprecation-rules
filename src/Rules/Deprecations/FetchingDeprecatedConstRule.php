@@ -49,18 +49,17 @@ class FetchingDeprecatedConstRule implements Rule
 		}
 
 		$constantReflection = $this->reflectionProvider->getConstant($node->name, $scope);
-		$defaultMessage = 'Use of constant %s is deprecated.';
 
 		if ($constantReflection->isDeprecated()->yes()) {
 			return [sprintf(
-				$constantReflection->getDeprecatedDescription() ?? $defaultMessage,
+				$constantReflection->getDeprecatedDescription() ?? 'Use of constant %s is deprecated.',
 				$constantReflection->getName()
 			)];
 		}
 
 		if (isset($this->deprecatedConstants[$constantReflection->getName()])) {
 			return [sprintf(
-				$this->deprecatedConstants[$constantReflection->getName()] ?? $defaultMessage,
+				$this->deprecatedConstants[$constantReflection->getName()],
 				$constantReflection->getName()
 			)];
 		}
