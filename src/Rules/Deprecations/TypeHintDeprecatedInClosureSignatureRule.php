@@ -5,7 +5,6 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClosureNode;
-use PHPStan\Reflection\ParametersAcceptor;
 use PHPStan\Rules\Rule;
 use PHPStan\ShouldNotHappenException;
 use function sprintf;
@@ -36,7 +35,7 @@ class TypeHintDeprecatedInClosureSignatureRule implements Rule
 		}
 
 		$functionSignature = $scope->getAnonymousFunctionReflection();
-		if (!$functionSignature instanceof ParametersAcceptor) {
+		if ($functionSignature === null) {
 			throw new ShouldNotHappenException();
 		}
 

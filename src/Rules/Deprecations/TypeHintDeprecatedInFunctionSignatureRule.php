@@ -5,7 +5,6 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InFunctionNode;
-use PHPStan\Reflection\FunctionReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Rules\Rule;
 use PHPStan\ShouldNotHappenException;
@@ -37,7 +36,7 @@ class TypeHintDeprecatedInFunctionSignatureRule implements Rule
 		}
 
 		$function = $scope->getFunction();
-		if (!$function instanceof FunctionReflection) {
+		if ($function === null) {
 			throw new ShouldNotHappenException();
 		}
 		$functionSignature = ParametersAcceptorSelector::selectSingle($function->getVariants());
