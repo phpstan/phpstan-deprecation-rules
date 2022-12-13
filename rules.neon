@@ -1,3 +1,6 @@
+parameters:
+	deprecationRulesInstalled: true
+
 services:
     -
         class: PHPStan\Rules\Deprecations\DeprecatedClassHelper
