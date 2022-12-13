@@ -5,6 +5,5 @@ includes:
 	- vendor/phpstan/phpstan-phpunit/extension.neon
 
 parameters:
-	deprecationRulesInstalled: true
 	excludePaths:
 		- tests/*/data/*
