@@ -2,6 +2,9 @@ services:
     -
         class: PHPStan\Rules\Deprecations\DeprecatedClassHelper
 
+parameters:
+    deprecationRulesInstalled: true
+
 rules:
 	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
 	- PHPStan\Rules\Deprecations\AccessDeprecatedStaticPropertyRule
