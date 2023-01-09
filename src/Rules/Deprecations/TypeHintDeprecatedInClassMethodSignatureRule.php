@@ -5,10 +5,8 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassMethodNode;
-use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Rules\Rule;
-use PHPStan\ShouldNotHappenException;
 use function sprintf;
 
 /**
@@ -36,11 +34,7 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 			return [];
 		}
 
-		/** @var MethodReflection $method */
-		$method = $scope->getFunction();
-		if (!$method instanceof MethodReflection) {
-			throw new ShouldNotHappenException();
-		}
+		$method = $node->getMethodReflection();
 		$methodSignature = ParametersAcceptorSelector::selectSingle($method->getVariants());
 
 		$errors = [];
