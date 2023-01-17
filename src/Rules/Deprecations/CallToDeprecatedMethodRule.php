@@ -10,7 +10,6 @@ use PHPStan\Broker\ClassNotFoundException;
 use PHPStan\Reflection\MissingMethodFromReflectionException;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\Rule;
-use PHPStan\Type\TypeUtils;
 use function sprintf;
 
 /**
@@ -44,7 +43,7 @@ class CallToDeprecatedMethodRule implements Rule
 
 		$methodName = $node->name->name;
 		$methodCalledOnType = $scope->getType($node->var);
-		$referencedClasses = TypeUtils::getDirectClassNames($methodCalledOnType);
+		$referencedClasses = $methodCalledOnType->getObjectClassNames();
 
 		foreach ($referencedClasses as $referencedClass) {
 			try {

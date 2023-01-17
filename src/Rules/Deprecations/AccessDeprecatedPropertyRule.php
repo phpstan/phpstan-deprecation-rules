@@ -10,7 +10,6 @@ use PHPStan\Broker\ClassNotFoundException;
 use PHPStan\Reflection\MissingPropertyFromReflectionException;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\Rule;
-use PHPStan\Type\TypeUtils;
 use function sprintf;
 
 /**
@@ -44,7 +43,7 @@ class AccessDeprecatedPropertyRule implements Rule
 
 		$propertyName = $node->name->name;
 		$propertyAccessedOnType = $scope->getType($node->var);
-		$referencedClasses = TypeUtils::getDirectClassNames($propertyAccessedOnType);
+		$referencedClasses = $propertyAccessedOnType->getObjectClassNames();
 
 		foreach ($referencedClasses as $referencedClass) {
 			try {
