@@ -53,3 +53,24 @@ class DeprecatedScope
 	}
 
 }
+
+
+final class UsingDeprecatedMethodFromTrait extends MethodMovedToTraitClass
+{
+	use TraitCallingDeprecatedMethod;
+
+	public function callProphesize(): void
+	{
+		$this->prophesize();
+	}
+}
+
+final class UsingTraitReplacementForDeprecatedMethod extends MethodMovedToTraitClass
+{
+	use TraitReplacingDeprecatedMethod;
+
+	public function callProphesize(): void
+	{
+		$this->prophesize();
+	}
+}

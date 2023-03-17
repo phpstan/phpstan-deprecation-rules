@@ -42,6 +42,10 @@ class CallToDeprecatedMethodRuleTest extends RuleTestCase
 					"Call to deprecated method deprecatedWithDescription() of class CheckDeprecatedMethodCall\\Foo:\nCall a different method instead.",
 					15,
 				],
+				[
+					"Call to deprecated method prophesize() of class CheckDeprecatedMethodCall\\UsingDeprecatedMethodFromTrait:\nUse TraitReplacingDeprecatedMethod::prophesize()",
+					64,
+				],
 			]
 		);
 	}
