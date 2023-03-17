@@ -65,3 +65,32 @@ class Bar extends Foo
 	}
 
 }
+
+abstract class MethodMovedToTraitClass
+{
+	/** @deprecated Use TraitReplacingDeprecatedMethod::prophesize() */
+	protected function prophesize(): void
+	{
+		echo 'Base';
+	}
+}
+
+trait TraitCallingDeprecatedMethod
+{
+	protected function prophesize(): void
+	{
+		echo 'Trait';
+	}
+}
+
+trait TraitReplacingDeprecatedMethod
+{
+	/**
+	 * @not-deprecated
+	 */
+	protected function prophesize(): void
+	{
+		echo 'Trait';
+	}
+}
+
