@@ -53,7 +53,7 @@ class AccessDeprecatedStaticPropertyRule implements Rule
 		$referencedClasses = [];
 
 		if ($node->class instanceof Name) {
-			$referencedClasses[] = (string) $node->class;
+			$referencedClasses[] = $scope->resolveName($node->class);
 		} else {
 			$classTypeResult = $this->ruleLevelHelper->findTypeToCheck(
 				$scope,
@@ -87,14 +87,14 @@ class AccessDeprecatedStaticPropertyRule implements Rule
 					return [sprintf(
 						'Access to deprecated static property $%s of class %s.',
 						$propertyName,
-						$referencedClass
+						$property->getDeclaringClass()->getName()
 					)];
 				}
 
 				return [sprintf(
 					"Access to deprecated static property $%s of class %s:\n%s",
 					$propertyName,
-					$referencedClass,
+					$property->getDeclaringClass()->getName(),
 					$description
 				)];
 			}

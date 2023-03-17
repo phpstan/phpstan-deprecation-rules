@@ -59,6 +59,22 @@ class AccessDeprecatedStaticPropertyRuleTest extends RuleTestCase
 					"Access to deprecated static property \$deprecatedWithDescription of class AccessDeprecatedStaticProperty\Foo:\nThis is probably a singleton.",
 					33,
 				],
+				[
+					'Access to deprecated static property $deprecatedFoo of class AccessDeprecatedStaticProperty\Foo.',
+					117,
+				],
+				[
+					'Access to deprecated static property $deprecatedOtherFoo of class AccessDeprecatedStaticProperty\Child.',
+					118,
+				],
+				[
+					'Access to deprecated static property $deprecatedFoo of class AccessDeprecatedStaticProperty\Foo.',
+					119,
+				],
+				[
+					'Access to deprecated static property $deprecatedOtherFoo of class AccessDeprecatedStaticProperty\Child.',
+					120,
+				],
 			]
 		);
 	}

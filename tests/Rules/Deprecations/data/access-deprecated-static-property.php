@@ -104,3 +104,19 @@ class DeprecatedScope
 	}
 
 }
+
+class Child extends Foo
+{
+	/**
+	 * @deprecated
+	 */
+	public static $deprecatedOtherFoo;
+
+	public static function foo()
+	{
+		self::$deprecatedFoo;
+		self::$deprecatedOtherFoo;
+		static::$deprecatedFoo;
+		static::$deprecatedOtherFoo;
+	}
+}
