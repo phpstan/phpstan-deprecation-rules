@@ -19,6 +19,8 @@ services:
 		class: PHPStan\Rules\Deprecations\OverrideDeprecatedPropertyRule
 	-
 		class: PHPStan\Rules\Deprecations\OverrideDeprecatedMethodRule
+	-
+		class: PHPStan\Rules\Deprecations\OverrideDeprecatedConstantRule
 
 rules:
 	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
@@ -42,4 +44,6 @@ conditionalTags:
     PHPStan\Rules\Deprecations\OverrideDeprecatedPropertyRule:
         phpstan.rules.rule: %featureToggles.bleedingEdge%
     PHPStan\Rules\Deprecations\OverrideDeprecatedMethodRule:
+        phpstan.rules.rule: %featureToggles.bleedingEdge%
+    PHPStan\Rules\Deprecations\OverrideDeprecatedConstantRule:
         phpstan.rules.rule: %featureToggles.bleedingEdge%
