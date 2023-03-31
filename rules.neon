@@ -17,6 +17,8 @@ services:
 			- phpstan.deprecations.deprecatedScopeResolver
 	-
 		class: PHPStan\Rules\Deprecations\OverrideDeprecatedPropertyRule
+	-
+		class: PHPStan\Rules\Deprecations\OverrideDeprecatedMethodRule
 
 rules:
 	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
@@ -38,4 +40,6 @@ rules:
 
 conditionalTags:
     PHPStan\Rules\Deprecations\OverrideDeprecatedPropertyRule:
+        phpstan.rules.rule: %featureToggles.bleedingEdge%
+    PHPStan\Rules\Deprecations\OverrideDeprecatedMethodRule:
         phpstan.rules.rule: %featureToggles.bleedingEdge%
