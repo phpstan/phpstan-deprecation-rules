@@ -10,7 +10,9 @@ use PHPStan\Broker\ClassNotFoundException;
 use PHPStan\Reflection\MissingPropertyFromReflectionException;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use function sprintf;
+use function strtolower;
 
 /**
  * @implements Rule<PropertyFetch>
@@ -57,19 +59,25 @@ class AccessDeprecatedPropertyRule implements Rule
 				if ($propertyReflection->isDeprecated()->yes()) {
 					$description = $propertyReflection->getDeprecatedDescription();
 					if ($description === null) {
-						return [sprintf(
-							'Access to deprecated property $%s of class %s.',
-							$propertyName,
-							$propertyReflection->getDeclaringClass()->getName()
-						)];
+						return [
+							RuleErrorBuilder::message(sprintf(
+								'Access to deprecated property $%s of %s %s.',
+								$propertyName,
+								strtolower($propertyReflection->getDeclaringClass()->getClassTypeDescription()),
+								$propertyReflection->getDeclaringClass()->getName()
+							))->identifier('property.deprecated')->build(),
+						];
 					}
 
-					return [sprintf(
-						"Access to deprecated property $%s of class %s:\n%s",
-						$propertyName,
-						$propertyReflection->getDeclaringClass()->getName(),
-						$description
-					)];
+					return [
+						RuleErrorBuilder::message(sprintf(
+							"Access to deprecated property $%s of %s %s:\n%s",
+							$propertyName,
+							strtolower($propertyReflection->getDeclaringClass()->getClassTypeDescription()),
+							$propertyReflection->getDeclaringClass()->getName(),
+							$description
+						))->identifier('property.deprecated')->build(),
+					];
 				}
 			} catch (ClassNotFoundException $e) {
 				// Other rules will notify if the class is not found

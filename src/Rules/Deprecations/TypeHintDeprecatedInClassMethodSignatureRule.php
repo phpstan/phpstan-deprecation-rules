@@ -7,7 +7,9 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassMethodNode;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use function sprintf;
+use function strtolower;
 
 /**
  * @implements Rule<InClassMethodNode>
@@ -46,24 +48,24 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 			$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($parameter->getType()->getReferencedClasses());
 			foreach ($deprecatedClasses as $deprecatedClass) {
 				if ($method->getDeclaringClass()->isAnonymous()) {
-					$errors[] = sprintf(
+					$errors[] = RuleErrorBuilder::message(sprintf(
 						'Parameter $%s of method %s() in anonymous class has typehint with deprecated %s %s%s',
 						$parameter->getName(),
 						$method->getName(),
-						$this->deprecatedClassHelper->getClassType($deprecatedClass),
+						strtolower($deprecatedClass->getClassTypeDescription()),
 						$deprecatedClass->getName(),
 						$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass)
-					);
+					))->identifier(sprintf('parameter.deprecated%s', $deprecatedClass->getClassTypeDescription()))->build();
 				} else {
-					$errors[] = sprintf(
+					$errors[] = RuleErrorBuilder::message(sprintf(
 						'Parameter $%s of method %s::%s() has typehint with deprecated %s %s%s',
 						$parameter->getName(),
 						$method->getDeclaringClass()->getName(),
 						$method->getName(),
-						$this->deprecatedClassHelper->getClassType($deprecatedClass),
+						strtolower($deprecatedClass->getClassTypeDescription()),
 						$deprecatedClass->getName(),
 						$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass)
-					);
+					))->identifier(sprintf('parameter.deprecated%s', $deprecatedClass->getClassTypeDescription()))->build();
 				}
 			}
 		}
@@ -71,22 +73,22 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 		$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($methodSignature->getReturnType()->getReferencedClasses());
 		foreach ($deprecatedClasses as $deprecatedClass) {
 			if ($method->getDeclaringClass()->isAnonymous()) {
-				$errors[] = sprintf(
+				$errors[] = RuleErrorBuilder::message(sprintf(
 					'Return type of method %s() in anonymous class has typehint with deprecated %s %s%s',
 					$method->getName(),
-					$this->deprecatedClassHelper->getClassType($deprecatedClass),
+					strtolower($deprecatedClass->getClassTypeDescription()),
 					$deprecatedClass->getName(),
 					$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass)
-				);
+				))->identifier(sprintf('return.deprecated%s', $deprecatedClass->getClassTypeDescription()))->build();
 			} else {
-				$errors[] = sprintf(
+				$errors[] = RuleErrorBuilder::message(sprintf(
 					'Return type of method %s::%s() has typehint with deprecated %s %s%s',
 					$method->getDeclaringClass()->getName(),
 					$method->getName(),
-					$this->deprecatedClassHelper->getClassType($deprecatedClass),
+					strtolower($deprecatedClass->getClassTypeDescription()),
 					$deprecatedClass->getName(),
 					$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass)
-				);
+				))->identifier(sprintf('return.deprecated%s', $deprecatedClass->getClassTypeDescription()))->build();
 			}
 		}
 

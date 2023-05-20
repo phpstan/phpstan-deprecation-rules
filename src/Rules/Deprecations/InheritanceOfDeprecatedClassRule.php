@@ -8,6 +8,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Broker\ClassNotFoundException;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use function sprintf;
 
 /**
@@ -63,31 +64,31 @@ class InheritanceOfDeprecatedClassRule implements Rule
 			if ($parentClass->isDeprecated()) {
 				if (!$class->isAnonymous()) {
 					if ($description === null) {
-						$errors[] = sprintf(
+						$errors[] = RuleErrorBuilder::message(sprintf(
 							'Class %s extends deprecated class %s.',
 							$className,
 							$parentClassName
-						);
+						))->identifier('class.extendsDeprecatedClass')->build();
 					} else {
-						$errors[] = sprintf(
+						$errors[] = RuleErrorBuilder::message(sprintf(
 							"Class %s extends deprecated class %s:\n%s",
 							$className,
 							$parentClassName,
 							$description
-						);
+						))->identifier('class.extendsDeprecatedClass')->build();
 					}
 				} else {
 					if ($description === null) {
-						$errors[] = sprintf(
+						$errors[] = RuleErrorBuilder::message(sprintf(
 							'Anonymous class extends deprecated class %s.',
 							$parentClassName
-						);
+						))->identifier('class.extendsDeprecatedClass')->build();
 					} else {
-						$errors[] = sprintf(
+						$errors[] = RuleErrorBuilder::message(sprintf(
 							"Anonymous class extends deprecated class %s:\n%s",
 							$parentClassName,
 							$description
-						);
+						))->identifier('class.extendsDeprecatedClass')->build();
 					}
 				}
 			}

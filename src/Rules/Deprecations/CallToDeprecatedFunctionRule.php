@@ -9,6 +9,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Broker\FunctionNotFoundException;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use function sprintf;
 
 /**
@@ -54,17 +55,21 @@ class CallToDeprecatedFunctionRule implements Rule
 		if ($function->isDeprecated()->yes()) {
 			$description = $function->getDeprecatedDescription();
 			if ($description === null) {
-				return [sprintf(
-					'Call to deprecated function %s().',
-					$function->getName()
-				)];
+				return [
+					RuleErrorBuilder::message(sprintf(
+						'Call to deprecated function %s().',
+						$function->getName()
+					))->identifier('function.deprecated')->build(),
+				];
 			}
 
-			return [sprintf(
-				"Call to deprecated function %s():\n%s",
-				$function->getName(),
-				$description
-			)];
+			return [
+				RuleErrorBuilder::message(sprintf(
+					"Call to deprecated function %s():\n%s",
+					$function->getName(),
+					$description
+				))->identifier('function.deprecated')->build(),
+			];
 		}
 
 		return [];

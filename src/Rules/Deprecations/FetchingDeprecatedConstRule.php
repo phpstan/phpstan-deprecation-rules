@@ -7,6 +7,7 @@ use PhpParser\Node\Expr\ConstFetch;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use function sprintf;
 use const PHP_VERSION_ID;
 
@@ -55,17 +56,21 @@ class FetchingDeprecatedConstRule implements Rule
 		$constantReflection = $this->reflectionProvider->getConstant($node->name, $scope);
 
 		if ($constantReflection->isDeprecated()->yes()) {
-			return [sprintf(
-				$constantReflection->getDeprecatedDescription() ?? 'Use of constant %s is deprecated.',
-				$constantReflection->getName()
-			)];
+			return [
+				RuleErrorBuilder::message(sprintf(
+					$constantReflection->getDeprecatedDescription() ?? 'Use of constant %s is deprecated.',
+					$constantReflection->getName()
+				))->identifier('constant.deprecated')->build(),
+			];
 		}
 
 		if (isset($this->deprecatedConstants[$constantReflection->getName()])) {
-			return [sprintf(
-				$this->deprecatedConstants[$constantReflection->getName()],
-				$constantReflection->getName()
-			)];
+			return [
+				RuleErrorBuilder::message(sprintf(
+					$this->deprecatedConstants[$constantReflection->getName()],
+					$constantReflection->getName()
+				))->identifier('constant.deprecated')->build(),
+			];
 		}
 
 		return [];
