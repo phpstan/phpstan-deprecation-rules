@@ -18,15 +18,6 @@ class DeprecatedClassHelper
 		$this->reflectionProvider = $reflectionProvider;
 	}
 
-	public function getClassType(ClassReflection $class): string
-	{
-		if ($class->isInterface()) {
-			return 'interface';
-		}
-
-		return 'class';
-	}
-
 	public function getClassDeprecationDescription(ClassReflection $class): string
 	{
 		$description = $class->getDeprecatedDescription();

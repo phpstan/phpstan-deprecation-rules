@@ -8,6 +8,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Broker\ClassNotFoundException;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 use function sprintf;
 
 /**
@@ -63,18 +64,18 @@ class InheritanceOfDeprecatedInterfaceRule implements Rule
 
 				$description = $parentInterface->getDeprecatedDescription();
 				if ($description === null) {
-					$errors[] = sprintf(
+					$errors[] = RuleErrorBuilder::message(sprintf(
 						'Interface %s extends deprecated interface %s.',
 						$interfaceName,
 						$parentInterfaceName
-					);
+					))->identifier('interface.extendsDeprecatedInterface')->build();
 				} else {
-					$errors[] = sprintf(
+					$errors[] = RuleErrorBuilder::message(sprintf(
 						"Interface %s extends deprecated interface %s:\n%s",
 						$interfaceName,
 						$parentInterfaceName,
 						$description
-					);
+					))->identifier('interface.extendsDeprecatedInterface')->build();
 				}
 			} catch (ClassNotFoundException $e) {
 				// Other rules will notify if the interface is not found
