@@ -14,7 +14,11 @@ class AccessDeprecatedStaticPropertyRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
-		return new AccessDeprecatedStaticPropertyRule($this->createReflectionProvider(), self::getContainer()->getByType(RuleLevelHelper::class));
+		return new AccessDeprecatedStaticPropertyRule(
+			$this->createReflectionProvider(),
+			self::getContainer()->getByType(RuleLevelHelper::class),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+		);
 	}
 
 	public function testAccessDeprecatedStaticProperty(): void

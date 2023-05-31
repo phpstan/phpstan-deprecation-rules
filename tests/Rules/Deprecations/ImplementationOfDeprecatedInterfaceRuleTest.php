@@ -13,7 +13,10 @@ class ImplementationOfDeprecatedInterfaceRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
-		return new ImplementationOfDeprecatedInterfaceRule($this->createReflectionProvider());
+		return new ImplementationOfDeprecatedInterfaceRule(
+			$this->createReflectionProvider(),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+		);
 	}
 
 	public function testImplementationOfDeprecatedInterfacesInClasses(): void

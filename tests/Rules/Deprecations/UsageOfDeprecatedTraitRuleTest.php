@@ -13,7 +13,10 @@ class UsageOfDeprecatedTraitRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
-		return new UsageOfDeprecatedTraitRule($this->createReflectionProvider());
+		return new UsageOfDeprecatedTraitRule(
+			$this->createReflectionProvider(),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+		);
 	}
 
 	public function testUsageOfDeprecatedTrait(): void

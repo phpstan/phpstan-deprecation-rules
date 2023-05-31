@@ -13,7 +13,10 @@ class AccessDeprecatedPropertyRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
-		return new AccessDeprecatedPropertyRule($this->createReflectionProvider());
+		return new AccessDeprecatedPropertyRule(
+			$this->createReflectionProvider(),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+		);
 	}
 
 	public function testAccessDeprecatedProperty(): void

@@ -13,7 +13,9 @@ class UsageOfDeprecatedCastRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
-		return new UsageOfDeprecatedCastRule();
+		return new UsageOfDeprecatedCastRule(
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+		);
 	}
 
 	public function testUsageOfDeprecatedTrait(): void
