@@ -13,7 +13,10 @@ class TypeHintDeprecatedInClassMethodSignatureRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
-		return new TypeHintDeprecatedInClassMethodSignatureRule(new DeprecatedClassHelper($this->createReflectionProvider()));
+		return new TypeHintDeprecatedInClassMethodSignatureRule(
+			new DeprecatedClassHelper($this->createReflectionProvider()),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+		);
 	}
 
 	public function test(): void

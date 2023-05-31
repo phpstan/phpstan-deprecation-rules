@@ -15,7 +15,10 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
-		return new FetchingDeprecatedConstRule($this->createReflectionProvider());
+		return new FetchingDeprecatedConstRule(
+			$this->createReflectionProvider(),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+		);
 	}
 
 	public function testFetchingDeprecatedConst(): void

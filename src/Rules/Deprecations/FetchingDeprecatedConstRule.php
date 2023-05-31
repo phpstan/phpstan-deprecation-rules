@@ -19,12 +19,16 @@ class FetchingDeprecatedConstRule implements Rule
 	/** @var ReflectionProvider */
 	private $reflectionProvider;
 
+	/** @var DeprecatedScopeHelper */
+	private $deprecatedScopeHelper;
+
 	/** @var array<string,string> */
 	private $deprecatedConstants = [];
 
-	public function __construct(ReflectionProvider $reflectionProvider)
+	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
+		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
 
 		// phpcs:ignore SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
 		if (PHP_VERSION_ID >= 70300) {
@@ -40,7 +44,7 @@ class FetchingDeprecatedConstRule implements Rule
 
 	public function processNode(Node $node, Scope $scope): array
 	{
-		if (DeprecatedScopeHelper::isScopeDeprecated($scope)) {
+		if ($this->deprecatedScopeHelper->isScopeDeprecated($scope)) {
 			return [];
 		}
 

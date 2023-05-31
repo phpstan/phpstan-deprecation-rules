@@ -18,9 +18,13 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 	/** @var DeprecatedClassHelper */
 	private $deprecatedClassHelper;
 
-	public function __construct(DeprecatedClassHelper $deprecatedClassHelper)
+	/** @var DeprecatedScopeHelper */
+	private $deprecatedScopeHelper;
+
+	public function __construct(DeprecatedClassHelper $deprecatedClassHelper, DeprecatedScopeHelper $deprecatedScopeHelper)
 	{
 		$this->deprecatedClassHelper = $deprecatedClassHelper;
+		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
 	}
 
 	public function getNodeType(): string
@@ -30,7 +34,7 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 
 	public function processNode(Node $node, Scope $scope): array
 	{
-		if (DeprecatedScopeHelper::isScopeDeprecated($scope)) {
+		if ($this->deprecatedScopeHelper->isScopeDeprecated($scope)) {
 			return [];
 		}
 

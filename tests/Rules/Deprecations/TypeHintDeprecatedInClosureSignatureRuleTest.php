@@ -13,7 +13,10 @@ class TypeHintDeprecatedInClosureSignatureRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
-		return new TypeHintDeprecatedInClosureSignatureRule(new DeprecatedClassHelper($this->createReflectionProvider()));
+		return new TypeHintDeprecatedInClosureSignatureRule(
+			new DeprecatedClassHelper($this->createReflectionProvider()),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+		);
 	}
 
 	public function test(): void

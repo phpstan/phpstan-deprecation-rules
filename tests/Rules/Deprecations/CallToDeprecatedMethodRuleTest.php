@@ -13,7 +13,10 @@ class CallToDeprecatedMethodRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
-		return new CallToDeprecatedMethodRule($this->createReflectionProvider());
+		return new CallToDeprecatedMethodRule(
+			$this->createReflectionProvider(),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+		);
 	}
 
 	public function testDeprecatedMethodCall(): void

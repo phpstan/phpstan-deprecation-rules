@@ -14,7 +14,11 @@ class FetchingClassConstOfDeprecatedClassRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
-		return new FetchingClassConstOfDeprecatedClassRule($this->createReflectionProvider(), self::getContainer()->getByType(RuleLevelHelper::class));
+		return new FetchingClassConstOfDeprecatedClassRule(
+			$this->createReflectionProvider(),
+			self::getContainer()->getByType(RuleLevelHelper::class),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+		);
 	}
 
 	public function testFetchingClassConstOfDeprecatedClass(): void

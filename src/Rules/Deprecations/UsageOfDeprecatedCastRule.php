@@ -14,6 +14,14 @@ use function sprintf;
 class UsageOfDeprecatedCastRule implements Rule
 {
 
+	/** @var DeprecatedScopeHelper */
+	private $deprecatedScopeHelper;
+
+	public function __construct(DeprecatedScopeHelper $deprecatedScopeHelper)
+	{
+		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+	}
+
 	public function getNodeType(): string
 	{
 		return Cast::class;
@@ -21,7 +29,7 @@ class UsageOfDeprecatedCastRule implements Rule
 
 	public function processNode(Node $node, Scope $scope): array
 	{
-		if (DeprecatedScopeHelper::isScopeDeprecated($scope)) {
+		if ($this->deprecatedScopeHelper->isScopeDeprecated($scope)) {
 			return [];
 		}
 
