@@ -4,6 +4,8 @@ parameters:
 services:
     -
         class: PHPStan\Rules\Deprecations\DeprecatedClassHelper
+    -
+        class: PHPStan\Rules\Deprecations\EchoDeprecatedBinaryOpToStringRule
 
 rules:
 	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
@@ -22,3 +24,7 @@ rules:
 	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInFunctionSignatureRule
 	- PHPStan\Rules\Deprecations\UsageOfDeprecatedCastRule
 	- PHPStan\Rules\Deprecations\UsageOfDeprecatedTraitRule
+
+conditionalTags:
+	PHPStan\Rules\Deprecations\EchoDeprecatedBinaryOpToStringRule:
+		phpstan.rules.rule: %featureToggles.bleedingEdge%
