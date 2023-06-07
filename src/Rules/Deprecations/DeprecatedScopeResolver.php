@@ -4,6 +4,7 @@ namespace PHPStan\Rules\Deprecations;
 
 use PHPStan\Analyser\Scope;
 
+/** @api */
 interface DeprecatedScopeResolver
 {
 
