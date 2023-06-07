@@ -36,3 +36,48 @@ In case you don't own the code which you want to be considered deprecated, use [
 /** @deprecated */
 class ThirdPartyClass {}
 ```
+
+
+## Custom deprecated scopes
+
+Usage of deprecated code is not reported in code that is also deprecated:
+
+```php
+/** @deprecated */
+function doFoo(): void
+{
+    // not reported:
+    anotherDeprecatedFunction();
+}
+```
+
+If you have [a different way](https://github.com/phpstan/phpstan-deprecation-rules/issues/64) of marking code that calls deprecated symbols on purpose and you don't want these calls to be reported either, you can write an extension by implementing the [`DeprecatedScopeResolver`](https://github.com/phpstan/phpstan-deprecation-rules/blob/1.1.x/src/Rules/Deprecations/DeprecatedScopeResolver.php) interface.
+
+For example if you mark your PHPUnit tests that test deprecated code with `@group legacy`, you can implement the extension this way:
+
+```php
+class GroupLegacyScopeResolver implements DeprecatedScopeResolver
+{
+
+	public function isScopeDeprecated(Scope $scope): bool
+	{
+		$function = $scope->getFunction();
+		return $function !== null
+			&& $function->getDocComment() !== null
+			&& strpos($function->getDocComment(), '@group legacy') !== false;
+	}
+
+}
+```
+
+And register it in your [configuration file](https://phpstan.org/config-reference):
+
+```neon
+services:
+	-
+		class: GroupLegacyScopeResolver
+		tags:
+			- phpstan.deprecations.deprecatedScopeResolver
+```
+
+[Learn more about Scope](https://phpstan.org/developing-extensions/scope), a core concept for implementing custom PHPStan extensions.
