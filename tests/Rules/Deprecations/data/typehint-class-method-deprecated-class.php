@@ -32,7 +32,7 @@ class Foo
 
 }
 
-class FooImplOverride implements IThinkYourStucked
+class FooImplOverride implements IThinkYoureStuck
 {
 
     /**
@@ -44,7 +44,7 @@ class FooImplOverride implements IThinkYourStucked
 
 }
 
-class FooImplNoOverride implements IThinkYourStucked
+class FooImplNoOverride implements IThinkYoureStuck
 {
 
     public function oops($property): void

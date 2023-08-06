@@ -31,7 +31,7 @@ class Property
 
 }
 
-interface IThinkYourStucked
+interface IThinkYoureStuck
 {
 
     /**
