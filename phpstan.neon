@@ -1,7 +1,6 @@
 includes:
 	- rules.neon
 	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
-	- vendor/phpstan/phpstan-php-parser/extension.neon
 	- vendor/phpstan/phpstan-phpunit/extension.neon
 
 parameters:
