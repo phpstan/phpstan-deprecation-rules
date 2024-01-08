@@ -31,10 +31,6 @@ class InheritanceOfDeprecatedInterfaceRule implements Rule
 
 	public function processNode(Node $node, Scope $scope): array
 	{
-		if ($node->extends === null) {
-			return [];
-		}
-
 		$interfaceName = isset($node->namespacedName)
 			? (string) $node->namespacedName
 			: (string) $node->name;
