@@ -59,6 +59,10 @@ class OverrideDeprecatedMethodRule implements Rule
 				continue;
 			}
 
+			if ($ancestor->isTrait()) {
+				continue;
+			}
+
 			if (!$ancestor->hasMethod($methodName)) {
 				continue;
 			}

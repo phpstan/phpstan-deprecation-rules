@@ -23,12 +23,19 @@ class OverrideDeprecatedMethodRuleTest extends RuleTestCase
 			[
 				[
 					'Class OverrideDeprecatedMethod\Child overrides deprecated method deprecatedMethod of class OverrideDeprecatedMethod\Ancestor.',
-					36,
+					49,
 				],
-
 				[
 					'Class OverrideDeprecatedMethod\Child overrides deprecated method deprecatedInInterface of interface OverrideDeprecatedMethod\Deprecated.',
-					48,
+					61,
+				],
+				[
+					'Class OverrideDeprecatedMethod\Child overrides deprecated method deprecatedInTrait of class OverrideDeprecatedMethod\Ancestor.',
+					64,
+				],
+				[
+					'Class OverrideDeprecatedMethod\GrandChild overrides deprecated method deprecatedInChild of class OverrideDeprecatedMethod\Child.',
+					73,
 				],
 			]
 		);

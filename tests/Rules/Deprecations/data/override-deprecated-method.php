@@ -2,8 +2,18 @@
 
 namespace OverrideDeprecatedMethod;
 
+trait DeprecationTrait
+{
+	/**
+	 * @deprecated
+	 */
+	public function deprecatedInTrait(): void
+	{}
+}
+
 class Ancestor
 {
+	use DeprecationTrait;
 	/**
 	 * @deprecated
 	 */
@@ -33,6 +43,9 @@ interface Deprecated
 
 class Child extends Ancestor implements Deprecated
 {
+	use DeprecationTrait {
+		deprecatedInTrait as deprecatedInChild;
+	}
 	public function deprecatedMethod(): void
 	{}
 
@@ -47,10 +60,16 @@ class Child extends Ancestor implements Deprecated
 
 	public function deprecatedInInterface(): void
 	{}
+
+	public function deprecatedInTrait(): void
+	{}
 }
 
 class GrandChild extends Child
 {
 	public function explicitlyNotDeprecatedMethod(): void
+	{}
+
+	public function deprecatedInChild(): void
 	{}
 }
