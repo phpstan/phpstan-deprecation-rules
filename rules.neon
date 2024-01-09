@@ -15,6 +15,12 @@ services:
 		class: PHPStan\Rules\Deprecations\DefaultDeprecatedScopeResolver
 		tags:
 			- phpstan.deprecations.deprecatedScopeResolver
+	-
+		class: PHPStan\Rules\Deprecations\OverrideDeprecatedPropertyRule
+	-
+		class: PHPStan\Rules\Deprecations\OverrideDeprecatedMethodRule
+	-
+		class: PHPStan\Rules\Deprecations\OverrideDeprecatedConstantRule
 
 rules:
 	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
@@ -33,3 +39,11 @@ rules:
 	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInFunctionSignatureRule
 	- PHPStan\Rules\Deprecations\UsageOfDeprecatedCastRule
 	- PHPStan\Rules\Deprecations\UsageOfDeprecatedTraitRule
+
+conditionalTags:
+    PHPStan\Rules\Deprecations\OverrideDeprecatedPropertyRule:
+        phpstan.rules.rule: %featureToggles.bleedingEdge%
+    PHPStan\Rules\Deprecations\OverrideDeprecatedMethodRule:
+        phpstan.rules.rule: %featureToggles.bleedingEdge%
+    PHPStan\Rules\Deprecations\OverrideDeprecatedConstantRule:
+        phpstan.rules.rule: %featureToggles.bleedingEdge%
