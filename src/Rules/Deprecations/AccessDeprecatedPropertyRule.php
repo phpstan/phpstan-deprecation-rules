@@ -39,7 +39,7 @@ class AccessDeprecatedPropertyRule implements Rule
 
 	public function processNode(Node $node, Scope $scope): array
 	{
-		if ($this->deprecatedScopeHelper->isScopeDeprecated($scope)) {
+		if ($this->deprecatedScopeHelper->isScopeDeprecated($scope, $node)) {
 			return [];
 		}
 

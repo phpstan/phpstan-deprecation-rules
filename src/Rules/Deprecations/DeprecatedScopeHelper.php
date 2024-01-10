@@ -2,6 +2,7 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 
 class DeprecatedScopeHelper
@@ -18,9 +19,12 @@ class DeprecatedScopeHelper
 		$this->resolvers = $checkers;
 	}
 
-	public function isScopeDeprecated(Scope $scope): bool
+	public function isScopeDeprecated(Scope $scope, Node $node): bool
 	{
 		foreach ($this->resolvers as $checker) {
+			if ($checker instanceof NodeAwareDeprecatedScopeResolver) {
+				$checker->withNode($node);
+			}
 			if ($checker->isScopeDeprecated($scope)) {
 				return true;
 			}
