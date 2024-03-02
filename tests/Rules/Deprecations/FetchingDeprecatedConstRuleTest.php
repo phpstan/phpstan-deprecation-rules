@@ -63,7 +63,7 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 		);
 	}
 
-	public function testDeprecatedFilterConsts()
+	public function testDeprecatedFilterConsts(): void
 	{
 		if (!defined('FILTER_SANITIZE_STRING')) {
 			$this->markTestSkipped('Required constants are not available');
