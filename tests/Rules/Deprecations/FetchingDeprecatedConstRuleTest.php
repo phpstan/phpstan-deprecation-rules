@@ -73,10 +73,19 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 
 		if (PHP_VERSION_ID >= 80100) {
 			$expectedErrors[] = [
-				'Use of constant FILTER_SANITIZE_STRING is deprecated since PHP 8.1.',
-				5,
+				'Use of constant FILTER_SANITIZE_STRING is deprecated.',
+				8,
 			];
 		}
+		
+		$expectedErrors[] = [
+			'Use of constant MY_CONST is deprecated.',
+			17,
+		];
+		$expectedErrors[] = [
+			'Use of constant MY_CONST2 is deprecated.',
+			25,
+		];
 
 		require_once __DIR__ . '/data/fetching-deprecated-filter-const.php';
 		$this->analyse(
