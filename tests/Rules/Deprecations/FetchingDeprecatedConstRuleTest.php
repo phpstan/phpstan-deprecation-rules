@@ -63,4 +63,26 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 		);
 	}
 
+	public function testDeprecatedFilterConsts()
+	{
+		if (!defined('FILTER_SANITIZE_STRING')) {
+			$this->markTestSkipped('Required constants are not available');
+		}
+
+		$expectedErrors = [];
+
+		if (PHP_VERSION_ID >= 80100) {
+			$expectedErrors[] = [
+				'Use of constant FILTER_SANITIZE_STRING is deprecated since PHP 8.1.',
+				5,
+			];
+		}
+
+		require_once __DIR__ . '/data/fetching-deprecated-filter-const.php';
+		$this->analyse(
+			[__DIR__ . '/data/fetching-deprecated-filter-const.php'],
+			$expectedErrors
+		);
+	}
+
 }
