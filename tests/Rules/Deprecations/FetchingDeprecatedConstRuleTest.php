@@ -77,7 +77,7 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 				8,
 			];
 		}
-		
+
 		$expectedErrors[] = [
 			'Use of constant MY_CONST is deprecated.',
 			17,
