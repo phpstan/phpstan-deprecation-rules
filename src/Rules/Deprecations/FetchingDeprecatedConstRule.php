@@ -5,11 +5,12 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PhpParser\Node\Expr\ConstFetch;
 use PHPStan\Analyser\Scope;
+use PHPStan\Php\PhpVersion;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use function sprintf;
-use const PHP_VERSION_ID;
+use function sscanf;
 
 /**
  * @implements Rule<ConstFetch>
@@ -23,19 +24,18 @@ class FetchingDeprecatedConstRule implements Rule
 	/** @var DeprecatedScopeHelper */
 	private $deprecatedScopeHelper;
 
-	/** @var array<string,string> */
-	private $deprecatedConstants = [];
+	/** @var PhpVersion */
+	private $phpVersion;
 
-	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
+	public function __construct(
+		ReflectionProvider $reflectionProvider,
+		DeprecatedScopeHelper $deprecatedScopeHelper,
+		PhpVersion $phpVersion
+	)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
-
-		// phpcs:ignore SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
-		if (PHP_VERSION_ID >= 70300) {
-			$this->deprecatedConstants['FILTER_FLAG_SCHEME_REQUIRED'] = 'Use of constant %s is deprecated since PHP 7.3.';
-			$this->deprecatedConstants['FILTER_FLAG_HOST_REQUIRED'] = 'Use of constant %s is deprecated since PHP 7.3.';
-		}
+		$this->phpVersion = $phpVersion;
 	}
 
 	public function getNodeType(): string
@@ -54,20 +54,29 @@ class FetchingDeprecatedConstRule implements Rule
 		}
 
 		$constantReflection = $this->reflectionProvider->getConstant($node->name, $scope);
+		$deprecatedMessage = $constantReflection->getDeprecatedDescription();
+
+		// handle `@deprecated 7.3` as a min php version constraint.
+		// this notation is used in jetbrains/phpstorm-stubs
+		sscanf($deprecatedMessage ?? '', '%d.%d', $phpMajor, $phpMinor);
+		if ($phpMajor !== null && $phpMinor !== null) {
+			$phpVersionId = sprintf('%d%02d%02d', $phpMajor, $phpMinor, 0);
+
+			if ($this->phpVersion->getVersionId() >= $phpVersionId) {
+				return [
+					RuleErrorBuilder::message(sprintf(
+						'Use of constant %s is deprecated since PHP %s.',
+						$constantReflection->getName(),
+						$deprecatedMessage
+					))->identifier('constant.deprecated')->build(),
+				];
+			}
+		}
 
 		if ($constantReflection->isDeprecated()->yes()) {
 			return [
 				RuleErrorBuilder::message(sprintf(
 					$constantReflection->getDeprecatedDescription() ?? 'Use of constant %s is deprecated.',
-					$constantReflection->getName()
-				))->identifier('constant.deprecated')->build(),
-			];
-		}
-
-		if (isset($this->deprecatedConstants[$constantReflection->getName()])) {
-			return [
-				RuleErrorBuilder::message(sprintf(
-					$this->deprecatedConstants[$constantReflection->getName()],
 					$constantReflection->getName()
 				))->identifier('constant.deprecated')->build(),
 			];

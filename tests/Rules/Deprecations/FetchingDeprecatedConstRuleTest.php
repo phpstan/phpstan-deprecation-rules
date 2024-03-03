@@ -2,6 +2,7 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Php\PhpVersion;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use function defined;
@@ -17,7 +18,8 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 	{
 		return new FetchingDeprecatedConstRule(
 			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
+			self::getContainer()->getByType(PhpVersion::class)
 		);
 	}
 
