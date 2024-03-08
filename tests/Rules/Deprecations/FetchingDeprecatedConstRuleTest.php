@@ -31,27 +31,27 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 
 		if (PHP_VERSION_ID >= 70300) {
 			$expectedErrors[] = [
-				'Use of constant FILTER_FLAG_SCHEME_REQUIRED is deprecated since PHP 7.3.',
+				'Use of constant FILTER_FLAG_SCHEME_REQUIRED is deprecated.',
 				5,
 			];
 			$expectedErrors[] = [
-				'Use of constant FILTER_FLAG_HOST_REQUIRED is deprecated since PHP 7.3.',
+				'Use of constant FILTER_FLAG_HOST_REQUIRED is deprecated.',
 				6,
 			];
 			$expectedErrors[] = [
-				'Use of constant FILTER_FLAG_SCHEME_REQUIRED is deprecated since PHP 7.3.',
+				'Use of constant FILTER_FLAG_SCHEME_REQUIRED is deprecated.',
 				7,
 			];
 			$expectedErrors[] = [
-				'Use of constant FILTER_FLAG_HOST_REQUIRED is deprecated since PHP 7.3.',
+				'Use of constant FILTER_FLAG_HOST_REQUIRED is deprecated.',
 				8,
 			];
 			$expectedErrors[] = [
-				'Use of constant FILTER_FLAG_SCHEME_REQUIRED is deprecated since PHP 7.3.',
+				'Use of constant FILTER_FLAG_SCHEME_REQUIRED is deprecated.',
 				37,
 			];
 			$expectedErrors[] = [
-				'Use of constant FILTER_FLAG_HOST_REQUIRED is deprecated since PHP 7.3.',
+				'Use of constant FILTER_FLAG_HOST_REQUIRED is deprecated.',
 				38,
 			];
 		}
