@@ -9,11 +9,9 @@ final class LazyDeprecatedScopeResolverProvider
 
 	public const EXTENSION_TAG = 'phpstan.deprecations.deprecatedScopeResolver';
 
-	/** @var Container */
-	private $container;
+	private Container $container;
 
-	/** @var DeprecatedScopeHelper */
-	private $scopeHelper;
+	private ?DeprecatedScopeHelper $scopeHelper = null;
 
 	public function __construct(Container $container)
 	{
@@ -24,7 +22,7 @@ final class LazyDeprecatedScopeResolverProvider
 	{
 		if ($this->scopeHelper === null) {
 			$this->scopeHelper = new DeprecatedScopeHelper(
-				$this->container->getServicesByTag(self::EXTENSION_TAG)
+				$this->container->getServicesByTag(self::EXTENSION_TAG),
 			);
 		}
 		return $this->scopeHelper;

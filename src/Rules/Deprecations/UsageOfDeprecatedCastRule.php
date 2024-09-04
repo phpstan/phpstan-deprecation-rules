@@ -15,8 +15,7 @@ use function sprintf;
 class UsageOfDeprecatedCastRule implements Rule
 {
 
-	/** @var DeprecatedScopeHelper */
-	private $deprecatedScopeHelper;
+	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
 	public function __construct(DeprecatedScopeHelper $deprecatedScopeHelper)
 	{
@@ -48,7 +47,7 @@ class UsageOfDeprecatedCastRule implements Rule
 			return [
 				RuleErrorBuilder::message(sprintf(
 					'Casting class %s to string is deprecated.',
-					$method->getDeclaringClass()->getName()
+					$method->getDeclaringClass()->getName(),
 				))->identifier('class.toStringDeprecated')->build(),
 			];
 		}
@@ -57,7 +56,7 @@ class UsageOfDeprecatedCastRule implements Rule
 			RuleErrorBuilder::message(sprintf(
 				"Casting class %s to string is deprecated.:\n%s",
 				$method->getDeclaringClass()->getName(),
-				$description
+				$description,
 			))->identifier('class.toStringDeprecated')->build(),
 		];
 	}

@@ -17,11 +17,9 @@ use function sprintf;
 class InheritanceOfDeprecatedClassRule implements Rule
 {
 
-	/** @var ReflectionProvider */
-	private $reflectionProvider;
+	private ReflectionProvider $reflectionProvider;
 
-	/** @var DeprecatedScopeHelper */
-	private $deprecatedScopeHelper;
+	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
 	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
 	{
@@ -67,27 +65,27 @@ class InheritanceOfDeprecatedClassRule implements Rule
 						$errors[] = RuleErrorBuilder::message(sprintf(
 							'Class %s extends deprecated class %s.',
 							$className,
-							$parentClassName
+							$parentClassName,
 						))->identifier('class.extendsDeprecatedClass')->build();
 					} else {
 						$errors[] = RuleErrorBuilder::message(sprintf(
 							"Class %s extends deprecated class %s:\n%s",
 							$className,
 							$parentClassName,
-							$description
+							$description,
 						))->identifier('class.extendsDeprecatedClass')->build();
 					}
 				} else {
 					if ($description === null) {
 						$errors[] = RuleErrorBuilder::message(sprintf(
 							'Anonymous class extends deprecated class %s.',
-							$parentClassName
+							$parentClassName,
 						))->identifier('class.extendsDeprecatedClass')->build();
 					} else {
 						$errors[] = RuleErrorBuilder::message(sprintf(
 							"Anonymous class extends deprecated class %s:\n%s",
 							$parentClassName,
-							$description
+							$description,
 						))->identifier('class.extendsDeprecatedClass')->build();
 					}
 				}

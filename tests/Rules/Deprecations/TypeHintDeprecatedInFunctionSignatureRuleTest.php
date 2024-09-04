@@ -15,7 +15,7 @@ class TypeHintDeprecatedInFunctionSignatureRuleTest extends RuleTestCase
 	{
 		return new TypeHintDeprecatedInFunctionSignatureRule(
 			new DeprecatedClassHelper($this->createReflectionProvider()),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -30,7 +30,7 @@ class TypeHintDeprecatedInFunctionSignatureRuleTest extends RuleTestCase
 				["Parameter \$property4 of function TypeHintDeprecatedInFunctionSignature\setProperties() has typehint with deprecated class TypeHintDeprecatedInFunctionSignature\VerboseDeprecatedProperty:\nI'll be back", 8],
 				['Parameter $property6 of function TypeHintDeprecatedInFunctionSignature\setProperties() has typehint with deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty.', 8],
 				['Return type of function TypeHintDeprecatedInFunctionSignature\setProperties() has typehint with deprecated class TypeHintDeprecatedInFunctionSignature\DeprecatedProperty.', 8],
-			]
+			],
 		);
 	}
 

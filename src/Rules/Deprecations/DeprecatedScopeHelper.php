@@ -8,7 +8,7 @@ class DeprecatedScopeHelper
 {
 
 	/** @var DeprecatedScopeResolver[]  */
-	private $resolvers;
+	private array $resolvers;
 
 	/**
 	 * @param DeprecatedScopeResolver[] $checkers

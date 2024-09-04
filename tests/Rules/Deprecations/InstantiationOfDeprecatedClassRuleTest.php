@@ -17,7 +17,7 @@ class InstantiationOfDeprecatedClassRuleTest extends RuleTestCase
 		return new InstantiationOfDeprecatedClassRule(
 			$this->createReflectionProvider(),
 			self::getContainer()->getByType(RuleLevelHelper::class),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -35,7 +35,7 @@ class InstantiationOfDeprecatedClassRuleTest extends RuleTestCase
 					"Instantiation of deprecated class InstantiationOfDeprecatedClass\DeprecatedWithDescription:\nDo not instantiate.",
 					7,
 				],
-			]
+			],
 		);
 	}
 

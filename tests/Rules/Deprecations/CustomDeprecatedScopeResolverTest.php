@@ -32,7 +32,7 @@ final class CustomDeprecatedScopeResolverTest extends RuleTestCase
 			new DeprecatedScopeHelper([
 				new DefaultDeprecatedScopeResolver(),
 				$customScopeResolver,
-			])
+			]),
 		);
 	}
 
@@ -46,7 +46,7 @@ final class CustomDeprecatedScopeResolverTest extends RuleTestCase
 					'Call to deprecated method deprecatedFoo() of class CheckDeprecatedMethodCall\Foo.',
 					13,
 				],
-			]
+			],
 		);
 	}
 

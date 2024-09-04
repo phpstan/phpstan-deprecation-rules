@@ -17,7 +17,7 @@ class FetchingClassConstOfDeprecatedClassRuleTest extends RuleTestCase
 		return new FetchingClassConstOfDeprecatedClassRule(
 			$this->createReflectionProvider(),
 			self::getContainer()->getByType(RuleLevelHelper::class),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -51,7 +51,7 @@ class FetchingClassConstOfDeprecatedClassRuleTest extends RuleTestCase
 					"Fetching class constant FOO of deprecated class FetchingClassConstOfDeprecatedClass\DeprecatedBar:\nDeprecated for some reason.",
 					14,
 				],
-			]
+			],
 		);
 	}
 

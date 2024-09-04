@@ -18,11 +18,9 @@ use function sprintf;
 class CallToDeprecatedFunctionRule implements Rule
 {
 
-	/** @var ReflectionProvider */
-	private $reflectionProvider;
+	private ReflectionProvider $reflectionProvider;
 
-	/** @var DeprecatedScopeHelper */
-	private $deprecatedScopeHelper;
+	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
 	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
 	{
@@ -58,7 +56,7 @@ class CallToDeprecatedFunctionRule implements Rule
 				return [
 					RuleErrorBuilder::message(sprintf(
 						'Call to deprecated function %s().',
-						$function->getName()
+						$function->getName(),
 					))->identifier('function.deprecated')->build(),
 				];
 			}
@@ -67,7 +65,7 @@ class CallToDeprecatedFunctionRule implements Rule
 				RuleErrorBuilder::message(sprintf(
 					"Call to deprecated function %s():\n%s",
 					$function->getName(),
-					$description
+					$description,
 				))->identifier('function.deprecated')->build(),
 			];
 		}

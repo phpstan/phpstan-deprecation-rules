@@ -15,7 +15,7 @@ class CallToDeprecatedMethodRuleTest extends RuleTestCase
 	{
 		return new CallToDeprecatedMethodRule(
 			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -49,7 +49,7 @@ class CallToDeprecatedMethodRuleTest extends RuleTestCase
 					"Call to deprecated method prophesize() of class CheckDeprecatedMethodCall\\UsingDeprecatedMethodFromTrait:\nUse TraitReplacingDeprecatedMethod::prophesize()",
 					64,
 				],
-			]
+			],
 		);
 	}
 

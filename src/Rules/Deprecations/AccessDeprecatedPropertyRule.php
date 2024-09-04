@@ -20,11 +20,9 @@ use function strtolower;
 class AccessDeprecatedPropertyRule implements Rule
 {
 
-	/** @var ReflectionProvider */
-	private $reflectionProvider;
+	private ReflectionProvider $reflectionProvider;
 
-	/** @var DeprecatedScopeHelper */
-	private $deprecatedScopeHelper;
+	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
 	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
 	{
@@ -64,7 +62,7 @@ class AccessDeprecatedPropertyRule implements Rule
 								'Access to deprecated property $%s of %s %s.',
 								$propertyName,
 								strtolower($propertyReflection->getDeclaringClass()->getClassTypeDescription()),
-								$propertyReflection->getDeclaringClass()->getName()
+								$propertyReflection->getDeclaringClass()->getName(),
 							))->identifier('property.deprecated')->build(),
 						];
 					}
@@ -75,7 +73,7 @@ class AccessDeprecatedPropertyRule implements Rule
 							$propertyName,
 							strtolower($propertyReflection->getDeclaringClass()->getClassTypeDescription()),
 							$propertyReflection->getDeclaringClass()->getName(),
-							$description
+							$description,
 						))->identifier('property.deprecated')->build(),
 					];
 				}

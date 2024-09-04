@@ -23,14 +23,11 @@ use function strtolower;
 class FetchingClassConstOfDeprecatedClassRule implements Rule
 {
 
-	/** @var ReflectionProvider */
-	private $reflectionProvider;
+	private ReflectionProvider $reflectionProvider;
 
-	/** @var RuleLevelHelper */
-	private $ruleLevelHelper;
+	private RuleLevelHelper $ruleLevelHelper;
 
-	/** @var DeprecatedScopeHelper */
-	private $deprecatedScopeHelper;
+	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
 	public function __construct(ReflectionProvider $reflectionProvider, RuleLevelHelper $ruleLevelHelper, DeprecatedScopeHelper $deprecatedScopeHelper)
 	{
@@ -64,9 +61,7 @@ class FetchingClassConstOfDeprecatedClassRule implements Rule
 				$scope,
 				$node->class,
 				'', // We don't care about the error message
-				static function (Type $type) use ($constantName): bool {
-					return $type->canAccessConstants()->yes() && $type->hasConstant($constantName)->yes();
-				}
+				static fn (Type $type): bool => $type->canAccessConstants()->yes() && $type->hasConstant($constantName)->yes(),
 			);
 
 			if ($classTypeResult->getType() instanceof ErrorType) {
@@ -92,7 +87,7 @@ class FetchingClassConstOfDeprecatedClassRule implements Rule
 						'Fetching class constant %s of deprecated %s %s.',
 						$constantName,
 						strtolower($class->getClassTypeDescription()),
-						$referencedClass
+						$referencedClass,
 					))->identifier(sprintf('classConstant.deprecated%s', $class->getClassTypeDescription()))->build();
 				} else {
 					$errors[] = RuleErrorBuilder::message(sprintf(
@@ -100,7 +95,7 @@ class FetchingClassConstOfDeprecatedClassRule implements Rule
 						$constantName,
 						strtolower($class->getClassTypeDescription()),
 						$referencedClass,
-						$classDescription
+						$classDescription,
 					))->identifier(sprintf('classConstant.deprecated%s', $class->getClassTypeDescription()))->build();
 				}
 			}
@@ -125,7 +120,7 @@ class FetchingClassConstOfDeprecatedClassRule implements Rule
 					'Fetching deprecated class constant %s of %s %s.',
 					$constantName,
 					strtolower($class->getClassTypeDescription()),
-					$referencedClass
+					$referencedClass,
 				))->identifier('classConstant.deprecated')->build();
 			} else {
 				$errors[] = RuleErrorBuilder::message(sprintf(
@@ -133,7 +128,7 @@ class FetchingClassConstOfDeprecatedClassRule implements Rule
 					$constantName,
 					strtolower($class->getClassTypeDescription()),
 					$referencedClass,
-					$description
+					$description,
 				))->identifier('classConstant.deprecated')->build();
 			}
 		}

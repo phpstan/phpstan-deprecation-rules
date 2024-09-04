@@ -15,7 +15,7 @@ class InheritanceOfDeprecatedClassRuleTest extends RuleTestCase
 	{
 		return new InheritanceOfDeprecatedClassRule(
 			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -33,7 +33,7 @@ class InheritanceOfDeprecatedClassRuleTest extends RuleTestCase
 					"Class InheritanceOfDeprecatedClass\Bar3 extends deprecated class InheritanceOfDeprecatedClass\DeprecatedWithDescription:\nInheritance is deprecated.",
 					15,
 				],
-			]
+			],
 		);
 	}
 
@@ -51,7 +51,7 @@ class InheritanceOfDeprecatedClassRuleTest extends RuleTestCase
 					"Anonymous class extends deprecated class InheritanceOfDeprecatedClass\DeprecatedWithDescription:\nInheritance is deprecated.",
 					13,
 				],
-			]
+			],
 		);
 	}
 

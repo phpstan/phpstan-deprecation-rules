@@ -15,7 +15,7 @@ class ImplementationOfDeprecatedInterfaceRuleTest extends RuleTestCase
 	{
 		return new ImplementationOfDeprecatedInterfaceRule(
 			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -41,7 +41,7 @@ class ImplementationOfDeprecatedInterfaceRuleTest extends RuleTestCase
 					"Class ImplementationOfDeprecatedInterface\Foo4 implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedWithDescription:\nBetter interface imminent?",
 					20,
 				],
-			]
+			],
 		);
 	}
 
@@ -67,7 +67,7 @@ class ImplementationOfDeprecatedInterfaceRuleTest extends RuleTestCase
 					"Anonymous class implements deprecated interface ImplementationOfDeprecatedInterface\DeprecatedWithDescription:\nBetter interface imminent?",
 					17,
 				],
-			]
+			],
 		);
 	}
 

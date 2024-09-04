@@ -17,7 +17,7 @@ class CallToDeprecatedStaticMethodRuleTest extends RuleTestCase
 		return new CallToDeprecatedStaticMethodRule(
 			$this->createReflectionProvider(),
 			self::getContainer()->getByType(RuleLevelHelper::class),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -87,7 +87,7 @@ class CallToDeprecatedStaticMethodRuleTest extends RuleTestCase
 					'Call to deprecated method deprecatedOtherFoo() of class CheckDeprecatedStaticMethodCall\Child.',
 					77,
 				],
-			]
+			],
 		);
 	}
 

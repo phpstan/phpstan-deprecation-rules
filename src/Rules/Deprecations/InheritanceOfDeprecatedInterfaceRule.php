@@ -17,8 +17,7 @@ use function sprintf;
 class InheritanceOfDeprecatedInterfaceRule implements Rule
 {
 
-	/** @var ReflectionProvider */
-	private $reflectionProvider;
+	private ReflectionProvider $reflectionProvider;
 
 	public function __construct(ReflectionProvider $reflectionProvider)
 	{
@@ -63,14 +62,14 @@ class InheritanceOfDeprecatedInterfaceRule implements Rule
 					$errors[] = RuleErrorBuilder::message(sprintf(
 						'Interface %s extends deprecated interface %s.',
 						$interfaceName,
-						$parentInterfaceName
+						$parentInterfaceName,
 					))->identifier('interface.extendsDeprecatedInterface')->build();
 				} else {
 					$errors[] = RuleErrorBuilder::message(sprintf(
 						"Interface %s extends deprecated interface %s:\n%s",
 						$interfaceName,
 						$parentInterfaceName,
-						$description
+						$description,
 					))->identifier('interface.extendsDeprecatedInterface')->build();
 				}
 			} catch (ClassNotFoundException $e) {

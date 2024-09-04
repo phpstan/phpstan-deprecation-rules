@@ -15,7 +15,7 @@ class AccessDeprecatedPropertyRuleTest extends RuleTestCase
 	{
 		return new AccessDeprecatedPropertyRule(
 			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -45,7 +45,7 @@ class AccessDeprecatedPropertyRuleTest extends RuleTestCase
 					"Access to deprecated property \$deprecatedWithDescription of class AccessDeprecatedProperty\Foo:\nUse something else instead.",
 					19,
 				],
-			]
+			],
 		);
 	}
 

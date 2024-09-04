@@ -20,11 +20,9 @@ use function strtolower;
 class CallToDeprecatedMethodRule implements Rule
 {
 
-	/** @var ReflectionProvider */
-	private $reflectionProvider;
+	private ReflectionProvider $reflectionProvider;
 
-	/** @var DeprecatedScopeHelper */
-	private $deprecatedScopeHelper;
+	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
 	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
 	{
@@ -67,7 +65,7 @@ class CallToDeprecatedMethodRule implements Rule
 							'Call to deprecated method %s() of %s %s.',
 							$methodReflection->getName(),
 							strtolower($methodReflection->getDeclaringClass()->getClassTypeDescription()),
-							$methodReflection->getDeclaringClass()->getName()
+							$methodReflection->getDeclaringClass()->getName(),
 						))->identifier('method.deprecated')->build(),
 					];
 				}
@@ -78,7 +76,7 @@ class CallToDeprecatedMethodRule implements Rule
 						$methodReflection->getName(),
 						strtolower($methodReflection->getDeclaringClass()->getClassTypeDescription()),
 						$methodReflection->getDeclaringClass()->getName(),
-						$description
+						$description,
 					))->identifier('method.deprecated')->build(),
 				];
 			} catch (ClassNotFoundException $e) {

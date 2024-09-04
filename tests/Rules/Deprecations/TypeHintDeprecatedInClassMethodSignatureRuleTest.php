@@ -15,7 +15,7 @@ class TypeHintDeprecatedInClassMethodSignatureRuleTest extends RuleTestCase
 	{
 		return new TypeHintDeprecatedInClassMethodSignatureRule(
 			new DeprecatedClassHelper($this->createReflectionProvider()),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -33,7 +33,7 @@ class TypeHintDeprecatedInClassMethodSignatureRuleTest extends RuleTestCase
 				['Parameter $property of method TypeHintDeprecatedInClassMethodSignature\FooImplNoOverride::oops() has typehint with deprecated class TypeHintDeprecatedInClassMethodSignature\DeprecatedProperty.', 50],
 				['Parameter $property of method __construct() in anonymous class has typehint with deprecated class TypeHintDeprecatedInClassMethodSignature\DeprecatedProperty.', 71],
 				['Return type of method getProperty() in anonymous class has typehint with deprecated class TypeHintDeprecatedInClassMethodSignature\DeprecatedProperty.', 76],
-			]
+			],
 		);
 	}
 

@@ -15,7 +15,7 @@ class UsageOfDeprecatedTraitRuleTest extends RuleTestCase
 	{
 		return new UsageOfDeprecatedTraitRule(
 			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -37,7 +37,7 @@ class UsageOfDeprecatedTraitRuleTest extends RuleTestCase
 					"Usage of deprecated trait UsageOfDeprecatedTrait\DeprecatedTraitWithDescription in class UsageOfDeprecatedTrait\Foo3:\nDo not use traits.",
 					24,
 				],
-			]
+			],
 		);
 	}
 

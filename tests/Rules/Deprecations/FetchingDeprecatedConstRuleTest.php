@@ -17,7 +17,7 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 	{
 		return new FetchingDeprecatedConstRule(
 			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -59,7 +59,7 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 		require_once __DIR__ . '/data/fetching-deprecated-const-definition.php';
 		$this->analyse(
 			[__DIR__ . '/data/fetching-deprecated-const.php'],
-			$expectedErrors
+			$expectedErrors,
 		);
 	}
 

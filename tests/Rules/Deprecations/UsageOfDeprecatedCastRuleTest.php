@@ -14,7 +14,7 @@ class UsageOfDeprecatedCastRuleTest extends RuleTestCase
 	protected function getRule(): Rule
 	{
 		return new UsageOfDeprecatedCastRule(
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -28,7 +28,7 @@ class UsageOfDeprecatedCastRuleTest extends RuleTestCase
 					'Casting class UsageOfDeprecatedCast\Foo to string is deprecated.',
 					17,
 				],
-			]
+			],
 		);
 	}
 

@@ -15,7 +15,7 @@ class CallToDeprecatedFunctionRuleTest extends RuleTestCase
 	{
 		return new CallToDeprecatedFunctionRule(
 			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -37,7 +37,7 @@ class CallToDeprecatedFunctionRuleTest extends RuleTestCase
 					"Call to deprecated function CheckDeprecatedFunctionCall\\deprecated_with_description():\nGlobal function? Seriously?",
 					10,
 				],
-			]
+			],
 		);
 	}
 

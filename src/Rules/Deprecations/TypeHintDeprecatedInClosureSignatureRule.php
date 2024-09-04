@@ -17,11 +17,9 @@ use function strtolower;
 class TypeHintDeprecatedInClosureSignatureRule implements Rule
 {
 
-	/** @var DeprecatedClassHelper */
-	private $deprecatedClassHelper;
+	private DeprecatedClassHelper $deprecatedClassHelper;
 
-	/** @var DeprecatedScopeHelper */
-	private $deprecatedScopeHelper;
+	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
 	public function __construct(DeprecatedClassHelper $deprecatedClassHelper, DeprecatedScopeHelper $deprecatedScopeHelper)
 	{
@@ -54,7 +52,7 @@ class TypeHintDeprecatedInClosureSignatureRule implements Rule
 					$parameter->getName(),
 					strtolower($deprecatedClass->getClassTypeDescription()),
 					$deprecatedClass->getName(),
-					$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass)
+					$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass),
 				))->identifier(sprintf('parameter.deprecated%s', $deprecatedClass->getClassTypeDescription()))->build();
 			}
 		}
@@ -65,7 +63,7 @@ class TypeHintDeprecatedInClosureSignatureRule implements Rule
 				'Return type of anonymous function has typehint with deprecated %s %s%s',
 				strtolower($deprecatedClass->getClassTypeDescription()),
 				$deprecatedClass->getName(),
-				$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass)
+				$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass),
 			))->identifier(sprintf('return.deprecated%s', $deprecatedClass->getClassTypeDescription()))->build();
 		}
 

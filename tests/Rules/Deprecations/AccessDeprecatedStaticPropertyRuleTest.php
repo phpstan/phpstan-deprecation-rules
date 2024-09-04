@@ -17,7 +17,7 @@ class AccessDeprecatedStaticPropertyRuleTest extends RuleTestCase
 		return new AccessDeprecatedStaticPropertyRule(
 			$this->createReflectionProvider(),
 			self::getContainer()->getByType(RuleLevelHelper::class),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()])
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
 		);
 	}
 
@@ -79,7 +79,7 @@ class AccessDeprecatedStaticPropertyRuleTest extends RuleTestCase
 					'Access to deprecated static property $deprecatedOtherFoo of class AccessDeprecatedStaticProperty\Child.',
 					120,
 				],
-			]
+			],
 		);
 	}
 
