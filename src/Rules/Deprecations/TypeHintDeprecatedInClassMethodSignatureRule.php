@@ -5,7 +5,6 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassMethodNode;
-use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use function sprintf;
@@ -41,10 +40,9 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 		}
 
 		$method = $node->getMethodReflection();
-		$methodSignature = ParametersAcceptorSelector::selectSingle($method->getVariants());
 
 		$errors = [];
-		foreach ($methodSignature->getParameters() as $parameter) {
+		foreach ($method->getParameters() as $parameter) {
 			$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($parameter->getType()->getReferencedClasses());
 			foreach ($deprecatedClasses as $deprecatedClass) {
 				if ($method->getDeclaringClass()->isAnonymous()) {
@@ -70,7 +68,7 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 			}
 		}
 
-		$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($methodSignature->getReturnType()->getReferencedClasses());
+		$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($method->getReturnType()->getReferencedClasses());
 		foreach ($deprecatedClasses as $deprecatedClass) {
 			if ($method->getDeclaringClass()->isAnonymous()) {
 				$errors[] = RuleErrorBuilder::message(sprintf(
