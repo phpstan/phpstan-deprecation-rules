@@ -5,7 +5,6 @@ namespace PHPStan\Rules\Deprecations;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InFunctionNode;
-use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\ShouldNotHappenException;
@@ -43,10 +42,9 @@ class TypeHintDeprecatedInFunctionSignatureRule implements Rule
 		if ($function === null) {
 			throw new ShouldNotHappenException();
 		}
-		$functionSignature = ParametersAcceptorSelector::selectSingle($function->getVariants());
 
 		$errors = [];
-		foreach ($functionSignature->getParameters() as $parameter) {
+		foreach ($function->getParameters() as $parameter) {
 			$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($parameter->getType()->getReferencedClasses());
 			foreach ($deprecatedClasses as $deprecatedClass) {
 				$errors[] = RuleErrorBuilder::message(sprintf(
@@ -60,7 +58,7 @@ class TypeHintDeprecatedInFunctionSignatureRule implements Rule
 			}
 		}
 
-		$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($functionSignature->getReturnType()->getReferencedClasses());
+		$deprecatedClasses = $this->deprecatedClassHelper->filterDeprecatedClasses($function->getReturnType()->getReferencedClasses());
 		foreach ($deprecatedClasses as $deprecatedClass) {
 			$errors[] = RuleErrorBuilder::message(sprintf(
 				'Return type of function %s() has typehint with deprecated %s %s%s',
