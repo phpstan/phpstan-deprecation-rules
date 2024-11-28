@@ -39,12 +39,12 @@ class CallWithDeprecatedIniOptionRule implements Rule
 		'pdo_odbc.db2_instance_name' => 0,
 		'enable_dl' => 0,
 
-		'mbstring.func_overload' => 70200,
-		'track_errors' => 70200,
-
 		'iconv.input_encoding' => 50600,
 		'iconv.output_encoding' => 50600,
 		'iconv.internal_encoding' => 50600,
+
+		'mbstring.func_overload' => 70200,
+		'track_errors' => 70200,
 
 		'allow_url_include' => 70400,
 
