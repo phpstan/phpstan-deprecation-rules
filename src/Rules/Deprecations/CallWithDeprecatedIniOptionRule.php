@@ -28,7 +28,7 @@ class CallWithDeprecatedIniOptionRule implements Rule
 		'ini_set',
 		'ini_alter',
 		'ini_restore',
-	    'get_cfg_var',
+		'get_cfg_var',
 	];
 
 	private const DEPRECATED_OPTIONS = [
