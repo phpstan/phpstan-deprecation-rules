@@ -22,6 +22,7 @@ rules:
 	- PHPStan\Rules\Deprecations\CallToDeprecatedFunctionRule
 	- PHPStan\Rules\Deprecations\CallToDeprecatedMethodRule
 	- PHPStan\Rules\Deprecations\CallToDeprecatedStaticMethodRule
+	- PHPStan\Rules\Deprecations\CallWithDeprecatedIniOptionRule
 	- PHPStan\Rules\Deprecations\FetchingClassConstOfDeprecatedClassRule
 	- PHPStan\Rules\Deprecations\FetchingDeprecatedConstRule
 	- PHPStan\Rules\Deprecations\ImplementationOfDeprecatedInterfaceRule
