@@ -16,13 +16,15 @@ services:
 		tags:
 			- phpstan.deprecations.deprecatedScopeResolver
 
+	-
+		class: PHPStan\Rules\Deprecations\CallWithDeprecatedIniOptionRule
+
 rules:
 	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
 	- PHPStan\Rules\Deprecations\AccessDeprecatedStaticPropertyRule
 	- PHPStan\Rules\Deprecations\CallToDeprecatedFunctionRule
 	- PHPStan\Rules\Deprecations\CallToDeprecatedMethodRule
 	- PHPStan\Rules\Deprecations\CallToDeprecatedStaticMethodRule
-	- PHPStan\Rules\Deprecations\CallWithDeprecatedIniOptionRule
 	- PHPStan\Rules\Deprecations\FetchingClassConstOfDeprecatedClassRule
 	- PHPStan\Rules\Deprecations\FetchingDeprecatedConstRule
 	- PHPStan\Rules\Deprecations\ImplementationOfDeprecatedInterfaceRule
@@ -34,3 +36,7 @@ rules:
 	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInFunctionSignatureRule
 	- PHPStan\Rules\Deprecations\UsageOfDeprecatedCastRule
 	- PHPStan\Rules\Deprecations\UsageOfDeprecatedTraitRule
+
+conditionalTags:
+	PHPStan\Rules\Deprecations\CallWithDeprecatedIniOptionRule:
+		phpstan.rules.rule: %featureToggles.bleedingEdge%
