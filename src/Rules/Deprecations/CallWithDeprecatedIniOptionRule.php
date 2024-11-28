@@ -31,10 +31,34 @@ class CallWithDeprecatedIniOptionRule implements Rule
 	];
 
 	private const DEPRECATED_OPTIONS = [
+		// deprecated since unknown version
+		'mbstring.http_input' => 0,
+		'mbstring.http_output' => 0,
+		'mbstring.internal_encoding' => 0,
+		'pdo_odbc.db2_instance_name' => 0,
+		'enable_dl' => 0,
+
+		'mbstring.func_overload' => 70200,
+		'track_errors' => 70200,
+
+		'iconv.input_encoding' => 50600,
+		'iconv.output_encoding' => 50600,
+		'iconv.internal_encoding' => 50600,
+
+		'allow_url_include' => 70400,
+
+		'assert.quiet_eval' => 80000,
+
+		'filter.default' => 80100,
+		'oci8.old_oci_close_semantics' => 80100,
+
 		'assert.active' => 80300,
 		'assert.exception' => 80300,
 		'assert.bail' => 80300,
 		'assert.warning' => 80300,
+
+		'session.sid_length' => 80400,
+		'session.sid_bits_per_character' => 80400,
 	];
 
 	private ReflectionProvider $reflectionProvider;
