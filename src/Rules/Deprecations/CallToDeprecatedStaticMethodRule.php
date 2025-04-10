@@ -30,11 +30,14 @@ class CallToDeprecatedStaticMethodRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(ReflectionProvider $reflectionProvider, RuleLevelHelper $ruleLevelHelper, DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, RuleLevelHelper $ruleLevelHelper, DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->ruleLevelHelper = $ruleLevelHelper;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -84,8 +87,9 @@ class CallToDeprecatedStaticMethodRule implements Rule
 				continue;
 			}
 
-			if ($class->isDeprecated()) {
-				$classDescription = $class->getDeprecatedDescription();
+			$classDeprecation = $this->deprecationHelper->getDeprecation($class);
+			if ($classDeprecation !== null) {
+				$classDescription = $classDeprecation->getDescription();
 				if ($classDescription === null) {
 					$errors[] = RuleErrorBuilder::message(sprintf(
 						'Call to method %s() of deprecated %s %s.',
@@ -104,11 +108,12 @@ class CallToDeprecatedStaticMethodRule implements Rule
 				}
 			}
 
-			if (!$methodReflection->isDeprecated()->yes()) {
+			$methodDeprecation = $this->deprecationHelper->getDeprecation($methodReflection);
+			if ($methodDeprecation === null) {
 				continue;
 			}
 
-			$description = $methodReflection->getDeprecatedDescription();
+			$description = $methodDeprecation->getDescription();
 			if ($description === null) {
 				$errors[] = RuleErrorBuilder::message(sprintf(
 					'Call to deprecated method %s() of %s %s.',

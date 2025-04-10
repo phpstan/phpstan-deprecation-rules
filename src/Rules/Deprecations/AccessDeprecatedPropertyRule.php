@@ -24,10 +24,13 @@ class AccessDeprecatedPropertyRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -54,8 +57,10 @@ class AccessDeprecatedPropertyRule implements Rule
 				$classReflection = $this->reflectionProvider->getClass($referencedClass);
 				$propertyReflection = $classReflection->getProperty($propertyName, $scope);
 
-				if ($propertyReflection->isDeprecated()->yes()) {
-					$description = $propertyReflection->getDeprecatedDescription();
+				$deprecation = $this->deprecationHelper->getDeprecation($propertyReflection);
+
+				if ($deprecation !== null) {
+					$description = $deprecation->getDescription();
 					if ($description === null) {
 						return [
 							RuleErrorBuilder::message(sprintf(

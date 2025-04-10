@@ -19,6 +19,16 @@ services:
 	-
 		class: PHPStan\Rules\Deprecations\CallWithDeprecatedIniOptionRule
 
+	-
+		class: PHPStan\Rules\Deprecations\DeprecationHelper
+		arguments:
+			providers: tagged(phpstan.deprecationProvider)
+
+	-
+		class: PHPStan\Rules\Deprecations\DefaultDeprecationProvider
+		tags:
+			- phpstan.deprecationProvider
+
 rules:
 	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
 	- PHPStan\Rules\Deprecations\AccessDeprecatedStaticPropertyRule

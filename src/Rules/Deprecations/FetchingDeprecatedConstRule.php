@@ -20,10 +20,13 @@ class FetchingDeprecatedConstRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -43,10 +46,11 @@ class FetchingDeprecatedConstRule implements Rule
 
 		$constantReflection = $this->reflectionProvider->getConstant($node->name, $scope);
 
-		if ($constantReflection->isDeprecated()->yes()) {
+		$deprecation = $this->deprecationHelper->getDeprecation($constantReflection);
+		if ($deprecation !== null) {
 			return [
 				RuleErrorBuilder::message(sprintf(
-					$constantReflection->getDeprecatedDescription() ?? 'Use of constant %s is deprecated.',
+					$deprecation->getDescription() ?? 'Use of constant %s is deprecated.',
 					$constantReflection->getName(),
 				))->identifier('constant.deprecated')->build(),
 			];

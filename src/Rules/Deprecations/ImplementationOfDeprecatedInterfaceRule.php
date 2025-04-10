@@ -21,10 +21,13 @@ class ImplementationOfDeprecatedInterfaceRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -50,7 +53,8 @@ class ImplementationOfDeprecatedInterfaceRule implements Rule
 			return [];
 		}
 
-		if ($class->isDeprecated()) {
+		$classDeprecation = $this->deprecationHelper->getDeprecation($class);
+		if ($classDeprecation !== null) {
 			return [];
 		}
 
@@ -60,8 +64,9 @@ class ImplementationOfDeprecatedInterfaceRule implements Rule
 			try {
 				$interface = $this->reflectionProvider->getClass($interfaceName);
 
-				if ($interface->isDeprecated()) {
-					$description = $interface->getDeprecatedDescription();
+				$interfaceDeprecation = $this->deprecationHelper->getDeprecation($interface);
+				if ($interfaceDeprecation !== null) {
+					$description = $interfaceDeprecation->getDescription();
 					if (!$class->isAnonymous()) {
 						if ($description === null) {
 							$errors[] = RuleErrorBuilder::message(sprintf(

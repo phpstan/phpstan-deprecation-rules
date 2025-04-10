@@ -24,10 +24,13 @@ class CallToDeprecatedMethodRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -54,11 +57,12 @@ class CallToDeprecatedMethodRule implements Rule
 				$classReflection = $this->reflectionProvider->getClass($referencedClass);
 				$methodReflection = $classReflection->getMethod($methodName, $scope);
 
-				if (!$methodReflection->isDeprecated()->yes()) {
+				$deprecation = $this->deprecationHelper->getDeprecation($methodReflection);
+				if ($deprecation === null) {
 					continue;
 				}
 
-				$description = $methodReflection->getDeprecatedDescription();
+				$description = $deprecation->getDescription();
 				if ($description === null) {
 					return [
 						RuleErrorBuilder::message(sprintf(

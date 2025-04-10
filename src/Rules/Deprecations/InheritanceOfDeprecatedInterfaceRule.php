@@ -19,9 +19,12 @@ class InheritanceOfDeprecatedInterfaceRule implements Rule
 
 	private ReflectionProvider $reflectionProvider;
 
-	public function __construct(ReflectionProvider $reflectionProvider)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -41,7 +44,8 @@ class InheritanceOfDeprecatedInterfaceRule implements Rule
 			return [];
 		}
 
-		if ($interface->isDeprecated()) {
+		$interfaceDeprecation = $this->deprecationHelper->getDeprecation($interface);
+		if ($interfaceDeprecation !== null) {
 			return [];
 		}
 
@@ -53,11 +57,12 @@ class InheritanceOfDeprecatedInterfaceRule implements Rule
 			try {
 				$parentInterface = $this->reflectionProvider->getClass($parentInterfaceName);
 
-				if (!$parentInterface->isDeprecated()) {
+				$parentDeprecation = $this->deprecationHelper->getDeprecation($parentInterface);
+				if ($parentDeprecation === null) {
 					continue;
 				}
 
-				$description = $parentInterface->getDeprecatedDescription();
+				$description = $parentDeprecation->getDescription();
 				if ($description === null) {
 					$errors[] = RuleErrorBuilder::message(sprintf(
 						'Interface %s extends deprecated interface %s.',

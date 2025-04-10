@@ -27,11 +27,14 @@ class InstantiationOfDeprecatedClassRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(ReflectionProvider $reflectionProvider, RuleLevelHelper $ruleLevelHelper, DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, RuleLevelHelper $ruleLevelHelper, DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->ruleLevelHelper = $ruleLevelHelper;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -79,11 +82,12 @@ class InstantiationOfDeprecatedClassRule implements Rule
 				continue;
 			}
 
-			if (!$class->isDeprecated()) {
+			$deprecation = $this->deprecationHelper->getDeprecation($class);
+			if ($deprecation === null) {
 				continue;
 			}
 
-			$description = $class->getDeprecatedDescription();
+			$description = $deprecation->getDescription();
 			if ($description === null) {
 				$errors[] = RuleErrorBuilder::message(sprintf(
 					'Instantiation of deprecated class %s.',

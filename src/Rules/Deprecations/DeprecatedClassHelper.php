@@ -12,14 +12,22 @@ class DeprecatedClassHelper
 
 	private ReflectionProvider $reflectionProvider;
 
-	public function __construct(ReflectionProvider $reflectionProvider)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getClassDeprecationDescription(ClassReflection $class): string
 	{
-		$description = $class->getDeprecatedDescription();
+		$deprecation = $this->deprecationHelper->getDeprecation($class);
+		if ($deprecation === null) {
+			return '.';
+		}
+
+		$description = $deprecation->getDescription();
 		if ($description === null) {
 			return '.';
 		}
@@ -41,7 +49,7 @@ class DeprecatedClassHelper
 				continue;
 			}
 
-			if (!$class->isDeprecated()) {
+			if ($this->deprecationHelper->getDeprecation($class) === null) {
 				continue;
 			}
 

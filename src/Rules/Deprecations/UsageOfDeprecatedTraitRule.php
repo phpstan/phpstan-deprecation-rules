@@ -22,10 +22,13 @@ class UsageOfDeprecatedTraitRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -52,11 +55,12 @@ class UsageOfDeprecatedTraitRule implements Rule
 
 			try {
 				$trait = $this->reflectionProvider->getClass($traitName);
-				if (!$trait->isDeprecated()) {
+				$deprecation = $this->deprecationHelper->getDeprecation($trait);
+				if ($deprecation === null) {
 					continue;
 				}
 
-				$description = $trait->getDeprecatedDescription();
+				$description = $deprecation->getDescription();
 				if ($description === null) {
 					$errors[] = RuleErrorBuilder::message(sprintf(
 						'Usage of deprecated trait %s in class %s.',

@@ -30,11 +30,14 @@ class AccessDeprecatedStaticPropertyRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(ReflectionProvider $reflectionProvider, RuleLevelHelper $ruleLevelHelper, DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, RuleLevelHelper $ruleLevelHelper, DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->ruleLevelHelper = $ruleLevelHelper;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -82,8 +85,9 @@ class AccessDeprecatedStaticPropertyRule implements Rule
 				continue;
 			}
 
-			if ($property->isDeprecated()->yes()) {
-				$description = $property->getDeprecatedDescription();
+			$deprecation = $this->deprecationHelper->getDeprecation($property);
+			if ($deprecation !== null) {
+				$description = $deprecation->getDescription();
 				if ($description === null) {
 					return [
 						RuleErrorBuilder::message(sprintf(

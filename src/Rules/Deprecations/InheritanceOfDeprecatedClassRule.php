@@ -21,10 +21,13 @@ class InheritanceOfDeprecatedClassRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -58,8 +61,9 @@ class InheritanceOfDeprecatedClassRule implements Rule
 
 		try {
 			$parentClass = $this->reflectionProvider->getClass($parentClassName);
-			$description = $parentClass->getDeprecatedDescription();
-			if ($parentClass->isDeprecated()) {
+			$parentDeprecation = $this->deprecationHelper->getDeprecation($parentClass);
+			if ($parentDeprecation !== null) {
+				$description = $parentDeprecation->getDescription();
 				if (!$class->isAnonymous()) {
 					if ($description === null) {
 						$errors[] = RuleErrorBuilder::message(sprintf(

@@ -22,10 +22,13 @@ class CallToDeprecatedFunctionRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -50,8 +53,9 @@ class CallToDeprecatedFunctionRule implements Rule
 			return [];
 		}
 
-		if ($function->isDeprecated()->yes()) {
-			$description = $function->getDeprecatedDescription();
+		$deprecation = $this->deprecationHelper->getDeprecation($function);
+		if ($deprecation !== null) {
+			$description = $deprecation->getDescription();
 			if ($description === null) {
 				return [
 					RuleErrorBuilder::message(sprintf(

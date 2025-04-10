@@ -17,9 +17,12 @@ class UsageOfDeprecatedCastRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -39,10 +42,12 @@ class UsageOfDeprecatedCastRule implements Rule
 		}
 		$method = $castedType->getMethod('__toString', $scope);
 
-		if (! $method->isDeprecated()->yes()) {
+		$deprecation = $this->deprecationHelper->getDeprecation($method);
+		if ($deprecation === null) {
 			return [];
 		}
-		$description = $method->getDeprecatedDescription();
+
+		$description = $deprecation->getDescription();
 		if ($description === null) {
 			return [
 				RuleErrorBuilder::message(sprintf(

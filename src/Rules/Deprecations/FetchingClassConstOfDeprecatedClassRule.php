@@ -29,11 +29,14 @@ class FetchingClassConstOfDeprecatedClassRule implements Rule
 
 	private DeprecatedScopeHelper $deprecatedScopeHelper;
 
-	public function __construct(ReflectionProvider $reflectionProvider, RuleLevelHelper $ruleLevelHelper, DeprecatedScopeHelper $deprecatedScopeHelper)
+	private DeprecationHelper $deprecationHelper;
+
+	public function __construct(ReflectionProvider $reflectionProvider, RuleLevelHelper $ruleLevelHelper, DeprecatedScopeHelper $deprecatedScopeHelper, DeprecationHelper $deprecationHelper)
 	{
 		$this->reflectionProvider = $reflectionProvider;
 		$this->ruleLevelHelper = $ruleLevelHelper;
 		$this->deprecatedScopeHelper = $deprecatedScopeHelper;
+		$this->deprecationHelper = $deprecationHelper;
 	}
 
 	public function getNodeType(): string
@@ -80,8 +83,9 @@ class FetchingClassConstOfDeprecatedClassRule implements Rule
 				continue;
 			}
 
-			if ($class->isDeprecated()) {
-				$classDescription = $class->getDeprecatedDescription();
+			$classDeprecation = $this->deprecationHelper->getDeprecation($class);
+			if ($classDeprecation !== null) {
+				$classDescription = $classDeprecation->getDescription();
 				if ($classDescription === null) {
 					$errors[] = RuleErrorBuilder::message(sprintf(
 						'Fetching class constant %s of deprecated %s %s.',
@@ -110,11 +114,12 @@ class FetchingClassConstOfDeprecatedClassRule implements Rule
 
 			$constantReflection = $class->getConstant($constantName);
 
-			if (!$constantReflection->isDeprecated()->yes()) {
+			$constantDeprecation = $this->deprecationHelper->getDeprecation($constantReflection);
+			if ($constantDeprecation === null) {
 				continue;
 			}
 
-			$description = $constantReflection->getDeprecatedDescription();
+			$description = $constantDeprecation->getDescription();
 			if ($description === null) {
 				$errors[] = RuleErrorBuilder::message(sprintf(
 					'Fetching deprecated class constant %s of %s %s.',
