@@ -17,7 +17,6 @@ class TypeHintDeprecatedInFunctionSignatureRuleTest extends RuleTestCase
 		return new TypeHintDeprecatedInFunctionSignatureRule(
 			new DeprecatedClassHelper($this->createReflectionProvider(), $deprecationHelper),
 			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver($deprecationHelper)]),
-			$deprecationHelper,
 		);
 	}
 

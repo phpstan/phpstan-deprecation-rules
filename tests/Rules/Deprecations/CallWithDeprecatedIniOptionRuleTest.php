@@ -20,7 +20,6 @@ class CallWithDeprecatedIniOptionRuleTest extends RuleTestCase
 			$this->createReflectionProvider(),
 			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver($deprecationHelper)]),
 			self::getContainer()->getByType(PhpVersion::class),
-			$deprecationHelper,
 		);
 	}
 

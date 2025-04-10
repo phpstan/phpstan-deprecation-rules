@@ -23,18 +23,9 @@ class DefaultDeprecationProvider implements DeprecationProvider
 				: null;
 		}
 
-		if (
-			$reflection instanceof ConstantReflection
-			|| $reflection instanceof EnumCaseReflection
-			|| $reflection instanceof ExtendedPropertyReflection
-			|| $reflection instanceof ExtendedMethodReflection
-			|| $reflection instanceof FunctionReflection
-		) {
-			return $reflection->isDeprecated()->yes()
-				? Deprecation::create()->withDescription($reflection->getDeprecatedDescription())
-				: null;
-		}
-
-		return null;
+		return $reflection->isDeprecated()->yes()
+			? Deprecation::create()->withDescription($reflection->getDeprecatedDescription())
+			: null;
 	}
+
 }
