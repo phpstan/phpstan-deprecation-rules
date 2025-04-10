@@ -13,7 +13,11 @@ class InheritanceOfDeprecatedInterfaceRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
-		return new InheritanceOfDeprecatedInterfaceRule($this->createReflectionProvider());
+		$deprecationHelper = new DeprecationHelper([new DefaultDeprecationProvider()]);
+		return new InheritanceOfDeprecatedInterfaceRule(
+			$this->createReflectionProvider(),
+			$deprecationHelper,
+		);
 	}
 
 	public function testInheritanceOfDeprecatedInterfaces(): void

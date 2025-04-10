@@ -15,10 +15,12 @@ class CallWithDeprecatedIniOptionRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
+		$deprecationHelper = new DeprecationHelper([new DefaultDeprecationProvider()]);
 		return new CallWithDeprecatedIniOptionRule(
 			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver($deprecationHelper)]),
 			self::getContainer()->getByType(PhpVersion::class),
+			$deprecationHelper,
 		);
 	}
 

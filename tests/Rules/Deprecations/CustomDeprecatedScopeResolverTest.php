@@ -15,6 +15,7 @@ final class CustomDeprecatedScopeResolverTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
+		$deprecationHelper = new DeprecationHelper([new DefaultDeprecationProvider()]);
 		$customScopeResolver = new class implements DeprecatedScopeResolver
 		{
 
@@ -30,9 +31,10 @@ final class CustomDeprecatedScopeResolverTest extends RuleTestCase
 		return new CallToDeprecatedMethodRule(
 			$this->createReflectionProvider(),
 			new DeprecatedScopeHelper([
-				new DefaultDeprecatedScopeResolver(),
+				new DefaultDeprecatedScopeResolver($deprecationHelper),
 				$customScopeResolver,
 			]),
+			$deprecationHelper,
 		);
 	}
 

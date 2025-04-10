@@ -13,9 +13,11 @@ class InheritanceOfDeprecatedClassRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
+		$deprecationHelper = new DeprecationHelper([new DefaultDeprecationProvider()]);
 		return new InheritanceOfDeprecatedClassRule(
 			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver($deprecationHelper)]),
+			$deprecationHelper,
 		);
 	}
 

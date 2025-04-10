@@ -14,10 +14,12 @@ class InstantiationOfDeprecatedClassRuleTest extends RuleTestCase
 
 	protected function getRule(): Rule
 	{
+		$deprecationHelper = new DeprecationHelper([new DefaultDeprecationProvider()]);
 		return new InstantiationOfDeprecatedClassRule(
 			$this->createReflectionProvider(),
 			self::getContainer()->getByType(RuleLevelHelper::class),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
+			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver($deprecationHelper)]),
+			$deprecationHelper,
 		);
 	}
 
