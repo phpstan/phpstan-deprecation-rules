@@ -77,4 +77,11 @@ new class {
     {
         return $this->property;
     }
+
+	#[SomeAttribute]
+    public function methodWithAttribute(): ?DeprecatedProperty
+    {
+        return $this->property;
+    }
+
 };

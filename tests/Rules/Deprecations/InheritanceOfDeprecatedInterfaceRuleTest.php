@@ -38,6 +38,10 @@ class InheritanceOfDeprecatedInterfaceRuleTest extends RuleTestCase
 					"Interface InheritanceOfDeprecatedInterface\Foo4 extends deprecated interface InheritanceOfDeprecatedInterface\DeprecatedWithDescription:\nImplement something else.",
 					20,
 				],
+				[
+					'Interface InheritanceOfDeprecatedInterface\Foo4 extends deprecated interface InheritanceOfDeprecatedInterface\DeprecatedFooable.',
+					50,
+				],
 			],
 		);
 	}

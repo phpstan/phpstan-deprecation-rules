@@ -55,6 +55,7 @@ class InheritanceOfDeprecatedClassRule implements Rule
 		}
 
 		$parentClassName = (string) $node->extends;
+		$line = $node->name !== null ? $node->name->getStartLine() : $node->getStartLine();
 
 		try {
 			$parentClass = $this->reflectionProvider->getClass($parentClassName);
@@ -66,27 +67,27 @@ class InheritanceOfDeprecatedClassRule implements Rule
 							'Class %s extends deprecated class %s.',
 							$className,
 							$parentClassName,
-						))->identifier('class.extendsDeprecatedClass')->build();
+						))->identifier('class.extendsDeprecatedClass')->line($line)->build();
 					} else {
 						$errors[] = RuleErrorBuilder::message(sprintf(
 							"Class %s extends deprecated class %s:\n%s",
 							$className,
 							$parentClassName,
 							$description,
-						))->identifier('class.extendsDeprecatedClass')->build();
+						))->identifier('class.extendsDeprecatedClass')->line($line)->build();
 					}
 				} else {
 					if ($description === null) {
 						$errors[] = RuleErrorBuilder::message(sprintf(
 							'Anonymous class extends deprecated class %s.',
 							$parentClassName,
-						))->identifier('class.extendsDeprecatedClass')->build();
+						))->identifier('class.extendsDeprecatedClass')->line($line)->build();
 					} else {
 						$errors[] = RuleErrorBuilder::message(sprintf(
 							"Anonymous class extends deprecated class %s:\n%s",
 							$parentClassName,
 							$description,
-						))->identifier('class.extendsDeprecatedClass')->build();
+						))->identifier('class.extendsDeprecatedClass')->line($line)->build();
 					}
 				}
 			}
