@@ -2,21 +2,19 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Rules\RestrictedUsage\RestrictedMethodUsageRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
 /**
- * @extends RuleTestCase<CallToDeprecatedMethodRule>
+ * @extends RuleTestCase<RestrictedMethodUsageRule>
  */
 class CallToDeprecatedMethodRuleTest extends RuleTestCase
 {
 
 	protected function getRule(): Rule
 	{
-		return new CallToDeprecatedMethodRule(
-			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
-		);
+		return self::getContainer()->getByType(RestrictedMethodUsageRule::class);
 	}
 
 	public function testDeprecatedMethodCall(): void
@@ -51,6 +49,14 @@ class CallToDeprecatedMethodRuleTest extends RuleTestCase
 				],
 			],
 		);
+	}
+
+	public static function getAdditionalConfigFiles(): array
+	{
+		return [
+			__DIR__ . '/../../../rules.neon',
+			...parent::getAdditionalConfigFiles(),
+		];
 	}
 
 }

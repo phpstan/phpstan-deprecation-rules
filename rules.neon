@@ -19,11 +19,15 @@ services:
 	-
 		class: PHPStan\Rules\Deprecations\CallWithDeprecatedIniOptionRule
 
+	-
+		class: PHPStan\Rules\Deprecations\RestrictedDeprecatedMethodUsageExtension
+		tags:
+			- phpstan.restrictedMethodUsageExtension
+
 rules:
 	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
 	- PHPStan\Rules\Deprecations\AccessDeprecatedStaticPropertyRule
 	- PHPStan\Rules\Deprecations\CallToDeprecatedFunctionRule
-	- PHPStan\Rules\Deprecations\CallToDeprecatedMethodRule
 	- PHPStan\Rules\Deprecations\CallToDeprecatedStaticMethodRule
 	- PHPStan\Rules\Deprecations\FetchingClassConstOfDeprecatedClassRule
 	- PHPStan\Rules\Deprecations\FetchingDeprecatedConstRule

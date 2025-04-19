@@ -2,38 +2,19 @@
 
 namespace PHPStan\Rules\Deprecations;
 
-use PHPStan\Analyser\Scope;
+use PHPStan\Rules\RestrictedUsage\RestrictedMethodUsageRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
-use function strpos;
 
 /**
- * @extends RuleTestCase<CallToDeprecatedMethodRule>
+ * @extends RuleTestCase<RestrictedMethodUsageRule>
  */
 final class CustomDeprecatedScopeResolverTest extends RuleTestCase
 {
 
 	protected function getRule(): Rule
 	{
-		$customScopeResolver = new class implements DeprecatedScopeResolver
-		{
-
-			public function isScopeDeprecated(Scope $scope): bool
-			{
-				$function = $scope->getFunction();
-				return $function !== null
-					&& $function->getDocComment() !== null
-					&& strpos($function->getDocComment(), '@group legacy') !== false;
-			}
-
-		};
-		return new CallToDeprecatedMethodRule(
-			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([
-				new DefaultDeprecatedScopeResolver(),
-				$customScopeResolver,
-			]),
-		);
+		return self::getContainer()->getByType(RestrictedMethodUsageRule::class);
 	}
 
 	public function testCustomScope(): void
@@ -48,6 +29,15 @@ final class CustomDeprecatedScopeResolverTest extends RuleTestCase
 				],
 			],
 		);
+	}
+
+	public static function getAdditionalConfigFiles(): array
+	{
+		return [
+			__DIR__ . '/../../../rules.neon',
+			__DIR__ . '/custom-deprecated-scope.neon',
+			...parent::getAdditionalConfigFiles(),
+		];
 	}
 
 }
