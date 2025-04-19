@@ -2,23 +2,19 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Rules\RestrictedUsage\RestrictedStaticMethodUsageRule;
 use PHPStan\Rules\Rule;
-use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Testing\RuleTestCase;
 
 /**
- * @extends RuleTestCase<CallToDeprecatedStaticMethodRule>
+ * @extends RuleTestCase<RestrictedStaticMethodUsageRule>
  */
 class CallToDeprecatedStaticMethodRuleTest extends RuleTestCase
 {
 
 	protected function getRule(): Rule
 	{
-		return new CallToDeprecatedStaticMethodRule(
-			$this->createReflectionProvider(),
-			self::getContainer()->getByType(RuleLevelHelper::class),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
-		);
+		return self::getContainer()->getByType(RestrictedStaticMethodUsageRule::class);
 	}
 
 	public function testDeprecatedStaticMethodCall(): void
@@ -40,27 +36,19 @@ class CallToDeprecatedStaticMethodRuleTest extends RuleTestCase
 					9,
 				],
 				[
-					'Call to method foo() of deprecated class CheckDeprecatedStaticMethodCall\Foo.',
+					'Call to method foo() of deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBar.',
 					11,
 				],
 				[
-					'Call to method deprecatedFoo() of deprecated class CheckDeprecatedStaticMethodCall\Foo.',
+					'Call to method deprecatedFoo() of deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBar.',
 					12,
 				],
 				[
-					'Call to deprecated method deprecatedFoo() of class CheckDeprecatedStaticMethodCall\Foo.',
-					12,
-				],
-				[
-					'Call to method deprecatedFoo2() of deprecated class CheckDeprecatedStaticMethodCall\Foo.',
+					'Call to method deprecatedFoo2() of deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBar.',
 					13,
 				],
 				[
-					'Call to deprecated method deprecatedFoo2() of class CheckDeprecatedStaticMethodCall\Foo.',
-					13,
-				],
-				[
-					"Call to method foo() of deprecated class CheckDeprecatedStaticMethodCall\Foo:\nDo not touch this at all.",
+					"Call to method foo() of deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBaz:\nDo not touch this at all.",
 					15,
 				],
 				[
@@ -89,6 +77,14 @@ class CallToDeprecatedStaticMethodRuleTest extends RuleTestCase
 				],
 			],
 		);
+	}
+
+	public static function getAdditionalConfigFiles(): array
+	{
+		return [
+			__DIR__ . '/../../../rules.neon',
+			...parent::getAdditionalConfigFiles(),
+		];
 	}
 
 }

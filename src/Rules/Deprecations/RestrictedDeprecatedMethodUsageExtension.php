@@ -28,6 +28,41 @@ class RestrictedDeprecatedMethodUsageExtension implements RestrictedMethodUsageE
 			return null;
 		}
 
+		if ($methodReflection->getDeclaringClass()->isDeprecated()) {
+			$class = $methodReflection->getDeclaringClass();
+			$classDescription = $class->getDeprecatedDescription();
+			if ($classDescription === null) {
+				return RestrictedUsage::create(
+					sprintf(
+						'Call to method %s() of deprecated %s %s.',
+						$methodReflection->getName(),
+						strtolower($methodReflection->getDeclaringClass()->getClassTypeDescription()),
+						$methodReflection->getDeclaringClass()->getName(),
+					),
+					sprintf(
+						'%s.deprecated%s',
+						$methodReflection->isStatic() ? 'staticMethod' : 'method',
+						$methodReflection->getDeclaringClass()->getClassTypeDescription(),
+					),
+				);
+			}
+
+			return RestrictedUsage::create(
+				sprintf(
+					"Call to method %s() of deprecated %s %s:\n%s",
+					$methodReflection->getName(),
+					strtolower($methodReflection->getDeclaringClass()->getClassTypeDescription()),
+					$methodReflection->getDeclaringClass()->getName(),
+					$classDescription,
+				),
+				sprintf(
+					'%s.deprecated%s',
+					$methodReflection->isStatic() ? 'staticMethod' : 'method',
+					$methodReflection->getDeclaringClass()->getClassTypeDescription(),
+				),
+			);
+		}
+
 		if (!$methodReflection->isDeprecated()->yes()) {
 			return null;
 		}
@@ -41,7 +76,7 @@ class RestrictedDeprecatedMethodUsageExtension implements RestrictedMethodUsageE
 					strtolower($methodReflection->getDeclaringClass()->getClassTypeDescription()),
 					$methodReflection->getDeclaringClass()->getName(),
 				),
-				'method.deprecated',
+				sprintf('%s.deprecated', $methodReflection->isStatic() ? 'staticMethod' : 'method'),
 			);
 		}
 
@@ -53,7 +88,7 @@ class RestrictedDeprecatedMethodUsageExtension implements RestrictedMethodUsageE
 				$methodReflection->getDeclaringClass()->getName(),
 				$description,
 			),
-			'method.deprecated',
+			sprintf('%s.deprecated', $methodReflection->isStatic() ? 'staticMethod' : 'method'),
 		);
 	}
 

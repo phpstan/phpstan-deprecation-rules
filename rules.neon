@@ -28,7 +28,6 @@ rules:
 	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
 	- PHPStan\Rules\Deprecations\AccessDeprecatedStaticPropertyRule
 	- PHPStan\Rules\Deprecations\CallToDeprecatedFunctionRule
-	- PHPStan\Rules\Deprecations\CallToDeprecatedStaticMethodRule
 	- PHPStan\Rules\Deprecations\FetchingClassConstOfDeprecatedClassRule
 	- PHPStan\Rules\Deprecations\FetchingDeprecatedConstRule
 	- PHPStan\Rules\Deprecations\ImplementationOfDeprecatedInterfaceRule
