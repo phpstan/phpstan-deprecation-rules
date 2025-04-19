@@ -16,3 +16,9 @@ class Bar3 extends DeprecatedWithDescription
 {
 
 }
+
+#[SomeAttribute]
+class Bar4 extends DeprecatedWithDescription
+{
+
+}

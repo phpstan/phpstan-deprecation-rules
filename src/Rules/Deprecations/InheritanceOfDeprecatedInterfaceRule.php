@@ -45,6 +45,7 @@ class InheritanceOfDeprecatedInterfaceRule implements Rule
 			return [];
 		}
 
+		$line = $node->name !== null ? $node->name->getStartLine() : $node->getStartLine();
 		$errors = [];
 
 		foreach ($node->extends as $parentInterfaceName) {
@@ -63,14 +64,14 @@ class InheritanceOfDeprecatedInterfaceRule implements Rule
 						'Interface %s extends deprecated interface %s.',
 						$interfaceName,
 						$parentInterfaceName,
-					))->identifier('interface.extendsDeprecatedInterface')->build();
+					))->identifier('interface.extendsDeprecatedInterface')->line($line)->build();
 				} else {
 					$errors[] = RuleErrorBuilder::message(sprintf(
 						"Interface %s extends deprecated interface %s:\n%s",
 						$interfaceName,
 						$parentInterfaceName,
 						$description,
-					))->identifier('interface.extendsDeprecatedInterface')->build();
+					))->identifier('interface.extendsDeprecatedInterface')->line($line)->build();
 				}
 			} catch (ClassNotFoundException $e) {
 				// Other rules will notify if the interface is not found

@@ -38,6 +38,7 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 		}
 
 		$method = $node->getMethodReflection();
+		$line = $node->getOriginalNode()->name->getStartLine();
 
 		$errors = [];
 		foreach ($method->getParameters() as $parameter) {
@@ -51,7 +52,7 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 						strtolower($deprecatedClass->getClassTypeDescription()),
 						$deprecatedClass->getName(),
 						$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass),
-					))->identifier(sprintf('parameter.deprecated%s', $deprecatedClass->getClassTypeDescription()))->build();
+					))->identifier(sprintf('parameter.deprecated%s', $deprecatedClass->getClassTypeDescription()))->line($line)->build();
 				} else {
 					$errors[] = RuleErrorBuilder::message(sprintf(
 						'Parameter $%s of method %s::%s() has typehint with deprecated %s %s%s',
@@ -61,7 +62,7 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 						strtolower($deprecatedClass->getClassTypeDescription()),
 						$deprecatedClass->getName(),
 						$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass),
-					))->identifier(sprintf('parameter.deprecated%s', $deprecatedClass->getClassTypeDescription()))->build();
+					))->identifier(sprintf('parameter.deprecated%s', $deprecatedClass->getClassTypeDescription()))->line($line)->build();
 				}
 			}
 		}
@@ -75,7 +76,7 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 					strtolower($deprecatedClass->getClassTypeDescription()),
 					$deprecatedClass->getName(),
 					$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass),
-				))->identifier(sprintf('return.deprecated%s', $deprecatedClass->getClassTypeDescription()))->build();
+				))->identifier(sprintf('return.deprecated%s', $deprecatedClass->getClassTypeDescription()))->line($line)->build();
 			} else {
 				$errors[] = RuleErrorBuilder::message(sprintf(
 					'Return type of method %s::%s() has typehint with deprecated %s %s%s',
@@ -84,7 +85,7 @@ class TypeHintDeprecatedInClassMethodSignatureRule implements Rule
 					strtolower($deprecatedClass->getClassTypeDescription()),
 					$deprecatedClass->getName(),
 					$this->deprecatedClassHelper->getClassDeprecationDescription($deprecatedClass),
-				))->identifier(sprintf('return.deprecated%s', $deprecatedClass->getClassTypeDescription()))->build();
+				))->identifier(sprintf('return.deprecated%s', $deprecatedClass->getClassTypeDescription()))->line($line)->build();
 			}
 		}
 

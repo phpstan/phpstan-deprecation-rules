@@ -33,6 +33,10 @@ class InheritanceOfDeprecatedClassRuleTest extends RuleTestCase
 					"Class InheritanceOfDeprecatedClass\Bar3 extends deprecated class InheritanceOfDeprecatedClass\DeprecatedWithDescription:\nInheritance is deprecated.",
 					15,
 				],
+				[
+					"Class InheritanceOfDeprecatedClass\Bar4 extends deprecated class InheritanceOfDeprecatedClass\DeprecatedWithDescription:\nInheritance is deprecated.",
+					21,
+				],
 			],
 		);
 	}

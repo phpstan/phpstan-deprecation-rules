@@ -45,3 +45,9 @@ interface DeprecatedFoo3 extends Fooable, DeprecatedFooable, DeprecatedFooable2
 {
 
 }
+
+#[SomeAttribute]
+interface Foo4 extends Fooable, DeprecatedFooable
+{
+
+}
