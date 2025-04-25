@@ -173,12 +173,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 				);
 			}
 
-			return RestrictedUsage::create(
-				$location->createMessage(
-					sprintf('deprecated %s %s', strtolower($classReflection->getClassTypeDescription()), $classReflection->getDisplayName()),
-				),
-				$location->createIdentifier('deprecated'),
-			);
+			return $defaultUsage;
 		}
 
 		if ($location->value === ClassNameUsageLocation::TRAIT_USE) {
@@ -195,12 +190,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 				);
 			}
 
-			return RestrictedUsage::create(
-				$location->createMessage(
-					sprintf('deprecated %s %s', strtolower($classReflection->getClassTypeDescription()), $classReflection->getDisplayName()),
-				),
-				$location->createIdentifier('deprecated'),
-			);
+			return $defaultUsage;
 		}
 
 		if ($location->value === ClassNameUsageLocation::STATIC_METHOD_CALL) {
