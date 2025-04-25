@@ -72,7 +72,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 							strtolower($classReflection->getClassTypeDescription()),
 							$classReflection->getDisplayName(),
 						),
-						$identifierPart,
+						$location->createIdentifier($identifierPart),
 					);
 				}
 
@@ -83,7 +83,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 						$classReflection->getDisplayName(),
 						$description,
 					),
-					$identifierPart,
+					$location->createIdentifier($identifierPart),
 				);
 			}
 
@@ -96,7 +96,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 						$classReflection->getDisplayName(),
 						$description,
 					),
-					$identifierPart,
+					$location->createIdentifier($identifierPart),
 				);
 			}
 
@@ -112,7 +112,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 							strtolower($classReflection->getClassTypeDescription()),
 							$classReflection->getDisplayName(),
 						),
-						$identifierPart,
+						$location->createIdentifier($identifierPart),
 					);
 				}
 
@@ -123,7 +123,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 						$classReflection->getDisplayName(),
 						$description,
 					),
-					$identifierPart,
+					$location->createIdentifier($identifierPart),
 				);
 			}
 
@@ -136,7 +136,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 						$classReflection->getDisplayName(),
 						$description,
 					),
-					$identifierPart,
+					$location->createIdentifier($identifierPart),
 				);
 			}
 
@@ -153,7 +153,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 						$classReflection->getDisplayName(),
 						$description,
 					),
-					$identifierPart,
+					$location->createIdentifier($identifierPart),
 				);
 			}
 
@@ -173,7 +173,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 				);
 			}
 
-			RestrictedUsage::create(
+			return RestrictedUsage::create(
 				$location->createMessage(
 					sprintf('deprecated %s %s', strtolower($classReflection->getClassTypeDescription()), $classReflection->getDisplayName()),
 				),
@@ -195,7 +195,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 				);
 			}
 
-			RestrictedUsage::create(
+			return RestrictedUsage::create(
 				$location->createMessage(
 					sprintf('deprecated %s %s', strtolower($classReflection->getClassTypeDescription()), $classReflection->getDisplayName()),
 				),
@@ -210,6 +210,8 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 					return null;
 				}
 			}
+
+			return $defaultUsage;
 		}
 
 		if ($location->value === ClassNameUsageLocation::STATIC_PROPERTY_ACCESS) {
@@ -219,6 +221,8 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 					return null;
 				}
 			}
+
+			return $defaultUsage;
 		}
 
 		if ($location->value === ClassNameUsageLocation::CLASS_CONSTANT_ACCESS) {
@@ -228,6 +232,8 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 					return null;
 				}
 			}
+
+			return $defaultUsage;
 		}
 
 		if (!$this->bleedingEdge) {
