@@ -203,6 +203,33 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 			);
 		}
 
+		if ($location->value === ClassNameUsageLocation::STATIC_METHOD_CALL) {
+			$method = $location->getMethod();
+			if ($method !== null) {
+				if ($method->isDeprecated()->yes() || $method->getDeclaringClass()->isDeprecated()) {
+					return null;
+				}
+			}
+		}
+
+		if ($location->value === ClassNameUsageLocation::STATIC_PROPERTY_ACCESS) {
+			$property = $location->getProperty();
+			if ($property !== null) {
+				if ($property->isDeprecated()->yes() || $property->getDeclaringClass()->isDeprecated()) {
+					return null;
+				}
+			}
+		}
+
+		if ($location->value === ClassNameUsageLocation::CLASS_CONSTANT_ACCESS) {
+			$constant = $location->getClassConstant();
+			if ($constant !== null) {
+				if ($constant->isDeprecated()->yes() || $constant->getDeclaringClass()->isDeprecated()) {
+					return null;
+				}
+			}
+		}
+
 		if (!$this->bleedingEdge) {
 			return null;
 		}

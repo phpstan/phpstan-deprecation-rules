@@ -52,25 +52,9 @@ class Bar extends Foo
 class DeprecatedBar extends Foo
 {
 
-	public static function foo()
+	public static function doDeprecatedBar()
 	{
-
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public static function deprecatedFoo()
-	{
-
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public static function deprecatedFoo2()
-	{
-
+		
 	}
 
 }
@@ -80,10 +64,5 @@ class DeprecatedBar extends Foo
  */
 class DeprecatedBaz extends Foo
 {
-
-	public static function foo()
-	{
-
-	}
 
 }

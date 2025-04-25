@@ -36,20 +36,12 @@ class CallToDeprecatedStaticMethodRuleTest extends RuleTestCase
 					9,
 				],
 				[
-					'Call to method foo() of deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBar.',
-					11,
-				],
-				[
-					'Call to method deprecatedFoo() of deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBar.',
+					'Call to deprecated method deprecatedFoo() of class CheckDeprecatedStaticMethodCall\Foo.',
 					12,
 				],
 				[
-					'Call to method deprecatedFoo2() of deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBar.',
+					'Call to deprecated method deprecatedFoo2() of class CheckDeprecatedStaticMethodCall\Foo.',
 					13,
-				],
-				[
-					"Call to method foo() of deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBaz:\nDo not touch this at all.",
-					15,
 				],
 				[
 					"Call to deprecated method deprecatedWithDescription() of class CheckDeprecatedStaticMethodCall\Foo:\nThis is probably a singleton.",
@@ -74,6 +66,10 @@ class CallToDeprecatedStaticMethodRuleTest extends RuleTestCase
 				[
 					'Call to deprecated method deprecatedOtherFoo() of class CheckDeprecatedStaticMethodCall\Child.',
 					77,
+				],
+				[
+					'Call to method doDeprecatedBar() of deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBar.',
+					81,
 				],
 			],
 		);

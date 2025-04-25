@@ -77,3 +77,5 @@ class Child extends Foo
 		static::deprecatedOtherFoo();
 	}
 }
+
+DeprecatedBar::doDeprecatedBar();

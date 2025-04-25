@@ -25,6 +25,12 @@ parameters:
 			path: tests/Rules/Deprecations/InstantiationOfDeprecatedClassRuleTest.php
 
 		-
+			message: '#^Accessing PHPStan\\Rules\\Methods\\CallStaticMethodsRule\:\:class is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.$#'
+			identifier: phpstanApi.classConstant
+			count: 1
+			path: tests/Rules/Deprecations/RestrictedDeprecatedClassNameUsageExtensionTest.php
+
+		-
 			message: '#^Accessing PHPStan\\Rules\\Classes\\ExistingClassInTraitUseRule\:\:class is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.$#'
 			identifier: phpstanApi.classConstant
 			count: 1
