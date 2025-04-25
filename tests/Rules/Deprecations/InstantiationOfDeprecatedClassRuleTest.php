@@ -2,23 +2,19 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Rules\Classes\InstantiationRule;
 use PHPStan\Rules\Rule;
-use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Testing\RuleTestCase;
 
 /**
- * @extends RuleTestCase<InstantiationOfDeprecatedClassRule>
+ * @extends RuleTestCase<InstantiationRule>
  */
 class InstantiationOfDeprecatedClassRuleTest extends RuleTestCase
 {
 
 	protected function getRule(): Rule
 	{
-		return new InstantiationOfDeprecatedClassRule(
-			$this->createReflectionProvider(),
-			self::getContainer()->getByType(RuleLevelHelper::class),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
-		);
+		return self::getContainer()->getByType(InstantiationRule::class);
 	}
 
 	public function testInstantiationOfDeprecatedClass(): void
@@ -37,6 +33,14 @@ class InstantiationOfDeprecatedClassRuleTest extends RuleTestCase
 				],
 			],
 		);
+	}
+
+	public static function getAdditionalConfigFiles(): array
+	{
+		return [
+			__DIR__ . '/../../../rules.neon',
+			...parent::getAdditionalConfigFiles(),
+		];
 	}
 
 }

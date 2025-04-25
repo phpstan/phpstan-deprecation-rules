@@ -2,21 +2,19 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Rules\Classes\ExistingClassesInClassImplementsRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
 /**
- * @extends RuleTestCase<ImplementationOfDeprecatedInterfaceRule>
+ * @extends RuleTestCase<ExistingClassesInClassImplementsRule>
  */
 class ImplementationOfDeprecatedInterfaceRuleTest extends RuleTestCase
 {
 
 	protected function getRule(): Rule
 	{
-		return new ImplementationOfDeprecatedInterfaceRule(
-			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
-		);
+		return self::getContainer()->getByType(ExistingClassesInClassImplementsRule::class);
 	}
 
 	public function testImplementationOfDeprecatedInterfacesInClasses(): void
@@ -69,6 +67,14 @@ class ImplementationOfDeprecatedInterfaceRuleTest extends RuleTestCase
 				],
 			],
 		);
+	}
+
+	public static function getAdditionalConfigFiles(): array
+	{
+		return [
+			__DIR__ . '/../../../rules.neon',
+			...parent::getAdditionalConfigFiles(),
+		];
 	}
 
 }

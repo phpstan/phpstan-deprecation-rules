@@ -2,21 +2,19 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Rules\Classes\ExistingClassInTraitUseRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
 /**
- * @extends RuleTestCase<UsageOfDeprecatedTraitRule>
+ * @extends RuleTestCase<ExistingClassInTraitUseRule>
  */
 class UsageOfDeprecatedTraitRuleTest extends RuleTestCase
 {
 
 	protected function getRule(): Rule
 	{
-		return new UsageOfDeprecatedTraitRule(
-			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
-		);
+		return self::getContainer()->getByType(ExistingClassInTraitUseRule::class);
 	}
 
 	public function testUsageOfDeprecatedTrait(): void
@@ -31,7 +29,7 @@ class UsageOfDeprecatedTraitRuleTest extends RuleTestCase
 				],
 				[
 					'Usage of deprecated trait UsageOfDeprecatedTrait\DeprecatedFooTrait in class UsageOfDeprecatedTrait\Foo2.',
-					16,
+					17,
 				],
 				[
 					"Usage of deprecated trait UsageOfDeprecatedTrait\DeprecatedTraitWithDescription in class UsageOfDeprecatedTrait\Foo3:\nDo not use traits.",
@@ -39,6 +37,14 @@ class UsageOfDeprecatedTraitRuleTest extends RuleTestCase
 				],
 			],
 		);
+	}
+
+	public static function getAdditionalConfigFiles(): array
+	{
+		return [
+			__DIR__ . '/../../../rules.neon',
+			...parent::getAdditionalConfigFiles(),
+		];
 	}
 
 }
