@@ -2,21 +2,19 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Rules\RestrictedUsage\RestrictedPropertyUsageRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
 /**
- * @extends RuleTestCase<AccessDeprecatedPropertyRule>
+ * @extends RuleTestCase<RestrictedPropertyUsageRule>
  */
 class AccessDeprecatedPropertyRuleTest extends RuleTestCase
 {
 
 	protected function getRule(): Rule
 	{
-		return new AccessDeprecatedPropertyRule(
-			$this->createReflectionProvider(),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
-		);
+		return self::getContainer()->getByType(RestrictedPropertyUsageRule::class);
 	}
 
 	public function testAccessDeprecatedProperty(): void
@@ -47,6 +45,14 @@ class AccessDeprecatedPropertyRuleTest extends RuleTestCase
 				],
 			],
 		);
+	}
+
+	public static function getAdditionalConfigFiles(): array
+	{
+		return [
+			__DIR__ . '/../../../rules.neon',
+			...parent::getAdditionalConfigFiles(),
+		];
 	}
 
 }

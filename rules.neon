@@ -27,6 +27,11 @@ services:
 			- phpstan.restrictedMethodUsageExtension
 
 	-
+		class: PHPStan\Rules\Deprecations\RestrictedDeprecatedPropertyUsageExtension
+		tags:
+			- phpstan.restrictedPropertyUsageExtension
+
+	-
 		class: PHPStan\Rules\Deprecations\RestrictedDeprecatedClassNameUsageExtension
 		arguments:
 			bleedingEdge: %featureToggles.bleedingEdge%
@@ -34,8 +39,6 @@ services:
 			- phpstan.restrictedClassNameUsageExtension
 
 rules:
-	- PHPStan\Rules\Deprecations\AccessDeprecatedPropertyRule
-	- PHPStan\Rules\Deprecations\AccessDeprecatedStaticPropertyRule
 	- PHPStan\Rules\Deprecations\FetchingClassConstOfDeprecatedClassRule
 	- PHPStan\Rules\Deprecations\FetchingDeprecatedConstRule
 	- PHPStan\Rules\Deprecations\UsageOfDeprecatedCastRule
