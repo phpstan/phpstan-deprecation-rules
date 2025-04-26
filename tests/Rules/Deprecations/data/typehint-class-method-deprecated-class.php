@@ -68,7 +68,7 @@ class DeprecatedClass
 new class {
     private $property;
 
-    public function __construct(DeprecatedProperty $property = null)
+    public function __construct(?DeprecatedProperty $property = null)
     {
         $this->property = $property;
     }

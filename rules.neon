@@ -3,9 +3,6 @@ parameters:
 
 services:
 	-
-		class: PHPStan\Rules\Deprecations\DeprecatedClassHelper
-
-	-
 		class: PHPStan\DependencyInjection\LazyDeprecatedScopeResolverProvider
 	-
 		class: PHPStan\Rules\Deprecations\DeprecatedScopeHelper
@@ -37,9 +34,6 @@ rules:
 	- PHPStan\Rules\Deprecations\CallToDeprecatedFunctionRule
 	- PHPStan\Rules\Deprecations\FetchingClassConstOfDeprecatedClassRule
 	- PHPStan\Rules\Deprecations\FetchingDeprecatedConstRule
-	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInClassMethodSignatureRule
-	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInClosureSignatureRule
-	- PHPStan\Rules\Deprecations\TypeHintDeprecatedInFunctionSignatureRule
 	- PHPStan\Rules\Deprecations\UsageOfDeprecatedCastRule
 
 conditionalTags:

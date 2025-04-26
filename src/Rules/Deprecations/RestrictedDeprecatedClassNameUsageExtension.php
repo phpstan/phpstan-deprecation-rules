@@ -8,6 +8,7 @@ use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\ClassNameUsageLocation;
 use PHPStan\Rules\RestrictedUsage\RestrictedClassNameUsageExtension;
 use PHPStan\Rules\RestrictedUsage\RestrictedUsage;
+use function rtrim;
 use function sprintf;
 use function strtolower;
 
@@ -224,6 +225,19 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 			}
 
 			return $defaultUsage;
+		}
+
+		if ($location->value === ClassNameUsageLocation::PARAMETER_TYPE || $location->value === ClassNameUsageLocation::RETURN_TYPE) {
+			$message = $location->createMessage(
+				sprintf('deprecated %s %s', strtolower($classReflection->getClassTypeDescription()), $classReflection->getDisplayName()),
+			);
+			if ($classReflection->getDeprecatedDescription() !== null) {
+				$message = rtrim($message, '.') . ":\n" . $classReflection->getDeprecatedDescription();
+			}
+			return RestrictedUsage::create(
+				$message,
+				$location->createIdentifier($identifierPart),
+			);
 		}
 
 		if (!$this->bleedingEdge) {

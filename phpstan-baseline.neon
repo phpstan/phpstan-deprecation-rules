@@ -31,6 +31,24 @@ parameters:
 			path: tests/Rules/Deprecations/RestrictedDeprecatedClassNameUsageExtensionTest.php
 
 		-
+			message: '#^Accessing PHPStan\\Rules\\Methods\\ExistingClassesInTypehintsRule\:\:class is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.$#'
+			identifier: phpstanApi.classConstant
+			count: 1
+			path: tests/Rules/Deprecations/TypeHintDeprecatedInClassMethodSignatureRuleTest.php
+
+		-
+			message: '#^Accessing PHPStan\\Rules\\Functions\\ExistingClassesInClosureTypehintsRule\:\:class is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.$#'
+			identifier: phpstanApi.classConstant
+			count: 1
+			path: tests/Rules/Deprecations/TypeHintDeprecatedInClosureSignatureRuleTest.php
+
+		-
+			message: '#^Accessing PHPStan\\Rules\\Functions\\ExistingClassesInTypehintsRule\:\:class is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.$#'
+			identifier: phpstanApi.classConstant
+			count: 1
+			path: tests/Rules/Deprecations/TypeHintDeprecatedInFunctionSignatureRuleTest.php
+
+		-
 			message: '#^Accessing PHPStan\\Rules\\Classes\\ExistingClassInTraitUseRule\:\:class is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.$#'
 			identifier: phpstanApi.classConstant
 			count: 1
