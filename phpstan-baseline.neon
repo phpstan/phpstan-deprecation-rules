@@ -1,6 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Accessing PHPStan\\Rules\\Classes\\ClassConstantRule\:\:class is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.$#'
+			identifier: phpstanApi.classConstant
+			count: 1
+			path: tests/Rules/ClassConstantRuleTest.php
+
+		-
 			message: '#^Accessing PHPStan\\Rules\\Classes\\ExistingClassesInClassImplementsRule\:\:class is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.$#'
 			identifier: phpstanApi.classConstant
 			count: 1

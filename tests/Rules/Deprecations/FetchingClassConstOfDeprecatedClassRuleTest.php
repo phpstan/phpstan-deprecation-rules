@@ -2,23 +2,19 @@
 
 namespace PHPStan\Rules\Deprecations;
 
+use PHPStan\Rules\RestrictedUsage\RestrictedClassConstantUsageRule;
 use PHPStan\Rules\Rule;
-use PHPStan\Rules\RuleLevelHelper;
 use PHPStan\Testing\RuleTestCase;
 
 /**
- * @extends RuleTestCase<FetchingClassConstOfDeprecatedClassRule>
+ * @extends RuleTestCase<RestrictedClassConstantUsageRule>
  */
 class FetchingClassConstOfDeprecatedClassRuleTest extends RuleTestCase
 {
 
 	protected function getRule(): Rule
 	{
-		return new FetchingClassConstOfDeprecatedClassRule(
-			$this->createReflectionProvider(),
-			self::getContainer()->getByType(RuleLevelHelper::class),
-			new DeprecatedScopeHelper([new DefaultDeprecatedScopeResolver()]),
-		);
+		return self::getContainer()->getByType(RestrictedClassConstantUsageRule::class);
 	}
 
 	public function testFetchingClassConstOfDeprecatedClass(): void
@@ -28,20 +24,8 @@ class FetchingClassConstOfDeprecatedClassRuleTest extends RuleTestCase
 			[__DIR__ . '/data/fetching-class-const-of-deprecated-class.php'],
 			[
 				[
-					'Fetching class constant class of deprecated class FetchingClassConstOfDeprecatedClass\DeprecatedFoo.',
-					6,
-				],
-				[
 					'Fetching deprecated class constant DEPRECATED_FOO of class FetchingClassConstOfDeprecatedClass\Foo.',
 					9,
-				],
-				[
-					'Fetching class constant class of deprecated class FetchingClassConstOfDeprecatedClass\DeprecatedFoo.',
-					11,
-				],
-				[
-					'Fetching class constant class of deprecated class FetchingClassConstOfDeprecatedClass\DeprecatedFoo.',
-					12,
 				],
 				[
 					"Fetching deprecated class constant DEPRECATED_WITH_DESCRIPTION of class FetchingClassConstOfDeprecatedClass\Foo:\nUse different constant.",
@@ -53,6 +37,14 @@ class FetchingClassConstOfDeprecatedClassRuleTest extends RuleTestCase
 				],
 			],
 		);
+	}
+
+	public static function getAdditionalConfigFiles(): array
+	{
+		return [
+			__DIR__ . '/../../../rules.neon',
+			...parent::getAdditionalConfigFiles(),
+		];
 	}
 
 }
