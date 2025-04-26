@@ -27,7 +27,7 @@ class RestrictedDeprecatedClassNameUsageExtensionTest extends RuleTestCase
 				11,
 			],
 			[
-				'Call to static method foo() on deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBaz.',
+				"Call to static method foo() on deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBaz:\nDo not touch this at all.",
 				15,
 			],
 		]);

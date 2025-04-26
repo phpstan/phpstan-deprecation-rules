@@ -56,141 +56,29 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 
 		$identifierPart = sprintf('deprecated%s', $classReflection->getClassTypeDescription());
 		$defaultUsage = RestrictedUsage::create(
-			$location->createMessage(
+			$this->addClassDescriptionToMessage($classReflection, $location->createMessage(
 				sprintf('deprecated %s %s', strtolower($classReflection->getClassTypeDescription()), $classReflection->getDisplayName()),
-			),
+			)),
 			$location->createIdentifier($identifierPart),
 		);
 
-		$description = $classReflection->getDeprecatedDescription();
-
 		if ($location->value === ClassNameUsageLocation::CLASS_IMPLEMENTS) {
-			if ($currentClassName === null) {
-				if ($description === null) {
-					return RestrictedUsage::create(
-						sprintf(
-							'Anonymous class implements deprecated %s %s.',
-							strtolower($classReflection->getClassTypeDescription()),
-							$classReflection->getDisplayName(),
-						),
-						$location->createIdentifier($identifierPart),
-					);
-				}
-
-				return RestrictedUsage::create(
-					sprintf(
-						"Anonymous class implements deprecated %s %s:\n%s",
-						strtolower($classReflection->getClassTypeDescription()),
-						$classReflection->getDisplayName(),
-						$description,
-					),
-					$location->createIdentifier($identifierPart),
-				);
-			}
-
-			if ($description !== null) {
-				return RestrictedUsage::create(
-					sprintf(
-						"Class %s implements deprecated %s %s:\n%s",
-						$currentClassName,
-						strtolower($classReflection->getClassTypeDescription()),
-						$classReflection->getDisplayName(),
-						$description,
-					),
-					$location->createIdentifier($identifierPart),
-				);
-			}
-
 			return $defaultUsage;
 		}
 
 		if ($location->value === ClassNameUsageLocation::CLASS_EXTENDS) {
-			if ($currentClassName === null) {
-				if ($description === null) {
-					return RestrictedUsage::create(
-						sprintf(
-							'Anonymous class extends deprecated %s %s.',
-							strtolower($classReflection->getClassTypeDescription()),
-							$classReflection->getDisplayName(),
-						),
-						$location->createIdentifier($identifierPart),
-					);
-				}
-
-				return RestrictedUsage::create(
-					sprintf(
-						"Anonymous class extends deprecated %s %s:\n%s",
-						strtolower($classReflection->getClassTypeDescription()),
-						$classReflection->getDisplayName(),
-						$description,
-					),
-					$location->createIdentifier($identifierPart),
-				);
-			}
-
-			if ($description !== null) {
-				return RestrictedUsage::create(
-					sprintf(
-						"Class %s extends deprecated %s %s:\n%s",
-						$currentClassName,
-						strtolower($classReflection->getClassTypeDescription()),
-						$classReflection->getDisplayName(),
-						$description,
-					),
-					$location->createIdentifier($identifierPart),
-				);
-			}
-
 			return $defaultUsage;
 		}
 
 		if ($location->value === ClassNameUsageLocation::INTERFACE_EXTENDS) {
-			if ($description !== null) {
-				return RestrictedUsage::create(
-					sprintf(
-						"Interface %s extends deprecated %s %s:\n%s",
-						$currentClassName,
-						strtolower($classReflection->getClassTypeDescription()),
-						$classReflection->getDisplayName(),
-						$description,
-					),
-					$location->createIdentifier($identifierPart),
-				);
-			}
-
 			return $defaultUsage;
 		}
 
 		if ($location->value === ClassNameUsageLocation::INSTANTIATION) {
-			if ($description !== null) {
-				return RestrictedUsage::create(
-					sprintf(
-						"Instantiation of deprecated %s %s:\n%s",
-						strtolower($classReflection->getClassTypeDescription()),
-						$classReflection->getDisplayName(),
-						$description,
-					),
-					$location->createIdentifier('deprecated'),
-				);
-			}
-
 			return $defaultUsage;
 		}
 
 		if ($location->value === ClassNameUsageLocation::TRAIT_USE) {
-			if ($description !== null) {
-				return RestrictedUsage::create(
-					sprintf(
-						"Usage of deprecated %s %s in class %s:\n%s",
-						strtolower($classReflection->getClassTypeDescription()),
-						$classReflection->getDisplayName(),
-						$currentClassName,
-						$description,
-					),
-					$location->createIdentifier('deprecated'),
-				);
-			}
-
 			return $defaultUsage;
 		}
 
@@ -228,16 +116,7 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 		}
 
 		if ($location->value === ClassNameUsageLocation::PARAMETER_TYPE || $location->value === ClassNameUsageLocation::RETURN_TYPE) {
-			$message = $location->createMessage(
-				sprintf('deprecated %s %s', strtolower($classReflection->getClassTypeDescription()), $classReflection->getDisplayName()),
-			);
-			if ($classReflection->getDeprecatedDescription() !== null) {
-				$message = rtrim($message, '.') . ":\n" . $classReflection->getDeprecatedDescription();
-			}
-			return RestrictedUsage::create(
-				$message,
-				$location->createIdentifier($identifierPart),
-			);
+			return $defaultUsage;
 		}
 
 		if (!$this->bleedingEdge) {
@@ -245,6 +124,15 @@ class RestrictedDeprecatedClassNameUsageExtension implements RestrictedClassName
 		}
 
 		return $defaultUsage;
+	}
+
+	private function addClassDescriptionToMessage(ClassReflection $classReflection, string $message): string
+	{
+		if ($classReflection->getDeprecatedDescription() === null) {
+			return $message;
+		}
+
+		return rtrim($message, '.') . ":\n" . $classReflection->getDeprecatedDescription();
 	}
 
 }
