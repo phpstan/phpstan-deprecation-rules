@@ -45,7 +45,6 @@ services:
 
 rules:
 	- PHPStan\Rules\Deprecations\FetchingDeprecatedConstRule
-	- PHPStan\Rules\Deprecations\UsageOfDeprecatedCastRule
 
 conditionalTags:
 	PHPStan\Rules\Deprecations\CallWithDeprecatedIniOptionRule:

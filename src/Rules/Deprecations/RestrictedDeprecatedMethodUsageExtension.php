@@ -68,6 +68,27 @@ class RestrictedDeprecatedMethodUsageExtension implements RestrictedMethodUsageE
 		}
 
 		$description = $methodReflection->getDeprecatedDescription();
+		if (strtolower($methodReflection->getName()) === '__tostring') {
+			if ($description === null) {
+				return RestrictedUsage::create(
+					sprintf(
+						'Casting class %s to string is deprecated.',
+						$methodReflection->getDeclaringClass()->getName(),
+					),
+					'class.toStringDeprecated',
+				);
+			}
+
+			return RestrictedUsage::create(
+				sprintf(
+					"Casting class %s to string is deprecated.:\n%s",
+					$methodReflection->getDeclaringClass()->getName(),
+					$description,
+				),
+				'class.toStringDeprecated',
+			);
+		}
+
 		if ($description === null) {
 			return RestrictedUsage::create(
 				sprintf(
