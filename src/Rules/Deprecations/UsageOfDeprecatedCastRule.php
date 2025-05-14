@@ -10,7 +10,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 use function sprintf;
 
 /**
- * @implements Rule<Cast>
+ * @implements Rule<Cast\String_>
  */
 class UsageOfDeprecatedCastRule implements Rule
 {
@@ -24,7 +24,7 @@ class UsageOfDeprecatedCastRule implements Rule
 
 	public function getNodeType(): string
 	{
-		return Cast::class;
+		return Cast\String_::class;
 	}
 
 	public function processNode(Node $node, Scope $scope): array

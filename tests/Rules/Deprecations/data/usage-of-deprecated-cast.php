@@ -24,3 +24,7 @@ function deprecatedScope(Foo $foo): string
 {
 	return (string) $foo;
 }
+
+function foo2(Foo $foo): string {
+	return (int) $foo;
+}
