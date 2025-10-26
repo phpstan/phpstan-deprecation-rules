@@ -223,9 +223,9 @@ jobs:
 
       - name: "Run infection"
         run: |
-          git fetch --depth=1 origin ${{ steps.previous-commit.outputs.name }}
+          git fetch --depth=1 origin ${{ steps.default-branch.outputs.name }}
           infection \
-            --git-diff-base=origin/${{ steps.previous-commit.outputs.name }} \
+            --git-diff-base=origin/${{ steps.default-branch.outputs.name }} \
             --git-diff-lines \
             --ignore-msi-with-no-mutations \
             --min-msi=100 \
