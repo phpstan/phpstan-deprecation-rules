@@ -5,5 +5,7 @@ includes:
 	- vendor/phpstan/phpstan-phpunit/extension.neon
 
 parameters:
+	resultCachePath: tmp/resultCache.php
+
 	excludePaths:
 		- tests/*/data/*
