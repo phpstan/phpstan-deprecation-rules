@@ -5,6 +5,7 @@ includes:
 	- vendor/phpstan/phpstan-phpunit/extension.neon
 
 parameters:
+	level: 8
 	resultCachePath: tmp/resultCache.php
 
 	excludePaths:
