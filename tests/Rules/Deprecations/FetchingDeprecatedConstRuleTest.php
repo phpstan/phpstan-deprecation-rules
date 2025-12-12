@@ -67,13 +67,14 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 			[
 				[
 					'Use of constant E_STRICT is deprecated.',
-					7
+					7,
 				],
 				[
 					'Use of constant E_STRICT is deprecated.',
-					18
+					18,
 				],
 			],
 		);
 	}
+
 }
