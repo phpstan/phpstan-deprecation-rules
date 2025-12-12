@@ -59,4 +59,21 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 		);
 	}
 
+	public function testEstrictWithVersionGuard(): void
+	{
+		require_once __DIR__ . '/data/bug-162.php';
+		$this->analyse(
+			[__DIR__ . '/data/bug-162.php'],
+			[
+				[
+					'Use of constant E_STRICT is deprecated.',
+					7
+				],
+				[
+					'Use of constant E_STRICT is deprecated.',
+					18
+				],
+			],
+		);
+	}
 }
