@@ -62,12 +62,7 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 
 	public function testEstrictWithVersionGuard(): void
 	{
-		$errors = [
-			[
-				'Use of constant E_STRICT is deprecated.',
-				7,
-			],
-		];
+		$errors = [];
 		if (PHP_VERSION_ID >= 80400) {
 			$errors = [
 				[
