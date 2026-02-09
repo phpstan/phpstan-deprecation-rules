@@ -5,6 +5,7 @@ namespace PHPStan\Rules\Deprecations;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use function defined;
+use const PHP_VERSION_ID;
 
 /**
  * @extends RuleTestCase<FetchingDeprecatedConstRule>
@@ -56,6 +57,29 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 		$this->analyse(
 			[__DIR__ . '/data/fetching-deprecated-const.php'],
 			$expectedErrors,
+		);
+	}
+
+	public function testEstrictWithVersionGuard(): void
+	{
+		$errors = [];
+		if (PHP_VERSION_ID >= 80400) {
+			$errors = [
+				[
+					'Use of constant E_STRICT is deprecated.',
+					7,
+				],
+				[
+					'Use of constant E_STRICT is deprecated.',
+					18,
+				],
+			];
+		}
+
+		require_once __DIR__ . '/data/bug-162.php';
+		$this->analyse(
+			[__DIR__ . '/data/bug-162.php'],
+			$errors,
 		);
 	}
 
