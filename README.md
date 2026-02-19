@@ -1,4 +1,4 @@
-# Rules for detecting usage of deprecated classes, methods, properties, constants and traits.
+# Rules for detecting usage of deprecated classes, methods, properties, constants, traits, functions and interfaces.
 
 [![Build](https://github.com/phpstan/phpstan-deprecation-rules/workflows/Build/badge.svg)](https://github.com/phpstan/phpstan-deprecation-rules/actions)
 [![Latest Stable Version](https://poser.pugx.org/phpstan/phpstan-deprecation-rules/v/stable)](https://packagist.org/packages/phpstan/phpstan-deprecation-rules)
@@ -29,7 +29,16 @@ includes:
 
 ## Deprecating code you don't own
 
-This extension emits deprecation warnings on code, which uses properties/functions/methods/classes which are annotated as `@deprecated`.
+This extension reports usage of deprecated symbols marked with the `@deprecated` PHPDoc annotation. It detects:
+
+- Calling deprecated **functions** and **methods** (instance and static)
+- Accessing deprecated **properties** (instance and static)
+- Fetching deprecated **class constants** and **global constants**
+- **Instantiating**, **extending**, or **using** deprecated **classes** and **traits**
+- **Implementing** or **extending** deprecated **interfaces**
+- **Type hints** referencing deprecated classes in parameter and return types
+- **Casting to string** when the class has a deprecated `__toString` method
+- Calling `ini_get`/`ini_set`/`ini_alter`/`ini_restore`/`get_cfg_var` with **deprecated INI options** (bleeding edge only)
 
 In case you don't own the code which you want to be considered deprecated, use [PHPStan Stub Files](https://phpstan.org/user-guide/stub-files) to declare deprecations for vendor files like:
 ```
