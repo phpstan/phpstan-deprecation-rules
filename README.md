@@ -27,6 +27,14 @@ includes:
 ```
 </details>
 
+## Compatibility with deprecation mechanisms
+
+| Mechanism                                                                             | Emits runtime deprecation | Supported by PHPStan?    |
+|---------------------------------------------------------------------------------------|---------------------------|--------------------------|
+| `@deprecated` PHPDoc                                                                  | No                        | Yes — via this extension |
+| `#[\Deprecated]`, [since PHP 8.4](https://www.php.net/manual/en/class.deprecated.php) | Yes                       | Yes — via this extension |
+| `trigger_deprecation()`                                                               | Yes                       | No                       |
+
 ## Deprecating code you don't own
 
 This extension emits deprecation warnings on code, which uses properties/functions/methods/classes which are annotated as `@deprecated`.
@@ -36,6 +44,22 @@ In case you don't own the code which you want to be considered deprecated, use [
 /** @deprecated */
 class ThirdPartyClass {}
 ```
+
+## `#[\Deprecated]` attribute (Since PHP 8.4)
+
+PHP 8.4 introduced a native [`#[\Deprecated]`](https://wiki.php.net/rfc/deprecated_attribute) attribute that triggers a runtime deprecation notice when a symbol is called.
+
+**This extension detects it** — no `@deprecated` PHPDoc annotation is required alongside it:
+
+```php
+#[\Deprecated('Will be removed in 2.0, use constructor injection instead.')]
+public function __construct(...) {}
+```
+
+PHPStan will report call sites with the `method.deprecated` identifier, including the attribute's description string.
+
+> [!NOTE]
+> Detection of `#[\Deprecated]` is provided by this extension (`phpstan-deprecation-rules`), **not** by PHPStan core. Removing this extension silences those errors entirely.
 
 ## Custom deprecation markers
 
