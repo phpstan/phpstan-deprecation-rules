@@ -94,3 +94,39 @@ trait TraitReplacingDeprecatedMethod
 	}
 }
 
+/**
+ * @deprecated
+ */
+trait DeprecatedTrait
+{
+
+	public function methodFromDeprecatedTrait(): void
+	{
+	}
+
+	public static function staticMethodFromDeprecatedTrait(): void
+	{
+	}
+
+}
+
+/**
+ * @deprecated Use something else.
+ */
+trait DeprecatedTraitWithDescription
+{
+
+	public function methodFromDeprecatedTraitWithDescription(): void
+	{
+	}
+
+}
+
+class ClassUsingDeprecatedTrait
+{
+
+	use DeprecatedTrait;
+	use DeprecatedTraitWithDescription;
+
+}
+

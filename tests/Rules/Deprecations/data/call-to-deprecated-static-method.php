@@ -79,3 +79,15 @@ class Child extends Foo
 }
 
 DeprecatedBar::doDeprecatedBar();
+
+ClassUsingDeprecatedTrait::staticMethodFromDeprecatedTrait();
+ClassUsingDeprecatedTrait::staticMethodFromDeprecatedTraitWithDescription();
+
+/**
+ * @deprecated
+ */
+function deprecated_scope_for_deprecated_trait(): void
+{
+	ClassUsingDeprecatedTrait::staticMethodFromDeprecatedTrait();
+	ClassUsingDeprecatedTrait::staticMethodFromDeprecatedTraitWithDescription();
+}
