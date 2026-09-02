@@ -74,3 +74,17 @@ final class UsingTraitReplacementForDeprecatedMethod extends MethodMovedToTraitC
 		$this->prophesize();
 	}
 }
+
+$obj = new ClassUsingDeprecatedTrait();
+$obj->methodFromDeprecatedTrait();
+$obj->methodFromDeprecatedTraitWithDescription();
+
+/**
+ * @deprecated
+ */
+function deprecated_scope_for_deprecated_trait(): void
+{
+	$obj = new ClassUsingDeprecatedTrait();
+	$obj->methodFromDeprecatedTrait();
+	$obj->methodFromDeprecatedTraitWithDescription();
+}
