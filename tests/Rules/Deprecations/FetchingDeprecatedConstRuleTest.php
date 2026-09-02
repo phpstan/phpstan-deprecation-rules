@@ -83,4 +83,15 @@ class FetchingDeprecatedConstRuleTest extends RuleTestCase
 		);
 	}
 
+	public function testEstrictWithVersionCompareGuard(): void
+	{
+		$errors = [];
+
+		require_once __DIR__ . '/data/bug-162b.php';
+		$this->analyse(
+			[__DIR__ . '/data/bug-162b.php'],
+			$errors,
+		);
+	}
+
 }
