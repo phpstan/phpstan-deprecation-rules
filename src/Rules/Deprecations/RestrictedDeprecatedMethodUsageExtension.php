@@ -3,6 +3,7 @@
 namespace PHPStan\Rules\Deprecations;
 
 use PHPStan\Analyser\Scope;
+use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ExtendedMethodReflection;
 use PHPStan\Rules\RestrictedUsage\RestrictedMethodUsageExtension;
 use PHPStan\Rules\RestrictedUsage\RestrictedUsage;
@@ -63,6 +64,34 @@ class RestrictedDeprecatedMethodUsageExtension implements RestrictedMethodUsageE
 			);
 		}
 
+		$deprecatedDeclaringTrait = $this->findDeprecatedDeclaringTrait(
+			$methodReflection->getDeclaringClass(),
+			$methodReflection->getName(),
+		);
+		if ($deprecatedDeclaringTrait !== null) {
+			$traitDescription = $deprecatedDeclaringTrait->getDeprecatedDescription();
+			if ($traitDescription === null) {
+				return RestrictedUsage::create(
+					sprintf(
+						'Call to method %s() of deprecated trait %s.',
+						$methodReflection->getName(),
+						$deprecatedDeclaringTrait->getName(),
+					),
+					sprintf('%s.deprecatedTrait', $methodReflection->isStatic() ? 'staticMethod' : 'method'),
+				);
+			}
+
+			return RestrictedUsage::create(
+				sprintf(
+					"Call to method %s() of deprecated trait %s:\n%s",
+					$methodReflection->getName(),
+					$deprecatedDeclaringTrait->getName(),
+					$traitDescription,
+				),
+				sprintf('%s.deprecatedTrait', $methodReflection->isStatic() ? 'staticMethod' : 'method'),
+			);
+		}
+
 		if (!$methodReflection->isDeprecated()->yes()) {
 			return null;
 		}
@@ -111,6 +140,19 @@ class RestrictedDeprecatedMethodUsageExtension implements RestrictedMethodUsageE
 			),
 			sprintf('%s.deprecated', $methodReflection->isStatic() ? 'staticMethod' : 'method'),
 		);
+	}
+
+	private function findDeprecatedDeclaringTrait(ClassReflection $declaringClass, string $methodName): ?ClassReflection
+	{
+		foreach ($declaringClass->getTraits() as $trait) {
+			if (!$trait->hasNativeMethod($methodName) || !$trait->isDeprecated()) {
+				continue;
+			}
+
+			return $trait;
+		}
+
+		return null;
 	}
 
 }
