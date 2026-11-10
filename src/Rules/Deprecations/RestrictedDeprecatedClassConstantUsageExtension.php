@@ -24,6 +24,11 @@ class RestrictedDeprecatedClassConstantUsageExtension implements RestrictedClass
 		Scope $scope
 	): ?RestrictedUsage
 	{
+		// Foo::class is reported as a deprecated class name usage
+		if ($constantReflection->getName() === 'class') {
+			return null;
+		}
+
 		if ($this->deprecatedScopeHelper->isScopeDeprecated($scope)) {
 			return null;
 		}
