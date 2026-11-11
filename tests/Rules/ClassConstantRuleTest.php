@@ -23,15 +23,15 @@ class ClassConstantRuleTest extends RuleTestCase
 			[__DIR__ . '/Deprecations/data/fetching-class-const-of-deprecated-class.php'],
 			[
 				[
-					'Access to constant class on deprecated class FetchingClassConstOfDeprecatedClass\DeprecatedFoo.',
+					'Access to constant on deprecated class FetchingClassConstOfDeprecatedClass\DeprecatedFoo.',
 					6,
 				],
 				[
-					'Access to constant class on deprecated class FetchingClassConstOfDeprecatedClass\DeprecatedFoo.',
+					'Access to constant on deprecated class FetchingClassConstOfDeprecatedClass\DeprecatedFoo.',
 					11,
 				],
 				[
-					'Access to constant class on deprecated class FetchingClassConstOfDeprecatedClass\DeprecatedFoo.',
+					'Access to constant on deprecated class FetchingClassConstOfDeprecatedClass\DeprecatedFoo.',
 					12,
 				],
 			],
