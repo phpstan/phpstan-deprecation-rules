@@ -108,7 +108,7 @@ The GitHub Actions workflow (`.github/workflows/build.yml`) runs on pull request
 - **Coding Standard** — PHP_CodeSniffer with `phpstan/build-cs`
 - **Tests** — PHPUnit across PHP 7.4–8.4 with both lowest and highest dependency versions
 - **Static Analysis** — PHPStan across PHP 7.4–8.4 with both lowest and highest dependency versions
-- **Mutation Testing** — Infection (via `phpstan/build-infection`) on PHP 8.2–8.4, runs after tests and static analysis pass
+- **Mutation Testing** — Infection (via `phpstan/build-infection`) on PHP 8.3–8.5, pull requests only, runs after tests and static analysis pass, requires 100% MSI on changed lines
 
 ## Branch Strategy
 
