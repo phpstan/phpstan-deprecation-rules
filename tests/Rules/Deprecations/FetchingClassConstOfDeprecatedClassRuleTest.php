@@ -39,6 +39,20 @@ class FetchingClassConstOfDeprecatedClassRuleTest extends RuleTestCase
 		);
 	}
 
+	public function testDeprecatedConstantOfAnonymousClass(): void
+	{
+		$file = __DIR__ . '/data/deprecated-member-of-anonymous-class.php';
+		$this->analyse(
+			[$file],
+			[
+				[
+					'Fetching deprecated class constant DEPRECATED_CONSTANT of class class@anonymous/' . $file . ':5.',
+					22,
+				],
+			],
+		);
+	}
+
 	public static function getAdditionalConfigFiles(): array
 	{
 		return [

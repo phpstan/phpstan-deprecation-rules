@@ -47,6 +47,20 @@ class AccessDeprecatedPropertyRuleTest extends RuleTestCase
 		);
 	}
 
+	public function testDeprecatedPropertyOfAnonymousClass(): void
+	{
+		$file = __DIR__ . '/data/deprecated-member-of-anonymous-class.php';
+		$this->analyse(
+			[$file],
+			[
+				[
+					'Access to deprecated property $deprecatedProperty of class class@anonymous/' . $file . ':5.',
+					21,
+				],
+			],
+		);
+	}
+
 	public static function getAdditionalConfigFiles(): array
 	{
 		return [

@@ -51,6 +51,24 @@ class CallToDeprecatedMethodRuleTest extends RuleTestCase
 		);
 	}
 
+	public function testDeprecatedMethodOfAnonymousClass(): void
+	{
+		$file = __DIR__ . '/data/deprecated-member-of-anonymous-class.php';
+		$this->analyse(
+			[$file],
+			[
+				[
+					'Call to deprecated method deprecatedMethod() of class class@anonymous/' . $file . ':5.',
+					20,
+				],
+				[
+					'Call to method method() of deprecated class class@anonymous/' . $file . ':24.',
+					32,
+				],
+			],
+		);
+	}
+
 	public static function getAdditionalConfigFiles(): array
 	{
 		return [

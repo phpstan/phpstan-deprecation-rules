@@ -42,7 +42,7 @@ class RestrictedDeprecatedClassConstantUsageExtension implements RestrictedClass
 						'Fetching class constant %s of deprecated %s %s.',
 						$constantReflection->getName(),
 						strtolower($constantReflection->getDeclaringClass()->getClassTypeDescription()),
-						$constantReflection->getDeclaringClass()->getName(),
+						$constantReflection->getDeclaringClass()->getDisplayName(),
 					),
 					sprintf(
 						'classConstant.deprecated%s',
@@ -56,7 +56,7 @@ class RestrictedDeprecatedClassConstantUsageExtension implements RestrictedClass
 					"Fetching class constant %s of deprecated %s %s:\n%s",
 					$constantReflection->getName(),
 					strtolower($constantReflection->getDeclaringClass()->getClassTypeDescription()),
-					$constantReflection->getDeclaringClass()->getName(),
+					$constantReflection->getDeclaringClass()->getDisplayName(),
 					$classDescription,
 				),
 				sprintf(
@@ -77,7 +77,7 @@ class RestrictedDeprecatedClassConstantUsageExtension implements RestrictedClass
 					'Fetching deprecated class constant %s of %s %s.',
 					$constantReflection->getName(),
 					strtolower($constantReflection->getDeclaringClass()->getClassTypeDescription()),
-					$constantReflection->getDeclaringClass()->getName(),
+					$constantReflection->getDeclaringClass()->getDisplayName(),
 				),
 				'classConstant.deprecated',
 			);
@@ -88,7 +88,7 @@ class RestrictedDeprecatedClassConstantUsageExtension implements RestrictedClass
 				"Fetching deprecated class constant %s of %s %s:\n%s",
 				$constantReflection->getName(),
 				strtolower($constantReflection->getDeclaringClass()->getClassTypeDescription()),
-				$constantReflection->getDeclaringClass()->getName(),
+				$constantReflection->getDeclaringClass()->getDisplayName(),
 				$description,
 			),
 			'classConstant.deprecated',
