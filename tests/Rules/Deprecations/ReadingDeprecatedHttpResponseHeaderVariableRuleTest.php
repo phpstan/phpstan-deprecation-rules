@@ -36,7 +36,35 @@ class ReadingDeprecatedHttpResponseHeaderVariableRuleTest extends RuleTestCase
 			],
 			[
 				'The predefined locally scoped $http_response_header variable is deprecated, call http_get_last_response_headers() instead.',
-				17,
+				51,
+			],
+			[
+				'The predefined locally scoped $http_response_header variable is deprecated, call http_get_last_response_headers() instead.',
+				57,
+			],
+			[
+				'The predefined locally scoped $http_response_header variable is deprecated, call http_get_last_response_headers() instead.',
+				70,
+			],
+			[
+				'The predefined locally scoped $http_response_header variable is deprecated, call http_get_last_response_headers() instead.',
+				76,
+			],
+			[
+				'The predefined locally scoped $http_response_header variable is deprecated, call http_get_last_response_headers() instead.',
+				77,
+			],
+			[
+				'The predefined locally scoped $http_response_header variable is deprecated, call http_get_last_response_headers() instead.',
+				87,
+			],
+			[
+				'The predefined locally scoped $http_response_header variable is deprecated, call http_get_last_response_headers() instead.',
+				93,
+			],
+			[
+				'The predefined locally scoped $http_response_header variable is deprecated, call http_get_last_response_headers() instead.',
+				105,
 			],
 		]);
 	}
@@ -45,6 +73,14 @@ class ReadingDeprecatedHttpResponseHeaderVariableRuleTest extends RuleTestCase
 	{
 		$this->phpVersionId = 80400;
 		$this->analyse([__DIR__ . '/data/bug-173.php'], []);
+	}
+
+	public static function getAdditionalConfigFiles(): array
+	{
+		return [
+			__DIR__ . '/../../../rules.neon',
+			...parent::getAdditionalConfigFiles(),
+		];
 	}
 
 }

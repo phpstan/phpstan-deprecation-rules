@@ -43,6 +43,11 @@ services:
 		tags:
 			- phpstan.restrictedClassNameUsageExtension
 
+	-
+		class: PHPStan\Rules\Deprecations\HttpResponseHeaderFetchVisitor
+		tags:
+			- phpstan.parser.richParserNodeVisitor
+
 rules:
 	- PHPStan\Rules\Deprecations\FetchingDeprecatedConstRule
 	- PHPStan\Rules\Deprecations\ReadingDeprecatedHttpResponseHeaderVariableRule
