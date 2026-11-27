@@ -66,3 +66,35 @@ class DeprecatedBaz extends Foo
 {
 
 }
+
+/**
+ * @deprecated
+ */
+trait DeprecatedTrait
+{
+
+	public static function staticMethodFromDeprecatedTrait(): void
+	{
+	}
+
+}
+
+/**
+ * @deprecated Use something else.
+ */
+trait DeprecatedTraitWithDescription
+{
+
+	public static function staticMethodFromDeprecatedTraitWithDescription(): void
+	{
+	}
+
+}
+
+class ClassUsingDeprecatedTrait
+{
+
+	use DeprecatedTrait;
+	use DeprecatedTraitWithDescription;
+
+}

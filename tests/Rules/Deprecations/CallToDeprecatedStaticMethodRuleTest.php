@@ -71,6 +71,14 @@ class CallToDeprecatedStaticMethodRuleTest extends RuleTestCase
 					'Call to method doDeprecatedBar() of deprecated class CheckDeprecatedStaticMethodCall\DeprecatedBar.',
 					81,
 				],
+				[
+					'Call to method staticMethodFromDeprecatedTrait() of deprecated trait CheckDeprecatedStaticMethodCall\DeprecatedTrait.',
+					83,
+				],
+				[
+					"Call to method staticMethodFromDeprecatedTraitWithDescription() of deprecated trait CheckDeprecatedStaticMethodCall\\DeprecatedTraitWithDescription:\nUse something else.",
+					84,
+				],
 			],
 		);
 	}
