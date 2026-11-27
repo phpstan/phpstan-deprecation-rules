@@ -1,0 +1,6 @@
+<?php
+
+namespace FetchingDeprecatedConstWithDescription;
+
+DEPRECATED_WITH_DESCRIPTION;
+\FetchingDeprecatedConstWithDescription\DEPRECATED_WITH_DESCRIPTION;
